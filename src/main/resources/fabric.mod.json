@@ -29,7 +29,7 @@
 	},
 	"entrypoints": {
 		"main": [
-			"io.github.username.modid.ModId"
+			"dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox"
 		],
 		"client": [
 		]

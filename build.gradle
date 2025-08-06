@@ -4,17 +4,25 @@ plugins {
 	id "maven-publish"
 	alias libs.plugins.loom
 	alias libs.plugins.minotaur
+	alias libs.plugins.yumi.licenser
 }
 
 version = "$modVersion+$branchName"
-archivesBaseName = project.slug
+base.archivesName = project.slug
 
 repositories {
+	maven {
+		name = 'ParchmentMC'
+		url = 'https://maven.parchmentmc.org'
+	}
 }
 
 dependencies {
 	minecraft libs.mc
-	mappings variantOf(libs.yarn) { classifier "v2" }
+	mappings loom.layered {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-${libs.versions.parchment.mc.get()}:${libs.versions.parchment.asProvider().get()}@zip")
+	}
 
 	modImplementation libs.fl
 	modImplementation libs.fapi
@@ -76,4 +84,10 @@ modrinth {
 	dependencies {
 		required.version "fabric-api", libs.versions.fapi.get()
 	}
+}
+
+license {
+	rule file("codeformat/HEADER")
+	
+	include("**/*.java")
 }

@@ -1,7 +1,7 @@
 {
 	"required": true,
 	"minVersion": "0.8",
-	"package": "io.github.username.modid.mixin",
+	"package": "dev.sweetberry.more_than_a_foxbox.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 	],
