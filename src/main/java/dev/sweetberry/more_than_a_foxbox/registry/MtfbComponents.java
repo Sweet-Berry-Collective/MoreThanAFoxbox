@@ -10,7 +10,6 @@ import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 
-import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
 public class MtfbComponents {

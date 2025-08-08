@@ -9,7 +9,6 @@ package dev.sweetberry.more_than_a_foxbox.data;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
-import net.minecraft.core.ClientAsset;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
