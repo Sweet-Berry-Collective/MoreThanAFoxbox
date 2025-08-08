@@ -7,8 +7,10 @@
 package dev.sweetberry.more_than_a_foxbox.item;
 
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
+import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 
 public final class MtfbItems {
@@ -37,6 +39,11 @@ public final class MtfbItems {
 	public static final RegistryContext.Value<Item> CARDBOARD = CONTEXT.defer(
 		"cardboard",
 		Item::new
+	);
+	
+	public static final RegistryContext.Value<Item> CARDBOARD_BOX = CONTEXT.defer(
+		"cardboard_box",
+		properties -> new BlockItem(MtfbBlocks.CARDBOARD_BOX.get(), properties)
 	);
 
 	private MtfbItems() {}
