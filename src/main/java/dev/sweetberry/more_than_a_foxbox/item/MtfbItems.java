@@ -22,6 +22,12 @@ public class MtfbItems {
 		Item::new
 	);
 
+	// TODO: Polyfill block that acts like cobwebs
+	public static final RegistryContext.Value<Item> POLYFILL = CONTEXT.defer(
+		"polyfill",
+		Item::new
+	);
+
 	public static final RegistryContext.Value<Item> CARDBOARD = CONTEXT.defer(
 		"cardboard",
 		Item::new
