@@ -6,7 +6,11 @@
 
 package dev.sweetberry.more_than_a_foxbox;
 
+import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
+import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
+import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +20,14 @@ public class MoreThanAFoxbox implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		//LOGGER.info("[Mod ID] pretty pink princess ponies prancing perpendicular");
+		registerDynamicRegistries();
+	}
+
+	public static void registerDynamicRegistries() {
+		DynamicRegistries.registerSynced(MtfbRegistries.PLUSHIE_VARIANT, PlushieVariant.DIRECT_CODEC, PlushieVariant.NETWORK_CODEC);
+	}
+
+	public static ResourceLocation id(String path) {
+		return ResourceLocation.fromNamespaceAndPath(ID, path);
 	}
 }

@@ -32,6 +32,7 @@
 			"dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox"
 		],
 		"client": [
+			"dev.sweetberry.more_than_a_foxbox.client.MoreThanAFoxboxClient"
 		]
 	}
 }
