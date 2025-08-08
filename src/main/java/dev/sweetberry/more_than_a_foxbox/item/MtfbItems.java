@@ -11,7 +11,7 @@ import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 
-public class MtfbItems {
+public final class MtfbItems {
 	private static final RegistryContext<Item, Item.Properties> CONTEXT = new RegistryContext<>(
 		BuiltInRegistries.ITEM,
 		MoreThanAFoxbox.ID,
@@ -39,6 +39,8 @@ public class MtfbItems {
 		Item::new
 	);
 
+	private MtfbItems() {}
+	
 	public static void register() {
 		CONTEXT.register();
 	}
