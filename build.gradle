@@ -26,6 +26,9 @@ dependencies {
 
 	modImplementation libs.fl
 	modImplementation libs.fapi
+	
+	implementation libs.yumi.commons.core
+	include libs.yumi.commons.core
 }
 
 loom {
