@@ -105,6 +105,10 @@ modrinth {
 	}
 }
 
+tasks.compileJava {
+	dependsOn tasks.applyLicenses
+}
+
 license {
 	rule file("codeformat/HEADER")
 	
