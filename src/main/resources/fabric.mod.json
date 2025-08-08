@@ -19,7 +19,10 @@
 	"icon": "assets/${modId}/icon.png",
 	"mixins": [
 		"${modId}.mixins.json",
-		"${modId}.client.mixins.json"
+		{
+			"config": "${modId}.client.mixins.json",
+			"environment": "client"
+		}
 	],
 	"depends": {
 		"minecraft": ">=${mc}",
