@@ -10,8 +10,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class CardboardBoxBlockEntity extends BlockEntity {
-	public CardboardBoxBlockEntity(
+public class BoxBlockEntity extends BlockEntity {
+	public BoxBlockEntity(
 		BlockPos pos,
 		BlockState blockState
 	) {

@@ -23,7 +23,7 @@ public final class MtfbBlockEntityTypes {
 	
 	public static final RegistryContext.Value<BlockEntityType<?>> CARDBOARD_BOX = CONTEXT.defer(
 		"cardboard_box",
-		builder -> builder.create(CardboardBoxBlockEntity::new, MtfbBlocks.CARDBOARD_BOX.get()).build()
+		builder -> builder.create(BoxBlockEntity::new, MtfbBlocks.CARDBOARD_BOX.get()).build()
 	);
 	
 	private MtfbBlockEntityTypes() {}

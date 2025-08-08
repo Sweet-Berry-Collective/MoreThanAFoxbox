@@ -23,7 +23,7 @@ public final class MtfbBlocks {
 	
 	public static final RegistryContext.Value<Block> CARDBOARD_BOX = CONTEXT.defer(
 		"cardboard_box",
-		properties -> new CardboardBoxBlock(
+		properties -> new BoxBlock(
 			properties
 				.instabreak()
 				.sound(SoundType.WOOL)
