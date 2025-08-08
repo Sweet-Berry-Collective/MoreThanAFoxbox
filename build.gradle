@@ -37,6 +37,14 @@ loom {
 			sourceSet("client")
 		}
 	}
+	
+	runs {
+		client {
+			client()
+			
+			source = sourceSets["client"]
+		}
+	}
 }
 
 processResources {
