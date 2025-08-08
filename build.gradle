@@ -28,6 +28,17 @@ dependencies {
 	modImplementation libs.fapi
 }
 
+loom {
+	splitEnvironmentSourceSets()
+	
+	mods {
+		register(modId) {
+			sourceSet("main")
+			sourceSet("client")
+		}
+	}
+}
+
 processResources {
 	final Map<String, String> meta = [
 		version       : version,
