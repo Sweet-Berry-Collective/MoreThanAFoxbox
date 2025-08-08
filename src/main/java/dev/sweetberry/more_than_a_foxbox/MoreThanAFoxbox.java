@@ -22,7 +22,7 @@ public class MoreThanAFoxbox implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		registerDynamicRegistries();
-		MtfbItems.init();
+		MtfbItems.register();
 	}
 
 	public static void registerDynamicRegistries() {
