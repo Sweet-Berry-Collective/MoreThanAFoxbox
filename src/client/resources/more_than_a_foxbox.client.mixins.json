@@ -1,11 +1,9 @@
 {
 	"required": true,
 	"minVersion": "0.8",
-	"package": "dev.sweetberry.more_than_a_foxbox.mixin",
+	"package": "dev.sweetberry.more_than_a_foxbox.client.mixin",
 	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-	],
-	"server": [
+	"client": [
 	],
 	"injectors": {
 		"defaultRequire": 1
