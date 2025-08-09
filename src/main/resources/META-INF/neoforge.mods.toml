@@ -10,7 +10,7 @@ displayName = "${modName}"
 description = '''${modDescription}'''
 authors = "${members}"
 displayURL = "${homepage}"
-logoFile = "assets/${modId}/icon.png"
+logoFile = "../../../client/resources/assets/${modId}/icon.png"
 
 [properties]
 "connector:placeholder" = true
