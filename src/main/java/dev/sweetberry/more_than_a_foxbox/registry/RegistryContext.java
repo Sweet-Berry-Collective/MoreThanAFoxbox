@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class RegistryContext<TValue> {
 	public final Registry<TValue> registry;
@@ -47,7 +48,7 @@ public class RegistryContext<TValue> {
 		}
 	}
 
-	public static class Value<TValue> {
+	public static class Value<TValue> implements Supplier<TValue> {
 		public final ResourceLocation location;
 		public final Function<ResourceKey<TValue>, TValue> createCallback;
 

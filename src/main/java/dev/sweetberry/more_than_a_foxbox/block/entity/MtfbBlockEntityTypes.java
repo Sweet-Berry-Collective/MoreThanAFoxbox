@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.Arrays;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked")
 public final class MtfbBlockEntityTypes {
@@ -26,7 +27,7 @@ public final class MtfbBlockEntityTypes {
 		MoreThanAFoxbox.ID
 	);
 
-	public static final RegistryContext.Value<BlockEntityType<BoxBlockEntity>> CARDBOARD_BOX = CONTEXT.defer(
+	public static final Supplier<BlockEntityType<BoxBlockEntity>> CARDBOARD_BOX = CONTEXT.defer(
 		"cardboard_box",
 		withBuilder(
 			FabricBlockEntityTypeBuilder::build,
@@ -44,14 +45,14 @@ public final class MtfbBlockEntityTypes {
 	private static <T extends BlockEntity> Function<ResourceKey<BlockEntityType<T>>, BlockEntityType<T>> withBuilder(
 		Function<FabricBlockEntityTypeBuilder<T>, BlockEntityType<T>> callback,
 		FabricBlockEntityTypeBuilder.Factory<? extends T> factory,
-		RegistryContext.Value<? extends Block> ...blocks
+		Supplier<? extends Block>...blocks
 	) {
 		return key -> callback.apply(
 			FabricBlockEntityTypeBuilder.create(
 				factory,
 				Arrays
 					.stream(blocks)
-					.map(RegistryContext.Value::get)
+					.map(Supplier::get)
 					.toArray(Block[]::new)
 			)
 		);

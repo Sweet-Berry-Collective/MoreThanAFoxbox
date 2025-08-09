@@ -15,6 +15,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class MtfbItems {
 	private static final RegistryContext<Item> CONTEXT = new RegistryContext<>(
@@ -22,28 +23,28 @@ public final class MtfbItems {
 		MoreThanAFoxbox.ID
 	);
 
-	public static final RegistryContext.Value<Item> SPEAKER = CONTEXT.defer(
+	public static final Supplier<Item> SPEAKER = CONTEXT.defer(
 		"speaker",
 		withProperties(Item::new)
 	);
 
-	public static final RegistryContext.Value<Item> SQUEAKER = CONTEXT.defer(
+	public static final Supplier<Item> SQUEAKER = CONTEXT.defer(
 		"squeaker",
 		withProperties(Item::new)
 	);
 
 	// TODO: Polyfill block that acts like cobwebs
-	public static final RegistryContext.Value<Item> POLYFILL = CONTEXT.defer(
+	public static final Supplier<Item> POLYFILL = CONTEXT.defer(
 		"polyfill",
 		withProperties(Item::new)
 	);
 
-	public static final RegistryContext.Value<Item> CARDBOARD = CONTEXT.defer(
+	public static final Supplier<Item> CARDBOARD = CONTEXT.defer(
 		"cardboard",
 		withProperties(Item::new)
 	);
 	
-	public static final RegistryContext.Value<Item> CARDBOARD_BOX = CONTEXT.defer(
+	public static final Supplier<Item> CARDBOARD_BOX = CONTEXT.defer(
 		"cardboard_box",
 		withProperties(properties -> new BlockItem(MtfbBlocks.CARDBOARD_BOX.get(), properties))
 	);
