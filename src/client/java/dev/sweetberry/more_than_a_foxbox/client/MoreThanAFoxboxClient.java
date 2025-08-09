@@ -6,20 +6,92 @@
 
 package dev.sweetberry.more_than_a_foxbox.client;
 
-import dev.sweetberry.more_than_a_foxbox.client.util.PlushieModelUtil;
+import dev.sweetberry.more_than_a_foxbox.block.BoxBlock;
+import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
+import dev.sweetberry.more_than_a_foxbox.client.util.ModelUtil;
+import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.loading.v1.ExtraModelKey;
 import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.SimpleUnbakedExtraModel;
+import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperBlockStateModel;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
+
+import java.util.function.Predicate;
 
 public class MoreThanAFoxboxClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		PreparableModelLoadingPlugin.register(PlushieModelUtil::getModels, (data, pluginContext) -> {
-			for (ResourceLocation id : data) {
-				pluginContext.addModel(ExtraModelKey.create(id::toString), SimpleUnbakedExtraModel.blockStateModel(id));
+		PreparableModelLoadingPlugin.register(
+			ModelUtil::getPlushieModels,
+			(data, pluginContext) -> {
+				for (ResourceLocation id : data) {
+					pluginContext.addModel(ExtraModelKey.create(id::toString), SimpleUnbakedExtraModel.blockStateModel(id));
+				}
 			}
-		});
+		);
+		
+		// Box Rotation
+		PreparableModelLoadingPlugin.register(
+			ModelUtil::getBoxModels,
+			(data, pluginContext) -> {
+				for (ResourceLocation id : data) {
+					pluginContext.addModel(ExtraModelKey.create(id::toString), SimpleUnbakedExtraModel.blockStateModel(id));
+				}
+				
+				pluginContext.modifyBlockModelAfterBake().register((model, context) -> {
+					BlockState state = context.state();
+					if (!state.is(MtfbBlocks.CARDBOARD_BOX.get())) return model;
+					OctalDirection direction = state.getValue(BoxBlock.ROTATION);
+
+					return new WrapperBlockStateModel(model) {
+						@Override
+						public void emitQuads(
+							QuadEmitter emitter,
+							BlockAndTintGetter blockView,
+							BlockPos pos,
+							BlockState state,
+							RandomSource random,
+							Predicate<@Nullable Direction> cullTest
+						) {
+							var rotationTransform = BoxBlock.pointVertexToward(direction, 0.5f);
+							emitter.pushTransform(quad -> {
+								for (int i = 0; i < 4; i++) {
+									var point = new Vector3f();
+									quad.copyPos(i, point);
+									var point4 = new Vector4f(point.x, point.y, point.z, 1.0f);
+									rotationTransform.transform(point4);
+									point.set(point4);
+									quad.pos(i, point);
+								}
+								return true;
+							});
+							super.emitQuads(
+								emitter,
+								blockView,
+								pos,
+								state,
+								random,
+								cullTest
+							);
+							emitter.popTransform();
+						}
+					};
+				});
+			}
+		);
+		
+		BlockRenderLayerMap.putBlock(MtfbBlocks.CARDBOARD_BOX.get(), ChunkSectionLayer.CUTOUT);
 	}
 }

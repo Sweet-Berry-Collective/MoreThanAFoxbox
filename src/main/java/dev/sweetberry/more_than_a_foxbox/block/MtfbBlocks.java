@@ -37,6 +37,7 @@ public final class MtfbBlocks {
 				.instabreak()
 				.sound(SoundType.WOOL)
 				.mapColor(MapColor.WOOD)
+				.noOcclusion()
 		))
 	);
 	
