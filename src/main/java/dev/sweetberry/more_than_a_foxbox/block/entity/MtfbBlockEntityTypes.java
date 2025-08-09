@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-@SuppressWarnings("unchecked")
 public final class MtfbBlockEntityTypes {
 	private static final RegistryContext<BlockEntityType<?>> CONTEXT =  new RegistryContext<>(
 		BuiltInRegistries.BLOCK_ENTITY_TYPE,
@@ -42,10 +41,11 @@ public final class MtfbBlockEntityTypes {
 		CONTEXT.register();
 	}
 
+	@SafeVarargs // We don't actually care about the type of Block that's supplied.
 	private static <T extends BlockEntity> Function<ResourceKey<BlockEntityType<T>>, BlockEntityType<T>> withBuilder(
 		Function<FabricBlockEntityTypeBuilder<T>, BlockEntityType<T>> callback,
 		FabricBlockEntityTypeBuilder.Factory<? extends T> factory,
-		Supplier<? extends Block>...blocks
+		Supplier<? extends Block>... blocks
 	) {
 		return key -> callback.apply(
 			FabricBlockEntityTypeBuilder.create(
