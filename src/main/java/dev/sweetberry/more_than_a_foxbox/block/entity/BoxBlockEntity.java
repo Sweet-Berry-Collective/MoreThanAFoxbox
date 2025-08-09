@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
 
-public class BoxBlockEntity extends BasePlushieBlockEntity {
+public class BoxBlockEntity extends PlushieHoldingBlockEntity {
 	public BoxBlockEntity(
 		BlockPos pos,
 		BlockState blockState
