@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class MtfbBlocks {
 	private static final RegistryContext<Block> CONTEXT = new RegistryContext<>(
@@ -29,7 +30,7 @@ public final class MtfbBlocks {
 		withProperties(WebBlock::new)
 	);
 	
-	public static final RegistryContext.Value<Block> CARDBOARD_BOX = CONTEXT.defer(
+	public static final Supplier<Block> CARDBOARD_BOX = CONTEXT.defer(
 		"cardboard_box",
 		withProperties(properties -> new BoxBlock(
 			properties
