@@ -28,7 +28,9 @@ public class RegistryContext<TValue> {
 		this.namespace = namespace;
 	}
 
-	@SuppressWarnings("unchecked") // Value<TValue> is equivalent to Value<T extends TValue>
+	@SuppressWarnings("unchecked")
+	// Value<TValue> is equivalent to Value<T extends TValue>
+	// Registry<TValue> is equivalent to Registry<T extends TValue>
 	public <T extends TValue> Value<T> defer(String path, Function<ResourceKey<T>, T> createCallback) {
 		var value = new Value<>(
 			(Registry<T>) registry,
