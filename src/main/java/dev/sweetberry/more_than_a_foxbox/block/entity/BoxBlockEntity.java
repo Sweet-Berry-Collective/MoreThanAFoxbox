@@ -8,7 +8,6 @@ package dev.sweetberry.more_than_a_foxbox.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.ClientAsset;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
