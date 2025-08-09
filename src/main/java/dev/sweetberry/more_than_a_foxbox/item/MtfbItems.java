@@ -32,10 +32,14 @@ public final class MtfbItems {
 		withProperties(Item::new)
 	);
 
-	// TODO: Polyfill block that acts like cobwebs
 	public static final RegistryContext.Value<Item> POLYFILL = CONTEXT.defer(
 		"polyfill",
 		withProperties(Item::new)
+	);
+
+	public static final RegistryContext.Value<BlockItem> POLYFILL_BLOCK = CONTEXT.defer(
+		"polyfill_block",
+		withProperties(properties -> new BlockItem(MtfbBlocks.POLYFILL_BLOCK.get(), properties))
 	);
 
 	public static final RegistryContext.Value<Item> CARDBOARD = CONTEXT.defer(

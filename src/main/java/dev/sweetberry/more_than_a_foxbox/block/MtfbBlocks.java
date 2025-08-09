@@ -12,6 +12,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.WebBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
@@ -21,6 +22,11 @@ public final class MtfbBlocks {
 	private static final RegistryContext<Block> CONTEXT = new RegistryContext<>(
 		BuiltInRegistries.BLOCK,
 		MoreThanAFoxbox.ID
+	);
+
+	public static final RegistryContext.Value<Block> POLYFILL_BLOCK = CONTEXT.defer(
+		"polyfill_block",
+		withProperties(WebBlock::new)
 	);
 	
 	public static final RegistryContext.Value<Block> CARDBOARD_BOX = CONTEXT.defer(

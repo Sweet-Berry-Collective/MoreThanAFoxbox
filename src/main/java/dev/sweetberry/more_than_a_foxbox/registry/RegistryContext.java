@@ -16,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class RegistryContext<TValue> {
 	public final Registry<TValue> registry;
@@ -30,7 +31,7 @@ public class RegistryContext<TValue> {
 
 	@SuppressWarnings("unchecked")
 	public <T extends TValue> Value<T> defer(String path, Function<ResourceKey<T>, T> createCallback) {
-		var value = new Value<T>(ResourceLocation.fromNamespaceAndPath(namespace, path), createCallback);
+		var value = new Value<>((Registry<T>) registry, ResourceLocation.fromNamespaceAndPath(namespace, path), createCallback);
 
 		values.add((Value<TValue>) value);
 
@@ -38,31 +39,29 @@ public class RegistryContext<TValue> {
 	}
 
 	public void register() {
-		for (var value : values) {
-			value.register(registry);
-		}
+		for (var value : values)
+			value.get();
 	}
 
-	public static class Value<TValue> {
+	public static class Value<TValue> implements Supplier<TValue> {
+		public final Registry<TValue> registry;
 		public final ResourceLocation location;
 		public final Function<ResourceKey<TValue>, TValue> createCallback;
 
 		private @Nullable TValue value = null;
 
-		public Value(ResourceLocation location, Function<ResourceKey<TValue>, TValue> createCallback) {
+		public Value(Registry<TValue> registry, ResourceLocation location, Function<ResourceKey<TValue>, TValue> createCallback) {
+			this.registry = registry;
 			this.location = location;
 			this.createCallback = createCallback;
 		}
 
+		@Override
 		public @NotNull TValue get() {
 			if (value == null)
-				throw new NullPointerException();
+				value = Registry.register(registry, location, createCallback.apply(ResourceKey.create(registry.key(), location)));
 
 			return value;
-		}
-
-		private void register(Registry<TValue> registry) {
-			value = Registry.register(registry, location, createCallback.apply(ResourceKey.create(registry.key(), location)));
 		}
 	}
 }
