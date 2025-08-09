@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-public class PlushieModelUtil {
+public class ModelUtil {
 	public static CompletableFuture<List<ResourceLocation>> getModels(ResourceManager manager, Executor executor) {
 		FileToIdConverter fileToIdConverter = FileToIdConverter.json("models/more_than_a_fox_box");
 		return CompletableFuture.supplyAsync(() -> fileToIdConverter.listMatchingResources(manager)
