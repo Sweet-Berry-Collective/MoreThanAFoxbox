@@ -6,7 +6,6 @@
 
 package dev.sweetberry.more_than_a_foxbox.registry;
 
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -28,9 +27,14 @@ public class RegistryContext<TValue> {
 		this.namespace = namespace;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked") // Value<TValue> is equivalent to Value<T extends TValue>
 	public <T extends TValue> Value<T> defer(String path, Function<ResourceKey<T>, T> createCallback) {
-		var value = new Value<T>(ResourceLocation.fromNamespaceAndPath(namespace, path), createCallback);
+		var value = new Value<>(
+			ResourceLocation.fromNamespaceAndPath(
+				namespace,
+				path
+			), createCallback
+		);
 
 		values.add((Value<TValue>) value);
 
