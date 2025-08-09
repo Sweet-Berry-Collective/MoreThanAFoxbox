@@ -1,2 +1,12 @@
 {
+	"item.more_than_a_foxbox.speaker": "Speaker",
+	"item.more_than_a_foxbox.squeaker": "Squeaker",
+
+	"item.more_than_a_foxbox.polyfill": "Polyfill",
+	"item.more_than_a_foxbox.polyfill_block": "Block of Polyfill",
+	"block.more_than_a_foxbox.polyfill_block": "Block of Polyfill",
+
+	"item.more_than_a_foxbox.cardboard": "Cardboard",
+	"item.more_than_a_foxbox.cardboard_box": "Cardboard Box",
+	"block.more_than_a_foxbox.cardboard_box": "Cardboard Box"
 }

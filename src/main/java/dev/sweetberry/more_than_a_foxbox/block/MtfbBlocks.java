@@ -9,31 +9,38 @@ package dev.sweetberry.more_than_a_foxbox.block;
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
+import java.util.function.Function;
+
 public final class MtfbBlocks {
-	private static final RegistryContext<Block, BlockBehaviour.Properties> CONTEXT = new RegistryContext<>(
+	private static final RegistryContext<Block> CONTEXT = new RegistryContext<>(
 		BuiltInRegistries.BLOCK,
-		MoreThanAFoxbox.ID,
-		key -> BlockBehaviour.Properties.of().setId(key)
+		MoreThanAFoxbox.ID
 	);
 	
 	public static final RegistryContext.Value<Block> CARDBOARD_BOX = CONTEXT.defer(
 		"cardboard_box",
-		properties -> new BoxBlock(
+		withProperties(properties -> new BoxBlock(
 			properties
 				.instabreak()
 				.sound(SoundType.WOOL)
 				.mapColor(MapColor.WOOD)
-		)
+		))
 	);
 	
 	private MtfbBlocks() {}
 	
 	public static void register() {
 		CONTEXT.register();
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T extends Block> Function<ResourceKey<T>, T> withProperties(Function<BlockBehaviour.Properties, T> callback) {
+		return key -> callback.apply(BlockBehaviour.Properties.of().setId((ResourceKey<Block>) key));
 	}
 }

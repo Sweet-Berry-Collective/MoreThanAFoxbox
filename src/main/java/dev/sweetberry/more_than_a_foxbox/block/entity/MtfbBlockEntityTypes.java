@@ -11,29 +11,49 @@ import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import java.util.Arrays;
+import java.util.function.Function;
+
+@SuppressWarnings("unchecked")
 public final class MtfbBlockEntityTypes {
-	private static final RegistryContext<BlockEntityType<?>, Builder> CONTEXT =  new RegistryContext<>(
+	private static final RegistryContext<BlockEntityType<?>> CONTEXT =  new RegistryContext<>(
 		BuiltInRegistries.BLOCK_ENTITY_TYPE,
-		MoreThanAFoxbox.ID,
-		key -> FabricBlockEntityTypeBuilder::create
+		MoreThanAFoxbox.ID
 	);
-	
-	public static final RegistryContext.Value<BlockEntityType<?>> CARDBOARD_BOX = CONTEXT.defer(
+
+	public static final RegistryContext.Value<BlockEntityType<BoxBlockEntity>> CARDBOARD_BOX = CONTEXT.defer(
 		"cardboard_box",
-		builder -> builder.create(BoxBlockEntity::new, MtfbBlocks.CARDBOARD_BOX.get()).build()
+		withBuilder(
+			FabricBlockEntityTypeBuilder::build,
+			BoxBlockEntity::new,
+			MtfbBlocks.CARDBOARD_BOX
+		)
 	);
-	
+
 	private MtfbBlockEntityTypes() {}
-	
+
 	public static void register() {
 		CONTEXT.register();
 	}
-	
-	@FunctionalInterface
-	public interface Builder {
-		FabricBlockEntityTypeBuilder<?> create(FabricBlockEntityTypeBuilder.Factory<?> factory, Block... blocks);
+
+	private static <T extends BlockEntity> Function<ResourceKey<BlockEntityType<T>>, BlockEntityType<T>> withBuilder(
+		Function<FabricBlockEntityTypeBuilder<T>, BlockEntityType<T>> callback,
+		FabricBlockEntityTypeBuilder.Factory<? extends T> factory,
+		RegistryContext.Value<? extends Block> ...blocks
+	) {
+		return key -> callback.apply(
+			FabricBlockEntityTypeBuilder.create(
+				factory,
+				Arrays
+					.stream(blocks)
+					.map(RegistryContext.Value::get)
+					.toArray(Block[]::new)
+			)
+		);
 	}
 }

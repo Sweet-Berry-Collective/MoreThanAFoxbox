@@ -17,42 +17,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class RegistryContext<TValue, TProperties> {
+public class RegistryContext<TValue> {
 	public final Registry<TValue> registry;
 	public final String namespace;
-	public final Function<ResourceKey<TValue>, TProperties> propertiesCallback;
 
-	private final List<Pair<Value<TValue>, Function<TProperties, ? extends TValue>>> values = new ArrayList<>();
+	private final List<Value<TValue>> values = new ArrayList<>();
 
-	public RegistryContext(Registry<TValue> registry, String namespace, Function<ResourceKey<TValue>, TProperties> propertiesCallback) {
+	public RegistryContext(Registry<TValue> registry, String namespace) {
 		this.registry = registry;
 		this.namespace = namespace;
-		this.propertiesCallback = propertiesCallback;
 	}
 
-	public <T extends TValue> Value<TValue> defer(String path, Function<TProperties, T> createCallback) {
-		var value = new Value<>(ResourceKey.create(registry.key(), ResourceLocation.fromNamespaceAndPath(namespace, path)));
+	@SuppressWarnings("unchecked")
+	public <T extends TValue> Value<T> defer(String path, Function<ResourceKey<T>, T> createCallback) {
+		var value = new Value<T>(ResourceLocation.fromNamespaceAndPath(namespace, path), createCallback);
 
-		values.add(Pair.of(value, createCallback));
+		values.add((Value<TValue>) value);
 
 		return value;
 	}
 
 	public void register() {
-		for (var pair : values) {
-			var value = pair.getFirst();
-			var createCallback = pair.getSecond();
-			value.update(Registry.register(registry, value.key, createCallback.apply(propertiesCallback.apply(value.key))));
+		for (var value : values) {
+			value.register(registry);
 		}
 	}
 
 	public static class Value<TValue> {
-		public final ResourceKey<TValue> key;
+		public final ResourceLocation location;
+		public final Function<ResourceKey<TValue>, TValue> createCallback;
 
 		private @Nullable TValue value = null;
 
-		public Value(ResourceKey<TValue> key) {
-			this.key = key;
+		public Value(ResourceLocation location, Function<ResourceKey<TValue>, TValue> createCallback) {
+			this.location = location;
+			this.createCallback = createCallback;
 		}
 
 		public @NotNull TValue get() {
@@ -62,8 +61,8 @@ public class RegistryContext<TValue, TProperties> {
 			return value;
 		}
 
-		private <T extends TValue> void update(T newValue) {
-			value = newValue;
+		private void register(Registry<TValue> registry) {
+			value = Registry.register(registry, location, createCallback.apply(ResourceKey.create(registry.key(), location)));
 		}
 	}
 }
