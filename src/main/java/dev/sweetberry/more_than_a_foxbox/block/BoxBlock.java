@@ -32,7 +32,8 @@ public class BoxBlock extends BaseEntityBlock {
 	public static final MapCodec<BoxBlock> CODEC = simpleCodec(BoxBlock::new);
 	public static final EnumProperty<OctalDirection> ROTATION = EnumProperty.create("facing", OctalDirection.class);
 	public static final float Z_DEFENSE = 0.005f;
-	
+	private static final VoxelShape SHAPE = Block.column(10.0f, 0.0f, 8.0f);
+
 	public BoxBlock(Properties properties) {
 		super(properties);
 		this.registerDefaultState(
@@ -81,7 +82,7 @@ public class BoxBlock extends BaseEntityBlock {
 		BlockPos pos,
 		CollisionContext context
 	) {
-		return Block.column(10.0f, 0.0f, 8.0f);
+		return SHAPE;
 	}
 
 	@Override
