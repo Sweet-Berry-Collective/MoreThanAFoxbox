@@ -13,6 +13,8 @@ import java.util.Locale;
 
 /**
  * An octal direction like on a compass.
+ * <p>
+ * oh my god a me - Octal
  */
 public enum OctalDirection implements StringRepresentable {
 	SOUTH(0.0f),

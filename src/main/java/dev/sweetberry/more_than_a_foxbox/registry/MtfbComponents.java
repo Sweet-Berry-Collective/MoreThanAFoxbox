@@ -23,4 +23,8 @@ public class MtfbComponents {
 		consumer.apply(componentType);
 		return componentType.build();
 	}
+
+	public static void register() {
+
+	}
 }
