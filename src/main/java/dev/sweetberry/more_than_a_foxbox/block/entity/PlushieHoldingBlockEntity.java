@@ -17,10 +17,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public abstract class BasePlushieBlockEntity extends BlockEntity {
+public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 	private @Nullable ResourceKey<PlushieVariant> variant = null;
 
-	public BasePlushieBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
+	public PlushieHoldingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
 		super(type, pos, blockState);
 	}
 
