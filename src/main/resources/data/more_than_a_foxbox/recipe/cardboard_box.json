@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"CC",
+		"CC"
+	],
+	"key": {
+		"C": [
+			"more_than_a_foxbox:cardboard"
+		]
+	},
+	"result": {
+		"id": "more_than_a_foxbox:cardboard_box",
+		"count": 4
+	},
+	"show_notification": true
+}

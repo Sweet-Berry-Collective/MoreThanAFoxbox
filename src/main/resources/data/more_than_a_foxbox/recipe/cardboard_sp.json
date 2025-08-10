@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "more_than_a_foxbox:cardboard",
+	"category": "misc",
+	"pattern": [
+		"SP",
+		"PS"
+	],
+	"key": {
+		"P": [
+			"paper"
+		],
+		"S": [
+			"string"
+		]
+	},
+	"result": {
+		"id": "more_than_a_foxbox:cardboard"
+	},
+	"show_notification": true
+}
