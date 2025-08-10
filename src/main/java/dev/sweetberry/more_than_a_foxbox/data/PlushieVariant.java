@@ -19,27 +19,25 @@ import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 
-import java.util.Optional;
-
 public record PlushieVariant(
-	ResourceKey<SoundEvent> sounds,
-	Optional<Poses> poses
+	ResourceKey<SoundEvent> mobSounds,
+	Poses poses
 ) {
 	public static final Codec<PlushieVariant> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
 		ResourceKey.codec(Registries.SOUND_EVENT)
 			.fieldOf("mob_sounds")
-			.forGetter(PlushieVariant::sounds),
+			.forGetter(PlushieVariant::mobSounds),
 		Poses.DIRECT_CODEC
-			.optionalFieldOf("poses")
+			.fieldOf("poses")
 			.forGetter(PlushieVariant::poses)
 	).apply(inst, PlushieVariant::new));
 
 	public static final Codec<PlushieVariant> NETWORK_CODEC = RecordCodecBuilder.create(inst -> inst.group(
 		ResourceKey.codec(Registries.SOUND_EVENT)
 			.fieldOf("mob_sounds")
-			.forGetter(PlushieVariant::sounds),
+			.forGetter(PlushieVariant::mobSounds),
 		Poses.NETWORK_CODEC
-			.optionalFieldOf("poses")
+			.fieldOf("poses")
 			.forGetter(PlushieVariant::poses)
 	).apply(inst, PlushieVariant::new));
 
@@ -47,23 +45,23 @@ public record PlushieVariant(
 	public static final StreamCodec<RegistryFriendlyByteBuf, Holder<PlushieVariant>> STREAM_CODEC = ByteBufCodecs.holderRegistry(MtfbRegistries.PLUSHIE_VARIANT);
 
 	public record Poses(
-		Optional<ClientAsset> sit,
-		Optional<ClientAsset> stand,
-		Optional<ClientAsset> lay,
-		Optional<ClientAsset> box
+		ClientAsset sit,
+		ClientAsset stand,
+		ClientAsset lay,
+		ClientAsset box
 	) {
 		public static final Codec<Poses> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-			ClientAsset.CODEC.optionalFieldOf("sit").forGetter(Poses::sit),
-			ClientAsset.CODEC.optionalFieldOf("stand").forGetter(Poses::stand),
-			ClientAsset.CODEC.optionalFieldOf("lay").forGetter(Poses::lay),
-			ClientAsset.CODEC.optionalFieldOf("box").forGetter(Poses::box)
+			ClientAsset.CODEC.fieldOf("sit").forGetter(Poses::sit),
+			ClientAsset.CODEC.fieldOf("stand").forGetter(Poses::stand),
+			ClientAsset.CODEC.fieldOf("lay").forGetter(Poses::lay),
+			ClientAsset.CODEC.fieldOf("box").forGetter(Poses::box)
 		).apply(inst, Poses::new));
 
 		public static final Codec<Poses> NETWORK_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-			ClientAsset.CODEC.optionalFieldOf("sit").forGetter(Poses::sit),
-			ClientAsset.CODEC.optionalFieldOf("stand").forGetter(Poses::stand),
-			ClientAsset.CODEC.optionalFieldOf("lay").forGetter(Poses::lay),
-			ClientAsset.CODEC.optionalFieldOf("box").forGetter(Poses::box)
+			ClientAsset.CODEC.fieldOf("sit").forGetter(Poses::sit),
+			ClientAsset.CODEC.fieldOf("stand").forGetter(Poses::stand),
+			ClientAsset.CODEC.fieldOf("lay").forGetter(Poses::lay),
+			ClientAsset.CODEC.fieldOf("box").forGetter(Poses::box)
 		).apply(inst, Poses::new));
 	}
 }
