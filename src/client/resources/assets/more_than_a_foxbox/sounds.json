@@ -1,0 +1,13 @@
+{
+	"plushie.squeak": {
+		"subtitle": "subtitles.more_than_a_foxbox.plushie.squeak",
+		"sounds": [
+			{
+				"name": "more_than_a_foxbox:squeak_1"
+			},
+			{
+				"name": "more_than_a_foxbox:squeak_2"
+			}
+		]
+	}
+}

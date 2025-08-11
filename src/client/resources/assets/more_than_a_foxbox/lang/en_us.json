@@ -12,5 +12,7 @@
 
 	"item.more_than_a_foxbox.plushie": "Unknown Plushie",
 	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.fox": "Fox Plushie",
-	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.snow_fox": "Snow Fox Plushie"
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.snow_fox": "Snow Fox Plushie",
+
+	"subtitles.more_than_a_foxbox.plushie.squeak": "Plushie Squeaks"
 }
