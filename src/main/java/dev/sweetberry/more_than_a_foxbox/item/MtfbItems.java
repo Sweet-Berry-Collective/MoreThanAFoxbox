@@ -56,7 +56,7 @@ public final class MtfbItems {
 	
 	public static final Supplier<Item> CARDBOARD_BOX = CONTEXT.defer(
 		"cardboard_box",
-		withProperties(properties -> new BlockItem(MtfbBlocks.CARDBOARD_BOX.get(), properties))
+		withProperties(properties -> new BlockItem(MtfbBlocks.CARDBOARD_BOX.get(), properties.equippableUnswappable(EquipmentSlot.HEAD)))
 	);
 
 	private MtfbItems() {}
