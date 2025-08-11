@@ -1,0 +1,7 @@
+{
+	"parent": "more_than_a_foxbox:more_than_a_foxbox:plushie/fox/box",
+	"textures": {
+		"0": "more_than_a_foxbox:item/plushie/snow_fox",
+		"particle": "more_than_a_foxbox:item/plushie/snow_fox"
+	}
+}

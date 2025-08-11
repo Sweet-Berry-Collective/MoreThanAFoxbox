@@ -1,0 +1,9 @@
+{
+	"mob_sounds": "entity.fox.ambient",
+	"poses": {
+		"sit": "more_than_a_foxbox:snow_fox/sit",
+		"stand": "more_than_a_foxbox:snow_fox/stand",
+		"lay": "more_than_a_foxbox:snow_fox/lay",
+		"box": "more_than_a_foxbox:snow_fox/box"
+	}
+}
