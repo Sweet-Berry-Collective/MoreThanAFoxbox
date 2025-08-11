@@ -6,6 +6,7 @@
 
 package dev.sweetberry.more_than_a_foxbox.client;
 
+import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.BoxBlock;
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.client.util.ModelUtil;
@@ -18,6 +19,7 @@ import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperBlockState
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.client.renderer.item.ItemModels;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -41,6 +43,8 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 				}
 			}
 		);
+
+		ItemModels.ID_MAPPER.put(MoreThanAFoxbox.id("plushie"), PlushieModel.Unbaked.CODEC);
 		
 		// Box Rotation
 		PreparableModelLoadingPlugin.register(

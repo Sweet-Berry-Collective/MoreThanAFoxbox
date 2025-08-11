@@ -1,0 +1,14 @@
+{
+	"model": {
+		"type": "minecraft:condition",
+		"property": "minecraft:has_component",
+		"component": "more_than_a_foxbox:plushie",
+		"on_true": {
+			"type": "more_than_a_foxbox:plushie"
+		},
+		"on_false": {
+			"type": "minecraft:model",
+			"model": "more_than_a_foxbox:more_than_a_foxbox/plushie/placeholder"
+		}
+	}
+}

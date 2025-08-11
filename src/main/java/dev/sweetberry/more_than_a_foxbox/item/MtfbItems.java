@@ -11,6 +11,7 @@ import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 
@@ -21,6 +22,11 @@ public final class MtfbItems {
 	private static final RegistryContext<Item> CONTEXT = new RegistryContext<>(
 		BuiltInRegistries.ITEM,
 		MoreThanAFoxbox.ID
+	);
+
+	public static final Supplier<Item> PLUSHIE = CONTEXT.defer(
+		"plushie",
+		withProperties(properties -> new Item(properties.equippableUnswappable(EquipmentSlot.HEAD)))
 	);
 
 	public static final Supplier<Item> SPEAKER = CONTEXT.defer(
