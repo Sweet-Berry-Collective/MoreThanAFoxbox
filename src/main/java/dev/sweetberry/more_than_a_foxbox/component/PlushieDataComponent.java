@@ -10,10 +10,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
+import dev.sweetberry.more_than_a_foxbox.sound.MtfbSounds;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +32,27 @@ public record PlushieDataComponent(
 		SoundType.CODEC.optionalFieldOf("sound_type").forGetter(PlushieDataComponent::soundType)
 	).apply(inst, PlushieDataComponent::new));
 	public static final StreamCodec<RegistryFriendlyByteBuf, PlushieDataComponent> STREAM_CODEC = ByteBufCodecs.fromCodecWithRegistries(CODEC);
+
+	public Optional<SoundEvent> getInteractionSound(RegistryAccess access) {
+		var maybeSoundType = soundType;
+
+		if (maybeSoundType.isEmpty())
+			return Optional.empty();
+
+		var soundType = maybeSoundType.get();
+
+		if (soundType == SoundType.SQUEAKER)
+			return Optional.of(MtfbSounds.SQUEAK.get());
+
+		var maybeVariant = access.get(variant);
+
+		return maybeVariant.map(
+			plushieVariantReference -> plushieVariantReference
+				.value()
+				.mobSounds()
+				.value()
+		);
+	}
 
 	public enum SoundType implements StringRepresentable {
 		SQUEAKER,
