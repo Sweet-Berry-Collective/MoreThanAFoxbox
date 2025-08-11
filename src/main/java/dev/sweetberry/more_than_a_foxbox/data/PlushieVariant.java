@@ -11,20 +11,18 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import net.minecraft.core.ClientAsset;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 
 public record PlushieVariant(
-	ResourceKey<SoundEvent> mobSounds,
+	Holder<SoundEvent> mobSounds,
 	Poses poses
 ) {
 	public static final Codec<PlushieVariant> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-		ResourceKey.codec(Registries.SOUND_EVENT)
+		SoundEvent.CODEC
 			.fieldOf("mob_sounds")
 			.forGetter(PlushieVariant::mobSounds),
 		Poses.DIRECT_CODEC
@@ -33,7 +31,7 @@ public record PlushieVariant(
 	).apply(inst, PlushieVariant::new));
 
 	public static final Codec<PlushieVariant> NETWORK_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-		ResourceKey.codec(Registries.SOUND_EVENT)
+		SoundEvent.CODEC
 			.fieldOf("mob_sounds")
 			.forGetter(PlushieVariant::mobSounds),
 		Poses.NETWORK_CODEC
