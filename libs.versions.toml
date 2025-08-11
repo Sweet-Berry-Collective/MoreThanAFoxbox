@@ -9,6 +9,8 @@ parchment_mc = "1.21.8"
 fapi = "0.130.0+1.21.8"
 yumi_licenser = "2.1.+"
 yumi-commons = "1.0.0-beta.2"
+sodium = "mc1.21.6-0.6.13-fabric"
+modmenu = "15.0.0-beta.3"
 
 [plugins]
 loom = { id = "fabric-loom", version.ref = "loom" }
@@ -20,3 +22,5 @@ mc = { group = "mojang", name = "minecraft", version.ref = "mc" }
 fl = { group = "net.fabricmc", name = "fabric-loader", version.ref = "fl" }
 fapi = { group = "net.fabricmc.fabric-api", name = "fabric-api", version.ref = "fapi" }
 yumi-commons-core = { module = "dev.yumi.commons:yumi-commons-core", version.ref = "yumi-commons" }
+sodium = { group = "maven.modrinth", name = "sodium", version.ref = "sodium" }
+modmenu = { group = "maven.modrinth", name = "modmenu", version.ref = "modmenu" }

@@ -15,6 +15,17 @@ repositories {
 		name = 'ParchmentMC'
 		url = 'https://maven.parchmentmc.org'
 	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = "Modrinth Maven"
+				url = "https://api.modrinth.com/maven"
+			}
+		}
+		filter {
+			includeGroup "maven.modrinth"
+		}
+	}
 }
 
 dependencies {
@@ -29,6 +40,9 @@ dependencies {
 	
 	implementation libs.yumi.commons.core
 	include libs.yumi.commons.core
+	
+	modRuntimeOnly libs.sodium
+	modRuntimeOnly libs.modmenu
 }
 
 loom {
