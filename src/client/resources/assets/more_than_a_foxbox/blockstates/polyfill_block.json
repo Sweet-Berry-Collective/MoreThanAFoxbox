@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"": {
+			"model": "more_than_a_foxbox:block/polyfill_block"
+		}
+	}
+}
