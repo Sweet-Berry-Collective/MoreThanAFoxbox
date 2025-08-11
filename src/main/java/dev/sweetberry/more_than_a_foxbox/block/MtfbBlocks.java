@@ -27,7 +27,7 @@ public final class MtfbBlocks {
 
 	public static final RegistryContext.Value<Block> POLYFILL_BLOCK = CONTEXT.defer(
 		"polyfill_block",
-		withProperties(properties -> new WebBlock(
+		withProperties(properties -> new PolyfillBlock(
 			properties
 				.noCollission()
 				.instabreak()
