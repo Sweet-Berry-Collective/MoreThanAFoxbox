@@ -24,6 +24,7 @@ public final class MtfbComponents {
 		"plushie",
 		withBuilder(builder -> builder
 			.persistent(PlushieDataComponent.CODEC)
+			.networkSynchronized(PlushieDataComponent.STREAM_CODEC)
 			.build()
 		)
 	);
@@ -31,12 +32,12 @@ public final class MtfbComponents {
 	private MtfbComponents() {}
 
 	public static void register() {
-		CONTEXT.register();;
+		CONTEXT.register();
 	}
 
 	private static <T> Function<ResourceKey<DataComponentType<T>>, DataComponentType<T>> withBuilder(
 		Function<DataComponentType.Builder<T>, DataComponentType<T>> callback
 	) {
-		return key -> callback.apply(DataComponentType.<T>builder());
+		return key -> callback.apply(DataComponentType.builder());
 	}
 }
