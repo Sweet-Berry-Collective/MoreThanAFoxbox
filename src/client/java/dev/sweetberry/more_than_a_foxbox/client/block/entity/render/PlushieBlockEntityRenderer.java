@@ -9,6 +9,7 @@ package dev.sweetberry.more_than_a_foxbox.client.block.entity.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.BoxBlock;
+import dev.sweetberry.more_than_a_foxbox.block.entity.BoxBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
 import dev.sweetberry.more_than_a_foxbox.client.MoreThanAFoxboxClient;
@@ -47,8 +48,11 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 		Vec3 cameraPos
 	) {
 		Optional<ResourceLocation> optionalPoseModel = blockEntity.getPoseModel(blockEntity.getBlockState());
-		if (optionalPoseModel.isEmpty()) return;
-		ResourceLocation poseModel = optionalPoseModel.get();
+		ResourceLocation poseModel;
+		if (blockEntity instanceof BoxBlockEntity && optionalPoseModel.isEmpty())
+			return;
+		poseModel = optionalPoseModel.orElseGet(() -> MoreThanAFoxbox.id(
+			MoreThanAFoxbox.ID + "/placeholder"));
 		ModelManager modelManager = Minecraft.getInstance().getModelManager();
 		BlockStateModel blockStateModel = models.computeIfAbsent(
 				poseModel,
