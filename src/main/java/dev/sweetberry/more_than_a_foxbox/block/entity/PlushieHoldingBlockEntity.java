@@ -38,5 +38,5 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 			.map(PlushieDataComponent::variant);
 	}
 
-	public abstract Optional<ClientAsset> getModel(BlockState state);
+	public abstract Optional<ClientAsset> getPoseModel(BlockState state);
 }

@@ -16,6 +16,10 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.StringRepresentable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
 
 public record PlushieVariant(
 	Holder<SoundEvent> mobSounds,
@@ -61,5 +65,24 @@ public record PlushieVariant(
 			ClientAsset.CODEC.fieldOf("lay").forGetter(Poses::lay),
 			ClientAsset.CODEC.fieldOf("box").forGetter(Poses::box)
 		).apply(inst, Poses::new));
+		
+		public ClientAsset getModelFromPose(Pose pose) {
+			return switch (pose) {
+				case SIT -> sit;
+				case STAND -> stand;
+				case LAY -> lay;
+			};
+		}
+	}
+	
+	public enum Pose implements StringRepresentable {
+		SIT,
+		STAND,
+		LAY;
+
+		@Override
+		public @NotNull String getSerializedName() {
+			return this.name().toLowerCase(Locale.ROOT);
+		}
 	}
 }

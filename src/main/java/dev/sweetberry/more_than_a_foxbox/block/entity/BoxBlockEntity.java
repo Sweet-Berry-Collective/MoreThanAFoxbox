@@ -21,7 +21,7 @@ public class BoxBlockEntity extends PlushieHoldingBlockEntity {
 	}
 
 	@Override
-	public Optional<ClientAsset> getModel(BlockState state) {
+	public Optional<ClientAsset> getPoseModel(BlockState state) {
 		// TODO!
 		return Optional.empty();
 	}

@@ -46,6 +46,17 @@ public final class MtfbBlocks {
 		))
 	);
 	
+	public static final Supplier<Block> PLUSHIE = CONTEXT.defer(
+		"plushie",
+		withProperties(properties -> new PlushieBlock(
+			properties
+				.instabreak()
+				.sound(SoundType.WOOL)
+				.mapColor(MapColor.COLOR_LIGHT_GRAY)
+				.noOcclusion()
+		))
+	);
+	
 	private MtfbBlocks() {}
 	
 	public static void register() {

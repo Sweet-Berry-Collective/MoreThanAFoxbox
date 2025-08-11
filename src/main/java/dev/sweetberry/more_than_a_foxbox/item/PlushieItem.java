@@ -6,15 +6,16 @@
 
 package dev.sweetberry.more_than_a_foxbox.item;
 
+import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class PlushieItem extends Item {
+public class PlushieItem extends BlockItem {
 	public PlushieItem(Properties properties) {
-		super(properties);
+		super(MtfbBlocks.PLUSHIE.get(), properties);
 	}
 
 	@Override

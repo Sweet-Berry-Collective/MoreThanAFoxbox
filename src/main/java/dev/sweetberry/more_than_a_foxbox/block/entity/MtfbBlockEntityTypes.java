@@ -34,6 +34,15 @@ public final class MtfbBlockEntityTypes {
 			MtfbBlocks.CARDBOARD_BOX
 		)
 	);
+	
+	public static final Supplier<BlockEntityType<PlushieBlockEntity>> PLUSHIE = CONTEXT.defer(
+		"plushie",
+		withBuilder(
+			FabricBlockEntityTypeBuilder::build,
+			PlushieBlockEntity::new,
+			MtfbBlocks.PLUSHIE
+		)
+	);
 
 	private MtfbBlockEntityTypes() {}
 
