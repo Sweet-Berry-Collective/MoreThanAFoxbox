@@ -13,7 +13,6 @@ import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
 import dev.sweetberry.more_than_a_foxbox.client.MoreThanAFoxboxClient;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
-import net.fabricmc.fabric.api.client.model.loading.v1.ExtraModelKey;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderLayerHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -55,7 +54,7 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 				poseModel,
 			asset -> modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(asset))
 		);
-		if (blockStateModel == null) blockStateModel = modelManager.getModel(ExtraModelKey.create(() -> MoreThanAFoxbox.ID + ":" + MoreThanAFoxbox.ID + "/placeholder"));
+		if (blockStateModel == null) blockStateModel = modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(ResourceLocation.fromNamespaceAndPath(MoreThanAFoxbox.ID, MoreThanAFoxbox.ID + "/placeholder")));
 		if (blockStateModel == null) throw new NullPointerException("Placeholder model does not exist");
 		
 		poseStack.pushPose();
