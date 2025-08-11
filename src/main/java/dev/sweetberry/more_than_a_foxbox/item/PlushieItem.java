@@ -34,7 +34,7 @@ public class PlushieItem extends BlockItem {
 		if (plushie == null)
 			return super.getName(stack);
 
-		var location = plushie.variant().location();
+		var location = plushie.variant().unwrapKey().orElseThrow().location();
 
 		return Component.translatable("item.more_than_a_foxbox.plushie." + location.toLanguageKey());
 	}

@@ -7,14 +7,12 @@
 package dev.sweetberry.more_than_a_foxbox.client;
 
 import com.mojang.serialization.MapCodec;
-import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
-import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -40,7 +38,7 @@ public class PlushieModel implements ItemModel {
 			return;
 
 		var modelManager = Minecraft.getInstance().getModelManager();
-		var itemModel = modelManager.getItemModel(plushie.variant().location().withPrefix("more_than_a_foxbox/"));
+		var itemModel = modelManager.getItemModel(plushie.variant().unwrapKey().orElseThrow().location().withPrefix("more_than_a_foxbox/"));
 		itemModel.update(renderState, stack, itemModelResolver, displayContext, level, entity, seed);
 	}
 

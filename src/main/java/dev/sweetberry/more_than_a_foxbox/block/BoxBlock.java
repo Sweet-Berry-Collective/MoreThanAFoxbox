@@ -8,6 +8,7 @@ package dev.sweetberry.more_than_a_foxbox.block;
 
 import com.mojang.serialization.MapCodec;
 import dev.sweetberry.more_than_a_foxbox.block.entity.BoxBlockEntity;
+import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -18,7 +19,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +30,6 @@ import java.util.Objects;
 
 public class BoxBlock extends BaseEntityBlock {
 	public static final MapCodec<BoxBlock> CODEC = simpleCodec(BoxBlock::new);
-	public static final EnumProperty<OctalDirection> ROTATION = EnumProperty.create("facing", OctalDirection.class);
 	public static final float Z_DEFENSE = 0.005f;
 	private static final VoxelShape SHAPE = Block.column(10.0f, 0.0f, 8.0f);
 
@@ -38,17 +37,17 @@ public class BoxBlock extends BaseEntityBlock {
 		super(properties);
 		this.registerDefaultState(
 			this.stateDefinition.any()
-				.setValue(ROTATION, OctalDirection.SOUTH)
+				.setValue(MtfbBlockProperties.FACING, OctalDirection.SOUTH)
 		);
 	}
 
 	/**
-	 * 
+	 * Point a block toward an {@link OctalDirection}.
 	 * @param direction The direction to point toward.
 	 * @return A transformation matrix representing the rotation and z-fighting
 	 * translation.
 	 */
-	public static @NotNull Matrix4f pointVertexToward(OctalDirection direction, float centerXZ) {
+	public static @NotNull Matrix4f pointBlockToward(OctalDirection direction, float centerXZ) {
 		var rotationTransform = new Matrix4f();
 		rotationTransform.rotateAround(
 			new Quaternionf().rotateY(-direction.getDegrees() * Mth.DEG_TO_RAD + Mth.PI),
@@ -70,7 +69,7 @@ public class BoxBlock extends BaseEntityBlock {
 	public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
 		return Objects.requireNonNull(super.getStateForPlacement(context), "Superclass returned null state for placement. This shouldn't happen!")
 			.setValue(
-				ROTATION,
+				MtfbBlockProperties.FACING,
 				OctalDirection.fromYRot(context.getRotation()).getOpposite()
 			);
 	}
@@ -87,7 +86,7 @@ public class BoxBlock extends BaseEntityBlock {
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(ROTATION);
+		builder.add(MtfbBlockProperties.FACING);
 	}
 
 	@Override

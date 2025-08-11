@@ -18,11 +18,11 @@ import java.util.concurrent.Executor;
 
 public class ModelUtil {
 	public static CompletableFuture<List<ResourceLocation>> getPlushieModels(ResourceManager manager, Executor executor) {
-		return getModels("plushie", manager, executor);
+		return getModels(MoreThanAFoxbox.ID, manager, executor);
 	}
 	
 	public static CompletableFuture<List<ResourceLocation>> getBoxModels(ResourceManager manager, Executor executor) {
-		return getModels("box", manager, executor);
+		return getModels("block/cardboard_box", manager, executor);
 	}
 
 	private static @NotNull CompletableFuture<List<ResourceLocation>> getModels(
@@ -30,7 +30,7 @@ public class ModelUtil {
 		ResourceManager manager,
 		Executor executor
 	) {
-		FileToIdConverter fileToIdConverter = FileToIdConverter.json("models/" + MoreThanAFoxbox.ID + "/" + path);
+		FileToIdConverter fileToIdConverter = FileToIdConverter.json("models/" + path);
 		return CompletableFuture.supplyAsync(
 			() -> fileToIdConverter.listMatchingResources(manager)
 				.keySet()

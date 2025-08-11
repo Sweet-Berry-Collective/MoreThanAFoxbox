@@ -11,11 +11,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import dev.sweetberry.more_than_a_foxbox.sound.MtfbSounds;
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.NotNull;
@@ -24,11 +25,11 @@ import java.util.Locale;
 import java.util.Optional;
 
 public record PlushieDataComponent(
-	ResourceKey<PlushieVariant> variant,
+	Holder<PlushieVariant> variant,
 	Optional<SoundType> soundType
 ) {
 	public static final Codec<PlushieDataComponent> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-		ResourceKey.codec(MtfbRegistries.PLUSHIE_VARIANT).fieldOf("variant").forGetter(PlushieDataComponent::variant),
+		RegistryFixedCodec.create(MtfbRegistries.PLUSHIE_VARIANT).fieldOf("variant").forGetter(PlushieDataComponent::variant),
 		SoundType.CODEC.optionalFieldOf("sound_type").forGetter(PlushieDataComponent::soundType)
 	).apply(inst, PlushieDataComponent::new));
 	public static final StreamCodec<RegistryFriendlyByteBuf, PlushieDataComponent> STREAM_CODEC = ByteBufCodecs.fromCodecWithRegistries(CODEC);
@@ -44,10 +45,8 @@ public record PlushieDataComponent(
 		if (soundType == SoundType.SQUEAKER)
 			return Optional.of(MtfbSounds.SQUEAK.get());
 
-		var maybeVariant = access.get(variant);
-
-		return maybeVariant.map(
-			plushieVariantReference -> plushieVariantReference
+		return Optional.of(
+			variant
 				.value()
 				.mobSounds()
 				.value()

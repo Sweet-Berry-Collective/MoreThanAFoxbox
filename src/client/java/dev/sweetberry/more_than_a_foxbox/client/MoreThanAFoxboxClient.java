@@ -9,6 +9,9 @@ package dev.sweetberry.more_than_a_foxbox.client;
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.BoxBlock;
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
+import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
+import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
+import dev.sweetberry.more_than_a_foxbox.client.block.entity.render.PlushieBlockEntityRenderer;
 import dev.sweetberry.more_than_a_foxbox.client.util.ModelUtil;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.fabricmc.api.ClientModInitializer;
@@ -18,6 +21,7 @@ import net.fabricmc.fabric.api.client.model.loading.v1.SimpleUnbakedExtraModel;
 import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperBlockStateModel;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.item.ItemModels;
 import net.minecraft.core.BlockPos;
@@ -57,7 +61,8 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 				pluginContext.modifyBlockModelAfterBake().register((model, context) -> {
 					BlockState state = context.state();
 					if (!state.is(MtfbBlocks.CARDBOARD_BOX.get())) return model;
-					OctalDirection direction = state.getValue(BoxBlock.ROTATION);
+					OctalDirection direction = state.getValue(
+						MtfbBlockProperties.FACING);
 
 					return new WrapperBlockStateModel(model) {
 						@Override
@@ -69,7 +74,7 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 							RandomSource random,
 							Predicate<@Nullable Direction> cullTest
 						) {
-							var rotationTransform = BoxBlock.pointVertexToward(direction, 0.5f);
+							var rotationTransform = BoxBlock.pointBlockToward(direction, 0.5f);
 							emitter.pushTransform(quad -> {
 								for (int i = 0; i < 4; i++) {
 									var point = new Vector3f();
@@ -97,5 +102,13 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 		);
 		
 		BlockRenderLayerMap.putBlock(MtfbBlocks.CARDBOARD_BOX.get(), ChunkSectionLayer.CUTOUT);
+		BlockEntityRenderers.register(
+			MtfbBlockEntityTypes.CARDBOARD_BOX.get(),
+			PlushieBlockEntityRenderer::new
+		);
+		BlockEntityRenderers.register(
+			MtfbBlockEntityTypes.PLUSHIE.get(),
+			PlushieBlockEntityRenderer::new
+		);
 	}
 }

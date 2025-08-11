@@ -11,8 +11,8 @@ import dev.sweetberry.more_than_a_foxbox.component.PlushieDataComponent;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.ClientAsset;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,7 +24,7 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 		super(type, pos, blockState);
 	}
 
-	public void setPlushieVariant(ResourceKey<PlushieVariant> variant) {
+	public void setPlushieVariant(Holder<PlushieVariant> variant) {
 		this.applyComponents(
 			this.components(),
 			DataComponentPatch.builder()
@@ -33,7 +33,7 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 		);
 	}
 
-	public Optional<ResourceKey<PlushieVariant>> getPlushieVariant() {
+	public Optional<Holder<PlushieVariant>> getPlushieVariant() {
 		return Optional.ofNullable(this.components().get(MtfbComponents.PLUSHIE.get()))
 			.map(PlushieDataComponent::variant);
 	}
