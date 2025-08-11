@@ -27,7 +27,12 @@ public final class MtfbBlocks {
 
 	public static final RegistryContext.Value<Block> POLYFILL_BLOCK = CONTEXT.defer(
 		"polyfill_block",
-		withProperties(WebBlock::new)
+		withProperties(properties -> new WebBlock(
+			properties
+				.noCollission()
+				.instabreak()
+				.sound(SoundType.WOOL)
+		))
 	);
 	
 	public static final Supplier<Block> CARDBOARD_BOX = CONTEXT.defer(
@@ -35,7 +40,7 @@ public final class MtfbBlocks {
 		withProperties(properties -> new BoxBlock(
 			properties
 				.instabreak()
-				.sound(SoundType.WOOL)
+				.sound(SoundType.BAMBOO_WOOD)
 				.mapColor(MapColor.WOOD)
 				.noOcclusion()
 		))

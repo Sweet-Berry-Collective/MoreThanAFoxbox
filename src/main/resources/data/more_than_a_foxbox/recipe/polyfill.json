@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		" S ",
+		"S S",
+		" S "
+	],
+	"key": {
+		"S": [
+			"string"
+		]
+	},
+	"result": {
+		"id": "more_than_a_foxbox:polyfill",
+		"count": 4
+	},
+	"show_notification": true
+}

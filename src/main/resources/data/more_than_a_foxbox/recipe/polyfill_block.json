@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"PP",
+		"PP"
+	],
+	"key": {
+		"P": [
+			"more_than_a_foxbox:polyfill"
+		]
+	},
+	"result": {
+		"id": "more_than_a_foxbox:polyfill_block"
+	},
+	"show_notification": true
+}

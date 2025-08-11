@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		" I ",
+		"IRI",
+		" I "
+	],
+	"key": {
+		"I": [
+			"iron_nugget"
+		],
+		"R": [
+			"redstone"
+		]
+	},
+	"result": {
+		"id": "more_than_a_foxbox:speaker",
+		"count": 4
+	},
+	"show_notification": true
+}
