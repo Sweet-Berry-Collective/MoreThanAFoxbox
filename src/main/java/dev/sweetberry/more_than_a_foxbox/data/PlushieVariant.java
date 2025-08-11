@@ -9,12 +9,12 @@ package dev.sweetberry.more_than_a_foxbox.data;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
-import net.minecraft.core.ClientAsset;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.NotNull;
@@ -47,26 +47,26 @@ public record PlushieVariant(
 	public static final StreamCodec<RegistryFriendlyByteBuf, Holder<PlushieVariant>> STREAM_CODEC = ByteBufCodecs.holderRegistry(MtfbRegistries.PLUSHIE_VARIANT);
 
 	public record Poses(
-		ClientAsset sit,
-		ClientAsset stand,
-		ClientAsset lay,
-		ClientAsset box
+		ResourceLocation sit,
+		ResourceLocation stand,
+		ResourceLocation lay,
+		ResourceLocation box
 	) {
 		public static final Codec<Poses> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-			ClientAsset.CODEC.fieldOf("sit").forGetter(Poses::sit),
-			ClientAsset.CODEC.fieldOf("stand").forGetter(Poses::stand),
-			ClientAsset.CODEC.fieldOf("lay").forGetter(Poses::lay),
-			ClientAsset.CODEC.fieldOf("box").forGetter(Poses::box)
+			ResourceLocation.CODEC.fieldOf("sit").forGetter(Poses::sit),
+			ResourceLocation.CODEC.fieldOf("stand").forGetter(Poses::stand),
+			ResourceLocation.CODEC.fieldOf("lay").forGetter(Poses::lay),
+			ResourceLocation.CODEC.fieldOf("box").forGetter(Poses::box)
 		).apply(inst, Poses::new));
 
 		public static final Codec<Poses> NETWORK_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-			ClientAsset.CODEC.fieldOf("sit").forGetter(Poses::sit),
-			ClientAsset.CODEC.fieldOf("stand").forGetter(Poses::stand),
-			ClientAsset.CODEC.fieldOf("lay").forGetter(Poses::lay),
-			ClientAsset.CODEC.fieldOf("box").forGetter(Poses::box)
+			ResourceLocation.CODEC.fieldOf("sit").forGetter(Poses::sit),
+			ResourceLocation.CODEC.fieldOf("stand").forGetter(Poses::stand),
+			ResourceLocation.CODEC.fieldOf("lay").forGetter(Poses::lay),
+			ResourceLocation.CODEC.fieldOf("box").forGetter(Poses::box)
 		).apply(inst, Poses::new));
 		
-		public ClientAsset getModelFromPose(Pose pose) {
+		public ResourceLocation getModelFromPose(Pose pose) {
 			return switch (pose) {
 				case SIT -> sit;
 				case STAND -> stand;

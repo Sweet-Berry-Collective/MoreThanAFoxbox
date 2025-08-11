@@ -7,31 +7,35 @@
 package dev.sweetberry.more_than_a_foxbox.client.block.entity.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.BoxBlock;
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
+import dev.sweetberry.more_than_a_foxbox.client.MoreThanAFoxboxClient;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.fabricmc.fabric.api.client.model.loading.v1.ExtraModelKey;
+import net.fabricmc.fabric.api.renderer.v1.render.RenderLayerHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.ModelManager;
-import net.minecraft.core.ClientAsset;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHoldingBlockEntity> {
-	private final Map<ClientAsset, ModelPart> models = new HashMap<>();
+	private final Map<ResourceLocation, BlockStateModel> models = new HashMap<>();
+	private final BlockEntityRendererProvider.Context renderContext;
 	
-	public PlushieBlockEntityRenderer(BlockEntityRendererProvider.Context context) {}
+	public PlushieBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+		this.renderContext = context;
+	}
 	
 	@Override
 	public void render(
@@ -43,17 +47,16 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 		int packedOverlay,
 		Vec3 cameraPos
 	) {
-		Optional<ClientAsset> optionalPoseModel = blockEntity.getPoseModel(blockEntity.getBlockState());
+		Optional<ResourceLocation> optionalPoseModel = blockEntity.getPoseModel(blockEntity.getBlockState());
 		if (optionalPoseModel.isEmpty()) return;
-		ClientAsset poseModel = optionalPoseModel.get();
+		ResourceLocation poseModel = optionalPoseModel.get();
 		ModelManager modelManager = Minecraft.getInstance().getModelManager();
-		ModelPart modelPart = Objects.requireNonNull(
-			models.computeIfAbsent(
+		BlockStateModel blockStateModel = models.computeIfAbsent(
 				poseModel,
-				asset -> modelManager.getModel(ExtraModelKey.create(asset.id()::toString))
-			),
-			"Computed plushie model should not be null"
+			asset -> modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(asset))
 		);
+		if (blockStateModel == null) blockStateModel = modelManager.getModel(ExtraModelKey.create(() -> MoreThanAFoxbox.ID + ":" + MoreThanAFoxbox.ID + "/placeholder"));
+		if (blockStateModel == null) throw new NullPointerException("Placeholder model does not exist");
 		
 		poseStack.pushPose();
 		
@@ -61,13 +64,20 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 			MtfbBlockProperties.FACING);
 		Matrix4f rotationTransform = BoxBlock.pointBlockToward(direction, 0.5f);
 		poseStack.mulPose(rotationTransform);
-		
-		modelPart.render(
-			poseStack,
-			bufferSource.getBuffer(RenderType.cutout()), 
-			packedLight,
-			packedOverlay
-		);
+
+		this.renderContext.getBlockRenderDispatcher()
+			.getModelRenderer()
+			.render(
+				blockEntity.getLevel(),
+				blockStateModel,
+				blockEntity.getBlockState(),
+				blockEntity.getBlockPos(),
+				poseStack,
+				RenderLayerHelper.entityDelegate(bufferSource),
+				false,
+				blockEntity.getBlockState().getSeed(blockEntity.getBlockPos()),
+				packedOverlay
+			);
 		
 		poseStack.popPose();
 	}

@@ -9,7 +9,7 @@ package dev.sweetberry.more_than_a_foxbox.block.entity;
 import dev.sweetberry.more_than_a_foxbox.block.PlushieBlock;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.ClientAsset;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
@@ -23,9 +23,9 @@ public class PlushieBlockEntity extends PlushieHoldingBlockEntity {
 	}
 
 	@Override
-	public Optional<ClientAsset> getPoseModel(BlockState state) {
+	public Optional<ResourceLocation> getPoseModel(BlockState state) {
 		PlushieVariant.Pose pose = state.getValue(PlushieBlock.POSE);
 		return this.getPlushieVariant()
-			.map(reference -> reference.value().poses().getModelFromPose(pose));
+			.map(holder -> holder.value().poses().getModelFromPose(pose));
 	}
 }

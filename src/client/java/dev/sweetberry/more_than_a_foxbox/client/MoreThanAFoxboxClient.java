@@ -21,6 +21,7 @@ import net.fabricmc.fabric.api.client.model.loading.v1.SimpleUnbakedExtraModel;
 import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperBlockStateModel;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.item.ItemModels;
@@ -34,16 +35,22 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class MoreThanAFoxboxClient implements ClientModInitializer {
+	public static final Map<ResourceLocation, ExtraModelKey<BlockStateModel>> MODEL_KEYS = new HashMap<>();
+	
 	@Override
 	public void onInitializeClient() {
 		PreparableModelLoadingPlugin.register(
 			ModelUtil::getPlushieModels,
 			(data, pluginContext) -> {
 				for (ResourceLocation id : data) {
-					pluginContext.addModel(ExtraModelKey.create(id::toString), SimpleUnbakedExtraModel.blockStateModel(id));
+					ExtraModelKey<BlockStateModel> modelKey = ExtraModelKey.create(id::toString);
+					MODEL_KEYS.put(id, modelKey);
+					pluginContext.addModel(modelKey, SimpleUnbakedExtraModel.blockStateModel(id));
 				}
 			}
 		);
