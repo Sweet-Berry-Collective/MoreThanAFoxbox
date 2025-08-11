@@ -26,7 +26,7 @@ public final class MtfbItems {
 
 	public static final Supplier<Item> PLUSHIE = CONTEXT.defer(
 		"plushie",
-		withProperties(properties -> new Item(properties.equippableUnswappable(EquipmentSlot.HEAD)))
+		withProperties(properties -> new PlushieItem(properties.equippableUnswappable(EquipmentSlot.HEAD)))
 	);
 
 	public static final Supplier<Item> SPEAKER = CONTEXT.defer(

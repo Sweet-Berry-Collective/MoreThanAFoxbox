@@ -1,28 +1,28 @@
 {
 	"variants": {
 		"facing=south": {
-			"model": "more_than_a_foxbox:more_than_a_foxbox/box/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box"
 		},
 		"facing=south_west": {
-			"model": "more_than_a_foxbox:more_than_a_foxbox/box/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box"
 		},
 		"facing=west": {
-			"model": "more_than_a_foxbox:more_than_a_foxbox/box/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box"
 		},
 		"facing=north_west": {
-			"model": "more_than_a_foxbox:more_than_a_foxbox/box/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box"
 		},
 		"facing=north": {
-			"model": "more_than_a_foxbox:more_than_a_foxbox/box/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box"
 		},
 		"facing=north_east": {
-			"model": "more_than_a_foxbox:more_than_a_foxbox/box/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box"
 		},
 		"facing=east": {
-			"model": "more_than_a_foxbox:more_than_a_foxbox/box/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box"
 		},
 		"facing=south_east": {
-			"model": "more_than_a_foxbox:more_than_a_foxbox/box/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box"
 		}
 	}
 }

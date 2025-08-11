@@ -8,7 +8,7 @@
 		},
 		"on_false": {
 			"type": "minecraft:model",
-			"model": "more_than_a_foxbox:more_than_a_foxbox/plushie/placeholder"
+			"model": "more_than_a_foxbox:more_than_a_foxbox/placeholder"
 		}
 	}
 }
