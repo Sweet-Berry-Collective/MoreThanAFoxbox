@@ -1,0 +1,9 @@
+{
+	"mob_sounds": "entity.fox.death",
+	"poses": {
+		"sit": "more_than_a_foxbox:more_than_a_foxbox/placeholder",
+		"stand": "more_than_a_foxbox:more_than_a_foxbox/placeholder",
+		"lay": "more_than_a_foxbox:more_than_a_foxbox/placeholder",
+		"box": "more_than_a_foxbox:more_than_a_foxbox/placeholder"
+	}
+}

@@ -6,10 +6,14 @@
 
 package dev.sweetberry.more_than_a_foxbox.item;
 
+import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
+import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
+import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -34,7 +38,7 @@ public class PlushieItem extends BlockItem {
 		if (plushie == null)
 			return super.getName(stack);
 
-		var location = plushie.variant().unwrapKey().orElseThrow().location();
+		var location = plushie.variant().location();
 
 		return Component.translatable("item.more_than_a_foxbox.plushie." + location.toLanguageKey());
 	}

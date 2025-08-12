@@ -13,6 +13,7 @@ import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -59,9 +60,11 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 		return Optional.ofNullable(components().get(MtfbComponents.PLUSHIE.get()));
 	}
 
-	public Optional<Holder<PlushieVariant>> getPlushieVariant() {
-		return getPlushieData()
-			.map(PlushieDataComponent::variant);
+	public Optional<Holder.Reference<PlushieVariant>> getPlushieVariant() {
+		if (level == null)
+			return Optional.empty();
+
+		return getPlushieData().flatMap(plushieDataComponent -> level.registryAccess().get(plushieDataComponent.variant()));
 	}
 
 	public abstract Optional<ResourceLocation> getPoseModel(BlockState state);

@@ -8,6 +8,9 @@ package dev.sweetberry.more_than_a_foxbox.item;
 
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
+import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
+import dev.sweetberry.more_than_a_foxbox.component.PlushieDataComponent;
+import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -15,6 +18,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -26,7 +30,11 @@ public final class MtfbItems {
 
 	public static final Supplier<Item> PLUSHIE = CONTEXT.defer(
 		"plushie",
-		withProperties(properties -> new PlushieItem(properties.equippableUnswappable(EquipmentSlot.HEAD).stacksTo(1)))
+		withProperties(properties -> new PlushieItem(properties
+			.equippableUnswappable(EquipmentSlot.HEAD)
+			.stacksTo(1)
+			.component(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(PlushieVariant.PLACEHOLDER, Optional.empty()))
+		))
 	);
 
 	public static final Supplier<Item> SPEAKER = CONTEXT.defer(

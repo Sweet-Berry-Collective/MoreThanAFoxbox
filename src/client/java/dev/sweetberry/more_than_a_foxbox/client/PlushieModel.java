@@ -38,7 +38,7 @@ public class PlushieModel implements ItemModel {
 			return;
 
 		var modelManager = Minecraft.getInstance().getModelManager();
-		var itemModel = modelManager.getItemModel(plushie.variant().unwrapKey().orElseThrow().location().withPrefix("more_than_a_foxbox/"));
+		var itemModel = modelManager.getItemModel(plushie.variant().location().withPrefix("more_than_a_foxbox/"));
 		itemModel.update(renderState, stack, itemModelResolver, displayContext, level, entity, seed);
 	}
 
