@@ -67,6 +67,11 @@ public final class MtfbItems {
 		withProperties(properties -> new BlockItem(MtfbBlocks.CARDBOARD_BOX.get(), properties.equippableUnswappable(EquipmentSlot.HEAD)))
 	);
 
+	public static final Supplier<BlockItem> SEWING_TABLE = CONTEXT.defer(
+		"sewing_table",
+		withProperties(properties -> new BlockItem(MtfbBlocks.SEWING_TABLE.get(), properties))
+	);
+
 	private MtfbItems() {}
 	
 	public static void register() {
