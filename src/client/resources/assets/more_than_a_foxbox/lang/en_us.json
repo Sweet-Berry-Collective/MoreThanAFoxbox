@@ -10,10 +10,15 @@
 	"item.more_than_a_foxbox.cardboard_box": "Cardboard Box",
 	"block.more_than_a_foxbox.cardboard_box": "Cardboard Box",
 
+	"item.more_than_a_foxbox.plushie.no_sounds": "No sounds",
+	"item.more_than_a_foxbox.plushie.speaker": "Mob sounds",
+	"item.more_than_a_foxbox.plushie.squeaker": "Squeaky sounds",
+	"item.more_than_a_foxbox.plushie.debug": "Plushie type: %s",
+
 	"item.more_than_a_foxbox.plushie": "Unknown Plushie",
 	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.placeholder": "Unknown Plushie",
 	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.fox": "Fox Plushie",
 	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.snow_fox": "Snow Fox Plushie",
 
-	"subtitles.more_than_a_foxbox.plushie.squeak": "Plushie Squeaks"
+	"subtitles.more_than_a_foxbox.plushie.squeak": "Plushie squeaks"
 }

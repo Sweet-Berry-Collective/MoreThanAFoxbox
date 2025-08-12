@@ -9,10 +9,13 @@ package dev.sweetberry.more_than_a_foxbox.item;
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
+import dev.sweetberry.more_than_a_foxbox.component.PlushieDataComponent;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.sounds.SoundEvent;
@@ -21,10 +24,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class PlushieItem extends BlockItem {
 	public PlushieItem(Properties properties) {
@@ -69,5 +75,40 @@ public class PlushieItem extends BlockItem {
 		level.playSeededSound(player, center.x, center.y, center.z, sound.get(), SoundSource.PLAYERS, 1f, 1f,  level.random.nextLong());
 
 		return InteractionResult.SUCCESS;
+	}
+
+	private static MutableComponent getSoundComponent(Optional<PlushieDataComponent.SoundType> type) {
+		if (type.isEmpty())
+			return Component.translatable("item.more_than_a_foxbox.plushie.no_sounds");
+		if (type.get() == PlushieDataComponent.SoundType.SPEAKER)
+			return Component.translatable("item.more_than_a_foxbox.plushie.speaker");
+		return Component.translatable("item.more_than_a_foxbox.plushie.squeaker");
+	}
+
+	@Override
+	public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
+		var plushie = stack.get(MtfbComponents.PLUSHIE.get());
+
+		if (plushie == null)
+			return;
+
+		tooltipAdder.accept(getSoundComponent(plushie.soundType()).withStyle(ChatFormatting.DARK_PURPLE));
+
+		if (flag.isAdvanced()) {
+			tooltipAdder.accept(Component.empty());
+			tooltipAdder.accept(
+				Component
+					.translatable("item.more_than_a_foxbox.plushie.debug",
+						plushie
+							.variant()
+							.location()
+							.toString()
+					)
+					.withStyle(
+						ChatFormatting.DARK_GRAY
+					)
+			);
+			tooltipAdder.accept(Component.empty());
+		}
 	}
 }
