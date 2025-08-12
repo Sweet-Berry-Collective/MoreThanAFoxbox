@@ -42,13 +42,4 @@ public class ModelUtil {
 				.toList(), executor
 		);
 	}
-
-	// FIXME: Update code based on new refactors
-//	public static SimpleUnbakedExtraModel<BlockStateModel> getPlushieModel(PlushieVariant variant, ResourceLocation activePose) {
-//		return Minecraft.getInstance().getModelManager().getModel(createModelKey(variant, activePose));
-//	}
-//
-//	private static ExtraModelKey<SimpleUnbakedExtraModel<BlockStateModel>> createModelKey(PlushieVariant variant, ResourceLocation activePose) {
-//		return ExtraModelKey.create(() -> variant.poses().get(activePose).model().texturePath().toString());
-//	}
 }
