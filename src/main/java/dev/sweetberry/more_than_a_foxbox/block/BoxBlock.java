@@ -9,6 +9,7 @@ package dev.sweetberry.more_than_a_foxbox.block;
 import com.mojang.serialization.MapCodec;
 import dev.sweetberry.more_than_a_foxbox.block.entity.BoxBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
+import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
 import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
@@ -25,9 +26,14 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -36,9 +42,10 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
+import java.util.List;
 import java.util.Objects;
 
-public class BoxBlock extends BaseEntityBlock {
+public class BoxBlock extends PlushieHoldingBlock {
 	public static final MapCodec<BoxBlock> CODEC = simpleCodec(BoxBlock::new);
 	public static final float Z_DEFENSE = 0.005f;
 	private static final VoxelShape SHAPE = Block.column(10.0f, 0.0f, 8.0f);
@@ -49,6 +56,32 @@ public class BoxBlock extends BaseEntityBlock {
 			this.stateDefinition.any()
 				.setValue(MtfbBlockProperties.FACING, OctalDirection.SOUTH)
 		);
+	}
+
+	@Override
+	public @NotNull InteractionResult crouchUseWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult, PlushieHoldingBlockEntity entity) {
+		var plushie = entity.getPlushieData();
+
+		if (plushie.isEmpty())
+			return InteractionResult.PASS;
+
+		entity.removePlushieData();
+
+		if (player.hasInfiniteMaterials())
+			return InteractionResult.SUCCESS;
+
+		var plushieStack = MtfbItems.PLUSHIE.get().getDefaultInstance();
+
+		plushieStack.set(MtfbComponents.PLUSHIE.get(), plushie.get());
+
+		player.getInventory().setSelectedItem(plushieStack);
+
+		return InteractionResult.SUCCESS;
+	}
+
+	@Override
+	public @NotNull BlockEntityType<? extends PlushieHoldingBlockEntity> getPlushieHoldingBlockEntityType() {
+		return MtfbBlockEntityTypes.CARDBOARD_BOX.get();
 	}
 
 	/**
@@ -128,40 +161,6 @@ public class BoxBlock extends BaseEntityBlock {
 		entity.setPlushieData(stack.get(MtfbComponents.PLUSHIE.get()));
 
 		stack.consume(1, player);
-
-		return InteractionResult.SUCCESS;
-	}
-
-	@Override
-	protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		var maybeEntity = level.getBlockEntity(pos, MtfbBlockEntityTypes.CARDBOARD_BOX.get());
-
-		if (maybeEntity.isEmpty())
-			return super.useWithoutItem(state, level, pos, player, hitResult);
-
-		var entity = maybeEntity.get();
-
-		if (player.isShiftKeyDown()) {
-			var plushie = entity.getPlushieData();
-
-			if (plushie.isEmpty())
-				return InteractionResult.PASS;
-
-			entity.removePlushieData();
-
-			if (player.hasInfiniteMaterials())
-				return InteractionResult.SUCCESS;
-
-			var plushieStack = MtfbItems.PLUSHIE.get().getDefaultInstance();
-
-			plushieStack.set(MtfbComponents.PLUSHIE.get(), plushie.get());
-
-			player.getInventory().setSelectedItem(plushieStack);
-
-			return InteractionResult.SUCCESS;
-		}
-
-		entity.playSound(level, pos);
 
 		return InteractionResult.SUCCESS;
 	}

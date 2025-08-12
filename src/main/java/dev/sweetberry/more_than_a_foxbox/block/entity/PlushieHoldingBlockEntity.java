@@ -6,6 +6,7 @@
 
 package dev.sweetberry.more_than_a_foxbox.block.entity;
 
+import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.component.PlushieDataComponent;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
@@ -28,6 +29,7 @@ import java.util.Optional;
 
 public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 	public static final String PLUSHIE_KEY = "plushie";
+	public static final ResourceLocation PLUSHIE_DYNAMIC_DROP = MoreThanAFoxbox.id(PLUSHIE_KEY);
 
 	public PlushieHoldingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
 		super(type, pos, blockState);

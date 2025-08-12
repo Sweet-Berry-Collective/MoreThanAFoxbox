@@ -10,6 +10,7 @@ import com.mojang.serialization.MapCodec;
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieBlockEntity;
+import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
 import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -38,7 +40,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class PlushieBlock extends BaseEntityBlock {
+public class PlushieBlock extends PlushieHoldingBlock {
 	public static final MapCodec<PlushieBlock> CODEC = simpleCodec(PlushieBlock::new);
 	public static final EnumProperty<PlushieVariant.Pose> POSE = EnumProperty.create("pose", PlushieVariant.Pose.class);
 	private static final VoxelShape SHAPE = Block.column(10.0f, 0.0f, 8.0f);
@@ -50,6 +52,18 @@ public class PlushieBlock extends BaseEntityBlock {
 				.setValue(POSE, PlushieVariant.Pose.SIT)
 				.setValue(MtfbBlockProperties.FACING, OctalDirection.SOUTH)
 		);
+	}
+
+	@Override
+	public @NotNull InteractionResult crouchUseWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult, PlushieHoldingBlockEntity entity) {
+		level.setBlock(pos, state.cycle(POSE), Block.UPDATE_ALL);
+
+		return InteractionResult.SUCCESS;
+	}
+
+	@Override
+	public @NotNull BlockEntityType<? extends PlushieHoldingBlockEntity> getPlushieHoldingBlockEntityType() {
+		return MtfbBlockEntityTypes.PLUSHIE.get();
 	}
 
 	@Override
@@ -109,25 +123,5 @@ public class PlushieBlock extends BaseEntityBlock {
 		stack.set(MtfbComponents.PLUSHIE.get(), entity.components().get(MtfbComponents.PLUSHIE.get()));
 
 		return stack;
-	}
-
-	@Override
-	protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		var maybeEntity = level.getBlockEntity(pos, MtfbBlockEntityTypes.PLUSHIE.get());
-
-		if (maybeEntity.isEmpty())
-			return super.useWithoutItem(state, level, pos, player, hitResult);
-
-		var entity = maybeEntity.get();
-
-		if (player.isShiftKeyDown()) {
-			level.setBlock(pos, state.cycle(POSE), Block.UPDATE_ALL);
-
-			return InteractionResult.SUCCESS;
-		}
-
-		entity.playSound(level, pos);
-
-		return InteractionResult.SUCCESS;
 	}
 }
