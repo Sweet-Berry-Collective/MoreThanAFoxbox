@@ -7,13 +7,12 @@
 package dev.sweetberry.more_than_a_foxbox.block.entity;
 
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
-import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
-import dev.sweetberry.more_than_a_foxbox.component.PlushieDataComponent;
+import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
+import dev.sweetberry.more_than_a_foxbox.data.PlushieDataComponent;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;

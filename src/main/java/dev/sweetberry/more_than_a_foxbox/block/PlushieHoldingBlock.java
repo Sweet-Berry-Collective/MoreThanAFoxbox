@@ -6,9 +6,8 @@
 
 package dev.sweetberry.more_than_a_foxbox.block;
 
-import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
-import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
+import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;

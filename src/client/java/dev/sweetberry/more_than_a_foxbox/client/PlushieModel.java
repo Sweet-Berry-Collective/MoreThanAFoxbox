@@ -7,7 +7,7 @@
 package dev.sweetberry.more_than_a_foxbox.client;
 
 import com.mojang.serialization.MapCodec;
-import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
+import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ItemModel;
