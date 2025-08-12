@@ -22,7 +22,6 @@ public class BoxBlockEntity extends PlushieHoldingBlockEntity {
 
 	@Override
 	public Optional<ResourceLocation> getPoseModel(BlockState state) {
-		// TODO!
-		return Optional.empty();
+		return getPlushieVariant().map(it -> it.value().poses().box());
 	}
 }

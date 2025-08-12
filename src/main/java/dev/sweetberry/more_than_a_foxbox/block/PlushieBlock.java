@@ -7,13 +7,22 @@
 package dev.sweetberry.more_than_a_foxbox.block;
 
 import com.mojang.serialization.MapCodec;
+import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
+import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
+import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -21,6 +30,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -83,5 +93,41 @@ public class PlushieBlock extends BaseEntityBlock {
 		BlockState state
 	) {
 		return new PlushieBlockEntity(pos, state);
+	}
+
+	@Override
+	protected @NotNull ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
+		var stack = super.getCloneItemStack(level, pos, state, includeData);
+
+		var maybeEntity = level.getBlockEntity(pos, MtfbBlockEntityTypes.PLUSHIE.get());
+
+		if (maybeEntity.isEmpty())
+			return stack;
+
+		var entity = maybeEntity.get();
+
+		stack.set(MtfbComponents.PLUSHIE.get(), entity.components().get(MtfbComponents.PLUSHIE.get()));
+
+		return stack;
+	}
+
+	@Override
+	protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+		var maybeEntity = level.getBlockEntity(pos, MtfbBlockEntityTypes.PLUSHIE.get());
+
+		if (maybeEntity.isEmpty())
+			return super.useWithoutItem(state, level, pos, player, hitResult);
+
+		var entity = maybeEntity.get();
+
+		if (player.isShiftKeyDown()) {
+			level.setBlock(pos, state.cycle(POSE), Block.UPDATE_ALL);
+
+			return InteractionResult.SUCCESS;
+		}
+
+		entity.playSound(level, pos);
+
+		return InteractionResult.SUCCESS;
 	}
 }

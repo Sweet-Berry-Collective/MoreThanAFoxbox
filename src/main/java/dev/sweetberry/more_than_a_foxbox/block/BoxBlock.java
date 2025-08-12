@@ -8,17 +8,27 @@ package dev.sweetberry.more_than_a_foxbox.block;
 
 import com.mojang.serialization.MapCodec;
 import dev.sweetberry.more_than_a_foxbox.block.entity.BoxBlockEntity;
+import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
+import dev.sweetberry.more_than_a_foxbox.component.MtfbComponents;
+import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -95,5 +105,64 @@ public class BoxBlock extends BaseEntityBlock {
 		BlockState state
 	) {
 		return new BoxBlockEntity(pos, state);
+	}
+
+	@Override
+	protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+		if (player.isShiftKeyDown())
+			return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+
+		if (!stack.is(MtfbItems.PLUSHIE.get()))
+			return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+
+		var maybeEntity = level.getBlockEntity(pos, MtfbBlockEntityTypes.CARDBOARD_BOX.get());
+
+		if (maybeEntity.isEmpty())
+			return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+
+		if (!stack.has(MtfbComponents.PLUSHIE.get()))
+			return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+
+		var entity = maybeEntity.get();
+
+		entity.setPlushieData(stack.get(MtfbComponents.PLUSHIE.get()));
+
+		stack.consume(1, player);
+
+		return InteractionResult.SUCCESS;
+	}
+
+	@Override
+	protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+		var maybeEntity = level.getBlockEntity(pos, MtfbBlockEntityTypes.CARDBOARD_BOX.get());
+
+		if (maybeEntity.isEmpty())
+			return super.useWithoutItem(state, level, pos, player, hitResult);
+
+		var entity = maybeEntity.get();
+
+		if (player.isShiftKeyDown()) {
+			var plushie = entity.getPlushieData();
+
+			if (plushie.isEmpty())
+				return InteractionResult.PASS;
+
+			entity.removePlushieData();
+
+			if (player.hasInfiniteMaterials())
+				return InteractionResult.SUCCESS;
+
+			var plushieStack = MtfbItems.PLUSHIE.get().getDefaultInstance();
+
+			plushieStack.set(MtfbComponents.PLUSHIE.get(), plushie.get());
+
+			player.getInventory().setSelectedItem(plushieStack);
+
+			return InteractionResult.SUCCESS;
+		}
+
+		entity.playSound(level, pos);
+
+		return InteractionResult.SUCCESS;
 	}
 }
