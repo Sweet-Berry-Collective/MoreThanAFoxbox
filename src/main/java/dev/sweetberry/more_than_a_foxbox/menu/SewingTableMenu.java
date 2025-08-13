@@ -20,9 +20,9 @@ import java.util.List;
 
 public class SewingTableMenu extends AbstractContainerMenu {
 	public static final int RESULT_SLOT = 3;
-	private static final int INV_SLOT_START = RESULT_SLOT + 1;
-	private static final int INV_SLOT_END = INV_SLOT_START + 27;
-	private static final int USE_ROW_SLOT_END = INV_SLOT_END + 9;
+	public static final int INV_SLOT_START = RESULT_SLOT + 1;
+	public static final int INV_SLOT_END = INV_SLOT_START + 27;
+	public static final int USE_ROW_SLOT_END = INV_SLOT_END + 9;
 
 	private final InputContainer inputContainer = new InputContainer(3);
 	private final ResultContainer resultContainer = new ResultContainer();

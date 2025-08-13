@@ -11,6 +11,7 @@ import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.menu.MtfbMenus;
+import dev.sweetberry.more_than_a_foxbox.recipe.MtfbRecipes;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import dev.sweetberry.more_than_a_foxbox.sound.MtfbSounds;
 import net.fabricmc.api.ModInitializer;
@@ -24,6 +25,8 @@ public class MoreThanAFoxbox implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		LOGGER.info("my favorite animal,,, the fuck,,,,,,");
+
 		MtfbRegistries.register();
 		MtfbBlocks.register();
 		MtfbBlockEntityTypes.register();
@@ -31,6 +34,7 @@ public class MoreThanAFoxbox implements ModInitializer {
 		MtfbComponents.register();
 		MtfbSounds.register();
 		MtfbMenus.register();
+		MtfbRecipes.register();
 	}
 
 	public static ResourceLocation id(String path) {
