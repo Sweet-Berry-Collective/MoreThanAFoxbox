@@ -6,20 +6,26 @@
 
 package dev.sweetberry.more_than_a_foxbox.client.screen;
 
+import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.menu.SewingTableMenu;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.MenuAccess;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 
-public class SewingTableScreen extends Screen implements MenuAccess<SewingTableMenu> {
-	public final SewingTableMenu menu;
+public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> {
+	private static final ResourceLocation SCROLLER_SPRITE = ResourceLocation.withDefaultNamespace("container/stonecutter/scroller");
+	private static final ResourceLocation SCROLLER_DISABLED_SPRITE = ResourceLocation.withDefaultNamespace("container/stonecutter/scroller_disabled");
+	private static final ResourceLocation RECIPE_SELECTED_SPRITE = ResourceLocation.withDefaultNamespace("container/stonecutter/recipe_selected");
+	private static final ResourceLocation RECIPE_HIGHLIGHTED_SPRITE = ResourceLocation.withDefaultNamespace("container/stonecutter/recipe_highlighted");
+	private static final ResourceLocation RECIPE_SPRITE = ResourceLocation.withDefaultNamespace("container/stonecutter/recipe");
+	private static final ResourceLocation BG_LOCATION = MoreThanAFoxbox.id("textures/gui/container/sewing_table.png");
 
 	public SewingTableScreen(SewingTableMenu menu, Inventory playerInventory, Component title) {
-		super(title);
-
-		this.menu = menu;
+		super(menu, playerInventory, title);
 	}
 
 	@Override
@@ -28,7 +34,7 @@ public class SewingTableScreen extends Screen implements MenuAccess<SewingTableM
 	}
 
 	@Override
-	public boolean isPauseScreen() {
-		return false;
+	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
+		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, leftPos, topPos, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
 	}
 }
