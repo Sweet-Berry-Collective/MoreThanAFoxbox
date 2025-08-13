@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=east": {
+			"model": "more_than_a_foxbox:block/sewing_table",
+			"y": 90
+		},
+		"facing=north": {
+			"model": "more_than_a_foxbox:block/sewing_table"
+		},
+		"facing=south": {
+			"model": "more_than_a_foxbox:block/sewing_table",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "more_than_a_foxbox:block/sewing_table",
+			"y": 270
+		}
+	}
+}

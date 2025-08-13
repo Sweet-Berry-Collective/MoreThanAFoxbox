@@ -59,7 +59,10 @@ public final class MtfbBlocks {
 
 	public static final Supplier<SewingTableBlock> SEWING_TABLE = CONTEXT.defer(
 		"sewing_table",
-		withProperties(SewingTableBlock::new)
+		withProperties(properties -> new SewingTableBlock(
+			properties
+				.noOcclusion()
+		))
 	);
 	
 	private MtfbBlocks() {}
