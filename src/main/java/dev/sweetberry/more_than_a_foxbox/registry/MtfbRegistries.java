@@ -9,8 +9,11 @@ package dev.sweetberry.more_than_a_foxbox.registry;
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
+
+import java.util.Optional;
 
 public class MtfbRegistries {
 	public static final ResourceKey<Registry<PlushieVariant>> PLUSHIE_VARIANT = create("plushie_variant");
@@ -22,5 +25,4 @@ public class MtfbRegistries {
 	public static void register() {
 		DynamicRegistries.registerSynced(MtfbRegistries.PLUSHIE_VARIANT, PlushieVariant.DIRECT_CODEC, PlushieVariant.NETWORK_CODEC);
 	}
-
 }

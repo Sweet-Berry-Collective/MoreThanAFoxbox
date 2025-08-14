@@ -24,5 +24,7 @@
 
 	"item.more_than_a_foxbox.sewing_table": "Sewing Table",
 	"block.more_than_a_foxbox.sewing_table": "Sewing Table",
-	"container.more_than_a_foxbox.sewing_table": "Sewing Table"
+	"container.more_than_a_foxbox.sewing_table": "Sewing Table",
+
+	"item_group.more_than_a_foxbox.tab": "More Than A FoxBox"
 }
