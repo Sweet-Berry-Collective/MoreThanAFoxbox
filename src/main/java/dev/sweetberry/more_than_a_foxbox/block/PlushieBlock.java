@@ -66,8 +66,7 @@ public class PlushieBlock extends PlushieHoldingBlock {
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(POSE);
-		builder.add(MtfbBlockProperties.FACING);
+		builder.add(POSE, MtfbBlockProperties.FACING, POWERED);
 	}
 
 	@Override

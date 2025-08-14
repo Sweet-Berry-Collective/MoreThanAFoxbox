@@ -20,15 +20,21 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class PlushieHoldingBlock extends BaseEntityBlock {
+	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+
 	protected PlushieHoldingBlock(Properties properties) {
 		super(properties);
 	}
@@ -52,6 +58,31 @@ public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 		entity.playSound(level, pos);
 
 		return InteractionResult.SUCCESS;
+	}
+
+	@Override
+	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+		if (level.isClientSide)
+			return;
+
+		boolean powered = level.hasNeighborSignal(pos);
+
+		if (powered == state.getValue(POWERED))
+			return;
+
+		level.setBlock(pos, state.setValue(POWERED, powered), 2);
+
+		if (!powered)
+			return;
+
+		var maybeEntity = level.getBlockEntity(pos, getPlushieHoldingBlockEntityType());
+
+		if (maybeEntity.isEmpty())
+			return;
+
+		var entity = maybeEntity.get();
+
+		entity.playSound(level, pos);
 	}
 
 	@Override
