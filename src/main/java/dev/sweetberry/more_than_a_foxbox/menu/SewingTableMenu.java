@@ -69,8 +69,6 @@ public class SewingTableMenu extends AbstractContainerMenu {
 	) {
 		var optional = level.getServer().getRecipeManager().getRecipeFor(MtfbRecipes.SEWING_TYPE.get(), recipeInput, level);
 
-		MoreThanAFoxbox.LOGGER.info("h");
-
 		if (optional.isEmpty()) {
 			setResult(ItemStack.EMPTY, player);
 
@@ -83,15 +81,11 @@ public class SewingTableMenu extends AbstractContainerMenu {
 
 		var result = recipe.value().assemble(recipeInput, level.registryAccess());
 
-		MoreThanAFoxbox.LOGGER.info("h");
-
 		if (!result.isItemEnabled(level.enabledFeatures())) {
 			setResult(ItemStack.EMPTY, player);
 
 			return;
 		}
-
-		MoreThanAFoxbox.LOGGER.info("h");
 
 		setResult(result, player);
 	}
