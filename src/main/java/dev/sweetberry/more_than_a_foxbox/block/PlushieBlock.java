@@ -108,6 +108,11 @@ public class PlushieBlock extends PlushieHoldingBlock {
 	}
 
 	@Override
+	protected boolean hasAnalogOutputSignal(BlockState state) {
+		return true;
+	}
+
+	@Override
 	protected @NotNull ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
 		var stack = super.getCloneItemStack(level, pos, state, includeData);
 
@@ -123,6 +128,6 @@ public class PlushieBlock extends PlushieHoldingBlock {
 
 	@Override
 	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
-		return state.getValue(POSE).ordinal();
+		return state.getValue(POSE).ordinal() + 1;
 	}
 }
