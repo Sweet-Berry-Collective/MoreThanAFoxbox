@@ -1,5 +1,5 @@
 <!--suppress HtmlDeprecatedTag, XmlDeprecatedElement -->
-<center><img alt="mod preview" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png"/></center>
+<center><img alt="mod preview" src="./src/client/resources/assets/more_than_a_foxbox/icon.png"/></center>
 
 <center>
 Much more than just a fox in a box! More Than A Foxbox features familiar friends with configurable poses and noises.
