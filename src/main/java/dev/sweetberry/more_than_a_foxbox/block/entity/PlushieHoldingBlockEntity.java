@@ -14,7 +14,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
@@ -29,19 +33,24 @@ import java.util.Optional;
 
 public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 	public static final String PLUSHIE_KEY = "plushie";
+	public static final String NAME_KEY = "name";
 	public static final ResourceLocation PLUSHIE_DYNAMIC_DROP = MoreThanAFoxbox.id(PLUSHIE_KEY);
 
 	public PlushieHoldingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
 		super(type, pos, blockState);
 	}
 
-	public void setPlushieData(PlushieDataComponent component) {
+	public void setPlushieData(PlushieDataComponent component, Optional<Component> name) {
+		var builder = DataComponentPatch.builder()
+			.set(MtfbComponents.PLUSHIE.get(), component);
+
+		name.ifPresent(it -> builder.set(DataComponents.CUSTOM_NAME, it));
+
 		applyComponents(
 			components(),
-			DataComponentPatch.builder()
-				.set(MtfbComponents.PLUSHIE.get(), component)
-				.build()
+			builder.build()
 		);
+
 		setChanged();
 	}
 
@@ -50,6 +59,7 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 			components(),
 			DataComponentPatch.builder()
 				.remove(MtfbComponents.PLUSHIE.get())
+				.remove(DataComponents.CUSTOM_NAME)
 				.build()
 		);
 		setChanged();
@@ -61,6 +71,10 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 
 	public boolean hasPlushieData() {
 		return components().has(MtfbComponents.PLUSHIE.get());
+	}
+
+	public Optional<Component> getName() {
+		return Optional.ofNullable(components().get(DataComponents.CUSTOM_NAME));
 	}
 
 	public Optional<Holder.Reference<PlushieVariant>> getPlushieVariant() {
@@ -76,16 +90,18 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 	protected void loadAdditional(ValueInput input) {
 		var component = input.read(PLUSHIE_KEY, PlushieDataComponent.CODEC);
 
-		if (component.isEmpty())
-			return;
+		var name = input.read(NAME_KEY, ComponentSerialization.CODEC);
 
-		setPlushieData(component.get());
+		component.ifPresent(it -> setPlushieData(it, name));
 	}
 
 	@Override
 	protected void saveAdditional(ValueOutput output) {
 		getPlushieData()
 			.ifPresent(it -> output.store(PLUSHIE_KEY, PlushieDataComponent.CODEC, it));
+
+		getName()
+			.ifPresent(it -> output.store(NAME_KEY, ComponentSerialization.CODEC, it));
 	}
 
 	@Override

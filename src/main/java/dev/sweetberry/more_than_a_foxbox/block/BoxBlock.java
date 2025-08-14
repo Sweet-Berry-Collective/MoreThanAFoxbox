@@ -15,12 +15,14 @@ import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -38,6 +40,7 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class BoxBlock extends PlushieHoldingBlock {
 	public static final MapCodec<BoxBlock> CODEC = simpleCodec(BoxBlock::new);
@@ -54,21 +57,17 @@ public class BoxBlock extends PlushieHoldingBlock {
 
 	@Override
 	public @NotNull InteractionResult crouchUseWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult, PlushieHoldingBlockEntity entity) {
-		var plushie = entity.getPlushieData();
-
-		if (plushie.isEmpty())
+		if (!entity.hasPlushieData())
 			return InteractionResult.PASS;
+
+		var stack = getPlushieStack(entity);
 
 		entity.removePlushieData();
 
 		if (player.hasInfiniteMaterials())
 			return InteractionResult.SUCCESS;
 
-		var plushieStack = MtfbItems.PLUSHIE.get().getDefaultInstance();
-
-		plushieStack.set(MtfbComponents.PLUSHIE.get(), plushie.get());
-
-		player.getInventory().setSelectedItem(plushieStack);
+		player.getInventory().setSelectedItem(stack);
 
 		return InteractionResult.SUCCESS;
 	}
@@ -155,10 +154,27 @@ public class BoxBlock extends PlushieHoldingBlock {
 		if (!stack.has(MtfbComponents.PLUSHIE.get()))
 			return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
 
-		entity.setPlushieData(stack.get(MtfbComponents.PLUSHIE.get()));
+		entity.setPlushieData(stack.get(MtfbComponents.PLUSHIE.get()), Optional.ofNullable(stack.get(DataComponents.CUSTOM_NAME)));
 
 		stack.consume(1, player);
 
 		return InteractionResult.SUCCESS;
+	}
+
+	@Override
+	protected boolean hasAnalogOutputSignal(BlockState state) {
+		return true;
+	}
+
+	@Override
+	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+		var maybeEntity = level.getBlockEntity(pos, MtfbBlockEntityTypes.CARDBOARD_BOX.get());
+
+		if (maybeEntity.isEmpty())
+			return 0;
+
+		var entity = maybeEntity.get();
+
+		return entity.hasPlushieData() ? 1 : 0;
 	}
 }

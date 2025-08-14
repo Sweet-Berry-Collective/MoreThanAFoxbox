@@ -11,6 +11,7 @@ import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -91,6 +92,23 @@ public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 		return true;
 	}
 
+	public ItemStack getPlushieStack(PlushieHoldingBlockEntity plushie) {
+		var maybePlushieData = plushie.getPlushieData();
+
+		if (maybePlushieData.isEmpty())
+			return ItemStack.EMPTY;
+
+		var plushieData = maybePlushieData.get();
+
+		var stack = MtfbItems.PLUSHIE.get().getDefaultInstance();
+
+		stack.set(MtfbComponents.PLUSHIE.get(), plushieData);
+
+		plushie.getName().ifPresent(it -> stack.set(DataComponents.CUSTOM_NAME, it));
+
+		return stack;
+	}
+
 	@Override
 	protected @NotNull List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
 		var items =  new ArrayList<>(super.getDrops(state, params));
@@ -98,18 +116,10 @@ public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 		var blockEntity = params.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
 
 		if (blockEntity instanceof PlushieHoldingBlockEntity plushie) {
-			var maybePlushieData = plushie.getPlushieData();
+			var stack = getPlushieStack(plushie);
 
-			if (maybePlushieData.isEmpty())
-				return items;
-
-			var plushieData = maybePlushieData.get();
-
-			var stack = MtfbItems.PLUSHIE.get().getDefaultInstance();
-
-			stack.set(MtfbComponents.PLUSHIE.get(), plushieData);
-
-			items.add(stack);
+			if (stack != ItemStack.EMPTY)
+				items.add(stack);
 		}
 
 		return items;

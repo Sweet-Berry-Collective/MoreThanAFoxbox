@@ -7,6 +7,7 @@
 package dev.sweetberry.more_than_a_foxbox.block;
 
 import com.mojang.serialization.MapCodec;
+import com.sun.jna.platform.win32.Variant;
 import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
@@ -117,8 +118,11 @@ public class PlushieBlock extends PlushieHoldingBlock {
 
 		var entity = maybeEntity.get();
 
-		stack.set(MtfbComponents.PLUSHIE.get(), entity.components().get(MtfbComponents.PLUSHIE.get()));
+		return getPlushieStack(entity);
+	}
 
-		return stack;
+	@Override
+	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+		return state.getValue(POSE).ordinal();
 	}
 }
