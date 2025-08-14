@@ -18,6 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.TargetBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -83,6 +84,11 @@ public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 		var entity = maybeEntity.get();
 
 		entity.playSound(level, pos);
+	}
+
+	@Override
+	protected boolean isSignalSource(BlockState state) {
+		return true;
 	}
 
 	@Override
