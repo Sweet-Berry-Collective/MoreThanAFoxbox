@@ -2,14 +2,15 @@
 	"type": "minecraft:crafting_shaped",
 	"category": "misc",
 	"pattern": [
-		" I",
+		"sI",
 		"WW",
 		"SS"
 	],
 	"key": {
 		"W": "#minecraft:planks",
 		"S": "stick",
-		"I": "iron_nugget"
+		"I": "iron_nugget",
+		"s": "string"
 	},
 	"result": {
 		"id": "more_than_a_foxbox:sewing_table",
