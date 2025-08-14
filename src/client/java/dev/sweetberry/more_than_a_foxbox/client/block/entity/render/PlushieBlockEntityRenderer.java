@@ -49,8 +49,10 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 	) {
 		Optional<ResourceLocation> optionalPoseModel = blockEntity.getPoseModel(blockEntity.getBlockState());
 		ResourceLocation poseModel;
+
 		if (blockEntity instanceof BoxBlockEntity && optionalPoseModel.isEmpty())
 			return;
+
 		poseModel = optionalPoseModel.orElseGet(() -> MoreThanAFoxbox.id(
 			MoreThanAFoxbox.ID + "/placeholder"));
 		ModelManager modelManager = Minecraft.getInstance().getModelManager();
@@ -58,8 +60,15 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 				poseModel,
 			asset -> modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(asset))
 		);
-		if (blockStateModel == null) blockStateModel = modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(ResourceLocation.fromNamespaceAndPath(MoreThanAFoxbox.ID, MoreThanAFoxbox.ID + "/placeholder")));
-		if (blockStateModel == null) throw new NullPointerException("Placeholder model does not exist");
+
+		if (blockStateModel == null)
+			blockStateModel = modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(ResourceLocation.fromNamespaceAndPath(MoreThanAFoxbox.ID, MoreThanAFoxbox.ID + "/placeholder")));
+
+		if (blockStateModel == null) {
+			MoreThanAFoxbox.LOGGER.error("Cannot find placeholder plushie.");
+
+			return;
+		}
 		
 		poseStack.pushPose();
 		
