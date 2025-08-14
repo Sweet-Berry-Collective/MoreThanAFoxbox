@@ -6,8 +6,13 @@
 
 package dev.sweetberry.more_than_a_foxbox.menu;
 
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
+import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
+import dev.sweetberry.more_than_a_foxbox.recipe.ContainerRecipeInput;
+import dev.sweetberry.more_than_a_foxbox.recipe.MtfbRecipes;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -19,24 +24,84 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class SewingTableMenu extends AbstractContainerMenu {
-	public static final int RESULT_SLOT = 3;
+	public static final int RESULT_SLOT = 4;
 	public static final int INV_SLOT_START = RESULT_SLOT + 1;
 	public static final int INV_SLOT_END = INV_SLOT_START + 27;
 	public static final int USE_ROW_SLOT_END = INV_SLOT_END + 9;
 
-	private final InputContainer inputContainer = new InputContainer(3);
+	private final InputContainer inputContainer = new InputContainer(4);
 	private final ResultContainer resultContainer = new ResultContainer();
 
+	private final ContainerRecipeInput recipeInput = new ContainerRecipeInput(inputContainer);
+
+	private final ContainerLevelAccess access;
+	private final Player player;
+
 	public SewingTableMenu(int containerId, Inventory playerInventory) {
+		this(containerId, playerInventory, ContainerLevelAccess.NULL);
+	}
+
+	public SewingTableMenu(int containerId, Inventory playerInventory, ContainerLevelAccess access) {
 		super(MtfbMenus.SEWING_TABLE.get(), containerId);
 
-		addSlot(new Slot(inputContainer, 0, 20, 34-18));
-		addSlot(new Slot(inputContainer, 1, 20, 34));
-		addSlot(new Slot(inputContainer, 2, 20, 34+18));
+		this.access = access;
+		player = playerInventory.player;
 
-		addSlot(new ResultSlot(resultContainer, 3, 143, 34));
+		addSlot(new Slot(inputContainer, 0, 30, 35-18));
+		addSlot(new Slot(inputContainer, 1, 30, 35));
+		addSlot(new Slot(inputContainer, 2, 30, 35+18));
+		addSlot(new Slot(inputContainer, 3, 66, 35));
+
+		addSlot(new ResultSlot(resultContainer, 3, 124, 34));
 
 		addStandardInventorySlots(playerInventory, 8, 84);
+	}
+
+	private void setResult(ItemStack result, ServerPlayer player) {
+		resultContainer.setItem(0, result);
+		setRemoteSlot(RESULT_SLOT, result);
+		player.connection.send(new ClientboundContainerSetSlotPacket(containerId, incrementStateId(), RESULT_SLOT, result));
+	}
+
+	private void setupRecipeSlot(
+		ServerLevel level,
+		ServerPlayer player
+	) {
+		var optional = level.getServer().getRecipeManager().getRecipeFor(MtfbRecipes.SEWING_TYPE.get(), recipeInput, level);
+
+		MoreThanAFoxbox.LOGGER.info("h");
+
+		if (optional.isEmpty()) {
+			setResult(ItemStack.EMPTY, player);
+
+			return;
+		}
+
+		var recipe = optional.get();
+
+		resultContainer.setRecipeUsed(recipe);
+
+		var result = recipe.value().assemble(recipeInput, level.registryAccess());
+
+		MoreThanAFoxbox.LOGGER.info("h");
+
+		if (!result.isItemEnabled(level.enabledFeatures())) {
+			setResult(ItemStack.EMPTY, player);
+
+			return;
+		}
+
+		MoreThanAFoxbox.LOGGER.info("h");
+
+		setResult(result, player);
+	}
+
+	@Override
+	public void slotsChanged(Container container) {
+		access.execute((level, blockPos) -> {
+			if (level instanceof ServerLevel serverLevel)
+				setupRecipeSlot(serverLevel, (ServerPlayer) player);
+		});
 	}
 
 	@Override
@@ -87,7 +152,12 @@ public class SewingTableMenu extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return true;
+		return stillValid(access, player, MtfbBlocks.SEWING_TABLE.get());
+	}
+
+	@Override
+	public void removed(Player player) {
+		access.execute((level, blockPos) -> clearContainer(player, inputContainer));
 	}
 
 	private class InputContainer extends SimpleContainer {
@@ -126,17 +196,9 @@ public class SewingTableMenu extends AbstractContainerMenu {
 					refreshRecipes = true;
 			}
 
-			if (refreshRecipes) {
-//				setupResultSlot(selectedRecipeIndex.get());
-			}
+			if (refreshRecipes)
+				slotsChanged(inputContainer);
 
-//			access.execute((level, blockPos) -> {
-//				long l = level.getGameTime();
-//				if (lastSoundTime != l) {
-//					level.playSound(null, blockPos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
-//					lastSoundTime = l;
-//				}
-//			});
 			super.onTake(player, stack);
 		}
 

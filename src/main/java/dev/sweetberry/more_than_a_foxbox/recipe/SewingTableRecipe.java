@@ -23,79 +23,77 @@ import java.util.Optional;
 public record SewingTableRecipe(
 	Ingredient shell,
 	Ingredient filler,
+	Ingredient essence,
 	Optional<Ingredient> upgrade,
 	ItemStack result
-) implements Recipe<SewingTableRecipeInput> {
+) implements Recipe<ContainerRecipeInput> {
 	public static final MapCodec<SewingTableRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst
 		.group(
 			Ingredient.CODEC.fieldOf("shell").forGetter(SewingTableRecipe::shell),
 			Ingredient.CODEC.fieldOf("filler").forGetter(SewingTableRecipe::filler),
+			Ingredient.CODEC.fieldOf("essence").forGetter(SewingTableRecipe::essence),
 			Ingredient.CODEC.optionalFieldOf("upgrade").forGetter(SewingTableRecipe::upgrade),
 			ItemStack.CODEC.fieldOf("result").forGetter(SewingTableRecipe::result)
 		)
 		.apply(inst, SewingTableRecipe::new)
 	);
 
-	public static final StreamCodec<RegistryFriendlyByteBuf, SewingTableRecipe> STREAM_CODEC = StreamCodec.of(SewingTableRecipe::toNetwork, SewingTableRecipe::fromNetwork);
-
-	public static SewingTableRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
-		return new SewingTableRecipe(
-			Ingredient.CONTENTS_STREAM_CODEC.decode(buf),
-			Ingredient.CONTENTS_STREAM_CODEC.decode(buf),
-			Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC.decode(buf),
-			ItemStack.STREAM_CODEC.decode(buf)
-		);
-	}
-
-	public static void toNetwork(RegistryFriendlyByteBuf buf, SewingTableRecipe recipe) {
-		Ingredient.CONTENTS_STREAM_CODEC.encode(buf, recipe.shell);
-		Ingredient.CONTENTS_STREAM_CODEC.encode(buf, recipe.filler);
-		Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC.encode(buf, recipe.upgrade);
-		ItemStack.STREAM_CODEC.encode(buf, recipe.result);
-	}
+	public static final StreamCodec<RegistryFriendlyByteBuf, SewingTableRecipe> STREAM_CODEC = StreamCodec.composite(
+		Ingredient.CONTENTS_STREAM_CODEC, SewingTableRecipe::shell,
+		Ingredient.CONTENTS_STREAM_CODEC, SewingTableRecipe::filler,
+		Ingredient.CONTENTS_STREAM_CODEC, SewingTableRecipe::essence,
+		Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC, SewingTableRecipe::upgrade,
+		ItemStack.STREAM_CODEC, SewingTableRecipe::result,
+		SewingTableRecipe::new
+	);
 
 	private  boolean testUpgrade(ItemStack stack) {
 		return upgrade.map(value -> value.test(stack)).orElseGet(stack::isEmpty);
 	}
 
 	@Override
-	public boolean matches(SewingTableRecipeInput input, Level level) {
+	public boolean matches(ContainerRecipeInput input, Level level) {
 		if (!shell.test(input.getItem(0)))
 			return false;
 
 		if (!filler.test(input.getItem(1)))
 			return false;
 
-		return testUpgrade(input.getItem(2));
+		if (!essence.test(input.getItem(2)))
+			return false;
+
+		return testUpgrade(input.getItem(3));
 	}
 
 	@Override
-	public @NotNull ItemStack assemble(SewingTableRecipeInput input, HolderLookup.Provider registries) {
+	public @NotNull ItemStack assemble(ContainerRecipeInput input, HolderLookup.Provider registries) {
 		return result.copy();
 	}
 
 	@Override
-	public @NotNull RecipeSerializer<? extends Recipe<SewingTableRecipeInput>> getSerializer() {
+	public @NotNull RecipeSerializer<? extends Recipe<ContainerRecipeInput>> getSerializer() {
 		return MtfbRecipes.SEWING_SERIALIZER.get();
 	}
 
 	@Override
-	public @NotNull RecipeType<? extends Recipe<SewingTableRecipeInput>> getType() {
+	public @NotNull RecipeType<? extends Recipe<ContainerRecipeInput>> getType() {
 		return MtfbRecipes.SEWING_TYPE.get();
 	}
 
 	@Override
 	public @NotNull PlacementInfo placementInfo() {
-		return PlacementInfo.create(
+		return upgrade.map(ingredient -> PlacementInfo.create(
 			List.of(
 				shell,
 				filler,
-				upgrade
-					.orElseGet(() ->
-						Ingredient.of(Items.AIR)
-					)
+				ingredient
 			)
-		);
+		)).orElseGet(() -> PlacementInfo.create(
+			List.of(
+				shell,
+				filler
+			)
+		));
 	}
 
 	@Override

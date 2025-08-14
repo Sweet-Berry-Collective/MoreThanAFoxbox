@@ -18,7 +18,7 @@ public final class MtfbRecipes {
 	private static final RegistryContext<RecipeType<?>> TYPE_CONTEXT = new RegistryContext<>(BuiltInRegistries.RECIPE_TYPE, MoreThanAFoxbox.ID);
 	private static final RegistryContext<RecipeSerializer<?>> SERIALIZER_CONTEXT = new RegistryContext<>(BuiltInRegistries.RECIPE_SERIALIZER, MoreThanAFoxbox.ID);
 
-	public static final Supplier<IdentifiableRecipeType> SEWING_TYPE = TYPE_CONTEXT.defer("sewing", IdentifiableRecipeType::new);
+	public static final Supplier<IdentifiableRecipeType<ContainerRecipeInput, SewingTableRecipe>> SEWING_TYPE = TYPE_CONTEXT.defer("sewing", IdentifiableRecipeType::new);
 	public static final Supplier<SimpleRecipeSerializer<SewingTableRecipe>> SEWING_SERIALIZER = SERIALIZER_CONTEXT.defer(
 		"sewing",
 		key -> new SimpleRecipeSerializer<>(

@@ -6,6 +6,7 @@
 
 package dev.sweetberry.more_than_a_foxbox.block;
 
+import com.mojang.math.OctahedralGroup;
 import com.mojang.serialization.MapCodec;
 import dev.sweetberry.more_than_a_foxbox.menu.SewingTableMenu;
 import net.minecraft.core.BlockPos;
@@ -15,6 +16,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -36,7 +38,10 @@ public class SewingTableBlock extends Block {
 	public static final MapCodec<SewingTableBlock> CODEC = simpleCodec(SewingTableBlock::new);
 	private static final Component CONTAINER_TITLE = Component.translatable("container.more_than_a_foxbox.sewing_table");
 	public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
-	public static final VoxelShape SHAPE = makeShape();
+	public static final VoxelShape NORTH_SHAPE = makeShape();
+	public static final VoxelShape EAST_SHAPE = Shapes.rotate(NORTH_SHAPE, OctahedralGroup.ROT_90_Y_NEG);
+	public static final VoxelShape SOUTH_SHAPE = Shapes.rotate(EAST_SHAPE, OctahedralGroup.ROT_90_Y_NEG);
+	public static final VoxelShape WEST_SHAPE = Shapes.rotate(SOUTH_SHAPE, OctahedralGroup.ROT_90_Y_NEG);
 
 	private static VoxelShape makeShape(){
 		VoxelShape shape = Shapes.empty();
@@ -51,8 +56,14 @@ public class SewingTableBlock extends Block {
 	}
 
 	@Override
-	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return SHAPE;
+	protected @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+		return switch (state.getValue(FACING)) {
+			case Direction.NORTH -> NORTH_SHAPE;
+			case Direction.SOUTH -> SOUTH_SHAPE;
+			case Direction.EAST -> EAST_SHAPE;
+			case Direction.WEST ->  WEST_SHAPE;
+			default -> throw new IllegalArgumentException();
+		};
 	}
 
 	public SewingTableBlock(Properties properties) {
@@ -90,6 +101,6 @@ public class SewingTableBlock extends Block {
 	@Nullable
 	@Override
 	protected MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-		return new SimpleMenuProvider((i, inventory, player) -> new SewingTableMenu(i, inventory), CONTAINER_TITLE);
+		return new SimpleMenuProvider((i, inventory, player) -> new SewingTableMenu(i, inventory, ContainerLevelAccess.create(level, pos)), CONTAINER_TITLE);
 	}
 }

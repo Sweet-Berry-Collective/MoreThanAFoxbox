@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
 import org.jetbrains.annotations.NotNull;
 
-public record SewingTableRecipeInput(SimpleContainer container) implements RecipeInput {
+public record ContainerRecipeInput(SimpleContainer container) implements RecipeInput {
 	@Override
 	public @NotNull ItemStack getItem(int index) {
 		return container.getItem(index);
