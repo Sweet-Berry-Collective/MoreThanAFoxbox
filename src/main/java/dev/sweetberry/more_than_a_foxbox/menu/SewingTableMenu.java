@@ -184,10 +184,19 @@ public class SewingTableMenu extends AbstractContainerMenu {
 			var refreshRecipes = false;
 
 			for (int i = 0; i < RESULT_SLOT; i++) {
-				var item = getSlot(i).remove(1);
+				var slot = getSlot(i);
 
-				if (!item.isEmpty())
+				var item = slot.getItem();
+
+				var count = item.getCount();
+
+				if (count == 1)
 					refreshRecipes = true;
+
+				if (count == 1 && item.getRecipeRemainder() != ItemStack.EMPTY)
+					slot.set(item.getRecipeRemainder());
+				else
+					slot.remove(1);
 			}
 
 			if (refreshRecipes)
