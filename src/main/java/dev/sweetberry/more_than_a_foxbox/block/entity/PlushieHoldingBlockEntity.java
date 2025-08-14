@@ -59,6 +59,10 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 		return Optional.ofNullable(components().get(MtfbComponents.PLUSHIE.get()));
 	}
 
+	public boolean hasPlushieData() {
+		return components().has(MtfbComponents.PLUSHIE.get());
+	}
+
 	public Optional<Holder.Reference<PlushieVariant>> getPlushieVariant() {
 		if (level == null)
 			return Optional.empty();

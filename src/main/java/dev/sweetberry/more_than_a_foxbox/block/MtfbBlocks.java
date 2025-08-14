@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -42,6 +43,7 @@ public final class MtfbBlocks {
 				.sound(SoundType.BAMBOO_WOOD)
 				.mapColor(MapColor.WOOD)
 				.noOcclusion()
+				.pushReaction(PushReaction.DESTROY)
 		))
 	);
 	
@@ -53,6 +55,7 @@ public final class MtfbBlocks {
 				.sound(SoundType.WOOL)
 				.mapColor(MapColor.COLOR_LIGHT_GRAY)
 				.noOcclusion()
+				.pushReaction(PushReaction.DESTROY)
 		))
 	);
 

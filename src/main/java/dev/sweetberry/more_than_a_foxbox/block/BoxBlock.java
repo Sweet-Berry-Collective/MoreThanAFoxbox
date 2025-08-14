@@ -147,10 +147,13 @@ public class BoxBlock extends PlushieHoldingBlock {
 		if (maybeEntity.isEmpty())
 			return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
 
-		if (!stack.has(MtfbComponents.PLUSHIE.get()))
+		var entity = maybeEntity.get();
+
+		if (entity.hasPlushieData())
 			return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
 
-		var entity = maybeEntity.get();
+		if (!stack.has(MtfbComponents.PLUSHIE.get()))
+			return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
 
 		entity.setPlushieData(stack.get(MtfbComponents.PLUSHIE.get()));
 

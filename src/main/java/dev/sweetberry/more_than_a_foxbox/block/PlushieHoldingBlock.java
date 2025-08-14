@@ -10,11 +10,14 @@ import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -73,5 +76,10 @@ public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 		}
 
 		return items;
+	}
+
+	@Override
+	protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+		return canSupportCenter(level, pos.below(), Direction.UP);
 	}
 }
