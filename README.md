@@ -19,7 +19,7 @@ The shell item is usually wool corresponding to the color of the plushie.
 The filler item is usually the new Polyfill item.
 And the essence item is an item that is important to the mob the plushie is based off of.
 
-Plushies can also be upgraded with Speakers and Sqeakers, giving them mob sounds or squeaker sounds, respectively.
+Plushies can also be upgraded with Speakers and Squeakers, giving them mob sounds or squeaker sounds, respectively.
 
 Plushies can be placed on the ground, where you can select from 3 poses by crouch-clickinng the block, The poses are Sitting, Standing, and Laying.
 
