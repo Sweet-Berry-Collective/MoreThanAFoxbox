@@ -12,8 +12,10 @@ import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
 import dev.sweetberry.more_than_a_foxbox.client.block.entity.render.PlushieBlockEntityRenderer;
+import dev.sweetberry.more_than_a_foxbox.client.entity.render.BoxSeatEntityRenderer;
 import dev.sweetberry.more_than_a_foxbox.client.screen.SewingTableScreen;
 import dev.sweetberry.more_than_a_foxbox.client.util.ModelUtil;
+import dev.sweetberry.more_than_a_foxbox.entity.MtfbEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.menu.MtfbMenus;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.fabricmc.api.ClientModInitializer;
@@ -22,9 +24,9 @@ import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlu
 import net.fabricmc.fabric.api.client.model.loading.v1.SimpleUnbakedExtraModel;
 import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperBlockStateModel;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
@@ -125,6 +127,11 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 		BlockEntityRenderers.register(
 			MtfbBlockEntityTypes.PLUSHIE.get(),
 			PlushieBlockEntityRenderer::new
+		);
+
+		EntityRendererRegistry.register(
+			MtfbEntityTypes.BOX_SEAT.get(),
+			BoxSeatEntityRenderer::new
 		);
 
 		MenuScreens.register(MtfbMenus.SEWING_TABLE.get(), SewingTableScreen::new);
