@@ -29,6 +29,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.SCALE_SLOWNESS;
+import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.SQUISH_TIME;
+import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.STRETCH_TIME;
+
 public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHoldingBlockEntity> {
 	private final Map<ResourceLocation, BlockStateModel> models = new HashMap<>();
 	private final BlockEntityRendererProvider.Context renderContext;
@@ -77,6 +81,21 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 		Matrix4f rotationTransform = BoxBlock.pointBlockToward(direction, 0.5f);
 		poseStack.mulPose(rotationTransform);
 
+		// Stretch & Squish
+		float stretch = 1.0f - blockEntity.getDeltaStretch() / STRETCH_TIME;
+		float squish = blockEntity.getDeltaSquish() / SQUISH_TIME;
+		if (blockEntity.getDeltaStretch() < 0.0f) {
+			blockEntity.setDeltaStretch(blockEntity.getDeltaStretch() + partialTick / SCALE_SLOWNESS);
+		}
+		if (blockEntity.getDeltaSquish() < SQUISH_TIME) {
+			blockEntity.setDeltaSquish(blockEntity.getDeltaSquish() + partialTick / SCALE_SLOWNESS);
+		}
+		poseStack.translate(scaleInPlace(stretch), 0.0f, 0.0f);
+		if (blockEntity instanceof BoxBlockEntity) {
+			poseStack.translate(0.0f, scaleInPlace(squish), 0.0f);
+		}
+		poseStack.scale(stretch, squish, 1.0f);
+
 		this.renderContext.getBlockRenderDispatcher()
 			.getModelRenderer()
 			.render(
@@ -92,5 +111,9 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 			);
 		
 		poseStack.popPose();
+	}
+
+	private float scaleInPlace(float scale) {
+		return 1.0f - scale / 2.0f - 0.5f;
 	}
 }

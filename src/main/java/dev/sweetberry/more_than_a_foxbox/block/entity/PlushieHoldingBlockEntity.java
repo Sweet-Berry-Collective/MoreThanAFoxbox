@@ -18,7 +18,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
@@ -35,6 +34,11 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 	public static final String PLUSHIE_KEY = "plushie";
 	public static final String NAME_KEY = "name";
 	public static final ResourceLocation PLUSHIE_DYNAMIC_DROP = MoreThanAFoxbox.id(PLUSHIE_KEY);
+	public static final float STRETCH_TIME = 10.0f;
+	public static final float SQUISH_TIME = 10.0f;
+	public static final float SCALE_SLOWNESS = 3.0f;
+	private float deltaStretch = 0.0f;
+	private float deltaSquish = SQUISH_TIME;
 
 	public PlushieHoldingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
 		super(type, pos, blockState);
@@ -126,5 +130,26 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 		var center = pos.getCenter();
 
 		level.playSeededSound(null, center.x, center.y, center.z, maybeSound.get(), SoundSource.PLAYERS, 1f, 1f,  level.random.nextLong());
+	}
+
+	public float getDeltaStretch() {
+		return deltaStretch;
+	}
+
+	public void setDeltaStretch(float deltaStretch) {
+		this.deltaStretch = deltaStretch;
+	}
+
+	public float getDeltaSquish() {
+		return deltaSquish;
+	}
+
+	public void setDeltaSquish(float deltaSquish) {
+		this.deltaSquish = deltaSquish;
+	}
+	
+	public void resetStretchSquish() {
+		this.deltaStretch = -STRETCH_TIME / 2.0f;
+		this.deltaSquish = SQUISH_TIME / 2.0f;
 	}
 }
