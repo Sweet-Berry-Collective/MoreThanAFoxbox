@@ -1,5 +1,5 @@
 <!--suppress HtmlDeprecatedTag, XmlDeprecatedElement -->
-<center><img alt="A plushie fox in a box" src="./src/client/resources/assets/more_than_a_foxbox/icon.png"/></center>
+<center><img width="512" alt="A plushie fox in a box" src="https://github.com/Sweet-Berry-Collective/MoreThanAFoxbox/blob/fabric-1.21.8/src/client/resources/assets/more_than_a_foxbox/icon.png?raw=true"/></center>
 
 <center>
 Much more than just a fox in a box! More Than A Foxbox features familiar friends with configurable poses and noises.
@@ -31,4 +31,4 @@ If you want to add plushies, take a look at the [Examples Directory](https://git
 
 ---
 
-![Made for ModFest: Toybox](https://raw.githubusercontent.com/ModFest/art/refs/heads/v2/badge/svg/toybox/cozy.svg)
+[![Made for ModFest: Toybox](https://raw.githubusercontent.com/ModFest/art/refs/heads/v2/badge/svg/toybox/cozy.svg)](https://modfest.net/toybox)
