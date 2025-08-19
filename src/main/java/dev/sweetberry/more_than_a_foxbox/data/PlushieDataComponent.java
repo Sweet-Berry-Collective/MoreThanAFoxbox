@@ -12,6 +12,8 @@ import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import dev.sweetberry.more_than_a_foxbox.sound.MtfbSounds;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
@@ -49,6 +51,10 @@ public record PlushieDataComponent(
 			.value()
 			.mobSounds()
 			.value());
+	}
+
+	public MutableComponent getDisplayName() {
+		return Component.translatable("item.more_than_a_foxbox.plushie." + variant.location().toLanguageKey());
 	}
 
 	public enum SoundType implements StringRepresentable {

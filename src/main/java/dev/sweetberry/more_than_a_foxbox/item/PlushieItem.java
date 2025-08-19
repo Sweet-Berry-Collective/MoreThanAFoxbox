@@ -40,9 +40,7 @@ public class PlushieItem extends BlockItem {
 		if (plushie == null)
 			return super.getName(stack);
 
-		var location = plushie.variant().location();
-
-		return Component.translatable("item.more_than_a_foxbox.plushie." + location.toLanguageKey());
+		return plushie.getDisplayName();
 	}
 
 	public Optional<SoundEvent> getInteractionSound(RegistryAccess access, ItemStack stack) {
