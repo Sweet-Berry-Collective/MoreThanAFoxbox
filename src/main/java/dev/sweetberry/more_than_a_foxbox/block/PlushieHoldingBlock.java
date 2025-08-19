@@ -59,7 +59,11 @@ public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 		entity.resetStretchSquish();
 		entity.playSound(level, pos);
 
-		return InteractionResult.SUCCESS;
+		if (entity.hasPlushieData()) {
+			return InteractionResult.SUCCESS;
+		} else {
+			return InteractionResult.PASS;
+		}
 	}
 
 	@Override

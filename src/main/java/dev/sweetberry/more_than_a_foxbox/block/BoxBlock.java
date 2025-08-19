@@ -12,6 +12,8 @@ import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
 import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
+import dev.sweetberry.more_than_a_foxbox.entity.BoxSeatEntity;
+import dev.sweetberry.more_than_a_foxbox.entity.MtfbEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.minecraft.core.BlockPos;
@@ -19,10 +21,10 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -31,6 +33,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -45,7 +48,7 @@ import java.util.Optional;
 public class BoxBlock extends PlushieHoldingBlock {
 	public static final MapCodec<BoxBlock> CODEC = simpleCodec(BoxBlock::new);
 	public static final float Z_DEFENSE = 0.005f;
-	private static final VoxelShape SHAPE = Block.column(10.0f, 0.0f, 8.0f);
+	public static final VoxelShape SHAPE = Block.column(10.0f, 0.0f, 8.0f);
 
 	public BoxBlock(Properties properties) {
 		super(properties);
@@ -123,6 +126,46 @@ public class BoxBlock extends PlushieHoldingBlock {
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(MtfbBlockProperties.FACING, POWERED);
+	}
+
+	@Override
+	protected @NotNull InteractionResult useWithoutItem(
+		BlockState state,
+		Level level,
+		BlockPos pos,
+		Player player,
+		BlockHitResult hitResult
+	) {
+		InteractionResult result = super.useWithoutItem(
+			state,
+			level,
+			pos,
+			player,
+			hitResult
+		);
+		
+		if (result == InteractionResult.PASS) {
+			for (Player entity : level.getEntitiesOfClass(Player.class, new AABB(pos))) {
+				if (entity.getVehicle() instanceof BoxSeatEntity) {
+					return InteractionResult.PASS;
+				}
+			}
+			
+			BoxSeatEntity seatEntity;
+			seatEntity = MtfbEntityTypes.BOX_SEAT.get().create(level,
+				EntitySpawnReason.EVENT);
+			if (seatEntity == null) return InteractionResult.PASS;
+			seatEntity.setPos(pos.getBottomCenter());
+			level.addFreshEntity(seatEntity);
+			
+			if (seatEntity.isVehicle()) return InteractionResult.PASS;
+			
+			player.startRiding(seatEntity, true);
+			
+			return InteractionResult.SUCCESS;
+		}
+		
+		return result;
 	}
 
 	@Override
