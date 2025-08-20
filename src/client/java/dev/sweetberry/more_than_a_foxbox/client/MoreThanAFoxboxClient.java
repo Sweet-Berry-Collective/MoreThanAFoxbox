@@ -13,6 +13,7 @@ import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
 import dev.sweetberry.more_than_a_foxbox.client.block.entity.render.PlushieBlockEntityRenderer;
 import dev.sweetberry.more_than_a_foxbox.client.entity.render.BoxSeatEntityRenderer;
+import dev.sweetberry.more_than_a_foxbox.client.network.MtfbClientNetworking;
 import dev.sweetberry.more_than_a_foxbox.client.screen.SewingTableScreen;
 import dev.sweetberry.more_than_a_foxbox.client.util.ModelUtil;
 import dev.sweetberry.more_than_a_foxbox.entity.MtfbEntityTypes;
@@ -50,6 +51,8 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 	
 	@Override
 	public void onInitializeClient() {
+		MtfbClientNetworking.register();
+		
 		PreparableModelLoadingPlugin.register(
 			ModelUtil::getPlushieModels,
 			(data, pluginContext) -> {
