@@ -12,6 +12,7 @@ import dev.sweetberry.more_than_a_foxbox.entity.MtfbEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.menu.MtfbMenus;
+import dev.sweetberry.more_than_a_foxbox.network.MtfbNetworking;
 import dev.sweetberry.more_than_a_foxbox.recipe.MtfbRecipes;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import dev.sweetberry.more_than_a_foxbox.sound.MtfbSounds;
@@ -28,6 +29,7 @@ public class MoreThanAFoxbox implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("my favorite animal,,, the fuck,,,,,,");
 
+		MtfbNetworking.register();
 		MtfbRegistries.register();
 		MtfbBlocks.register();
 		MtfbBlockEntityTypes.register();

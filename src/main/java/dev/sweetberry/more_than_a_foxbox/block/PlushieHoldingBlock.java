@@ -9,9 +9,13 @@ package dev.sweetberry.more_than_a_foxbox.block;
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
+import dev.sweetberry.more_than_a_foxbox.network.clientbound.ClientboundPlushieSquish;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -55,8 +59,8 @@ public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 
 		if (player.isShiftKeyDown())
 			return crouchUseWithoutItem(state, level, pos, player, hitResult, entity);
-		
-		entity.resetStretchSquish();
+
+		squishPlushie(level, pos, player, entity);
 		entity.playSound(level, pos);
 
 		if (entity.hasPlushieData()) {
@@ -88,7 +92,28 @@ public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 
 		var entity = maybeEntity.get();
 
+		squishPlushie(level, pos, null, entity);
 		entity.playSound(level, pos);
+	}
+
+	private void squishPlushie(
+		Level level,
+		BlockPos pos,
+		@Nullable Player player,
+		PlushieHoldingBlockEntity entity
+	) {
+		if (!level.isClientSide()) {
+			for (ServerPlayer serverPlayer : PlayerLookup.tracking(entity)) {
+				if (serverPlayer.is(player)) continue;
+				
+				ServerPlayNetworking.send(
+					serverPlayer,
+					new ClientboundPlushieSquish(pos)
+				);
+			}
+		} else {
+			entity.resetStretchSquish();
+		}
 	}
 
 	@Override
