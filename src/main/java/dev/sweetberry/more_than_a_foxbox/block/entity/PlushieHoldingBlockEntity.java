@@ -33,7 +33,6 @@ import java.util.Optional;
 public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 	public static final String PLUSHIE_KEY = "plushie";
 	public static final String NAME_KEY = "name";
-	public static final ResourceLocation PLUSHIE_DYNAMIC_DROP = MoreThanAFoxbox.id(PLUSHIE_KEY);
 	public static final float STRETCH_TIME = 10.0f;
 	public static final float SQUISH_TIME = 10.0f;
 	public static final float SCALE_SLOWNESS = 2.0f;
@@ -42,6 +41,8 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 
 	public PlushieHoldingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
 		super(type, pos, blockState);
+
+		setChanged();
 	}
 
 	public void setPlushieData(PlushieDataComponent component, Optional<Component> name) {
