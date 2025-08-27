@@ -36,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
@@ -57,17 +58,16 @@ public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 
 		var entity = maybeEntity.get();
 
-		if (player.isShiftKeyDown())
+		if (player.isShiftKeyDown() && !Objects.requireNonNull(player.gameMode()).isBlockPlacingRestricted())
 			return crouchUseWithoutItem(state, level, pos, player, hitResult, entity);
 
 		squishPlushie(level, pos, player, entity);
 		entity.playSound(level, pos);
 
-		if (entity.hasPlushieData()) {
+		if (entity.hasPlushieData())
 			return InteractionResult.SUCCESS;
-		} else {
-			return InteractionResult.PASS;
-		}
+
+		return InteractionResult.PASS;
 	}
 
 	@Override
