@@ -58,7 +58,7 @@ public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 
 		var entity = maybeEntity.get();
 
-		if (player.isShiftKeyDown() && !Objects.requireNonNull(player.gameMode()).isBlockPlacingRestricted())
+		if (player.isShiftKeyDown() && !player.blockActionRestricted(level, pos, player.gameMode()))
 			return crouchUseWithoutItem(state, level, pos, player, hitResult, entity);
 
 		squishPlushie(level, pos, player, entity);
