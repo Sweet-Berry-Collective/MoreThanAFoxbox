@@ -1,0 +1,9 @@
+{
+	"mob_sounds": "entity.wolf_cute.ambient",
+	"poses": {
+		"sit": "more_than_a_foxbox:more_than_a_foxbox/wolf_snowy/sit",
+		"stand": "more_than_a_foxbox:more_than_a_foxbox/wolf_snowy/stand",
+		"lay": "more_than_a_foxbox:more_than_a_foxbox/wolf_snowy/lay",
+		"box": "more_than_a_foxbox:more_than_a_foxbox/wolf_snowy/box"
+	}
+}
