@@ -22,10 +22,13 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public final class MtfbItems {
 	private static final RegistryContext<Item> ITEM_CONTEXT = new RegistryContext<>(
@@ -134,7 +137,21 @@ public final class MtfbItems {
 
 		var stack = PLUSHIE.get().getDefaultInstance();
 
-		for (var value : registry.entrySet()) {
+		for (var value :
+			registry
+				.entrySet()
+				.stream()
+				.sorted(
+					Comparator
+						.comparing(it ->
+							it
+								.getKey()
+								.location()
+								.toString()
+						)
+				)
+				.toList()
+		) {
 			if (value.getKey() == PlushieVariant.PLACEHOLDER)
 				continue;
 
