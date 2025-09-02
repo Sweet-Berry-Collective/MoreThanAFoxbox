@@ -178,7 +178,7 @@ public class BoxBlock extends PlushieHoldingBlock {
 
 	@Override
 	protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-		if (player.isShiftKeyDown())
+		if (player.isShiftKeyDown() || player.blockActionRestricted(level, pos, player.gameMode()))
 			return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
 
 		if (!stack.is(MtfbItems.PLUSHIE.get()))
