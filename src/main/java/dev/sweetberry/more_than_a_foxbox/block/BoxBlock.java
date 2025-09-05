@@ -18,6 +18,8 @@ import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -150,15 +152,22 @@ public class BoxBlock extends PlushieHoldingBlock {
 					return InteractionResult.PASS;
 				}
 			}
+
+			if (!(level instanceof ServerLevel serverLevel))
+				return InteractionResult.SUCCESS;
 			
-			BoxSeatEntity seatEntity;
-			seatEntity = MtfbEntityTypes.BOX_SEAT.get().create(level,
-				EntitySpawnReason.EVENT);
-			if (seatEntity == null) return InteractionResult.PASS;
+			var seatEntity = MtfbEntityTypes.BOX_SEAT.get().create(level, EntitySpawnReason.EVENT);
+
+			if (seatEntity == null)
+				return InteractionResult.SUCCESS;
+
 			seatEntity.setPos(pos.getBottomCenter());
 			level.addFreshEntity(seatEntity);
 			
-			if (seatEntity.isVehicle()) return InteractionResult.PASS;
+			if (seatEntity.isVehicle())
+				return InteractionResult.SUCCESS;
+
+			serverLevel.getServer().execute(() -> player.startRiding(seatEntity));
 			
 			player.startRiding(seatEntity, true);
 			

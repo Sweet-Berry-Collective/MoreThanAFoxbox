@@ -19,8 +19,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -109,6 +111,14 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 
 		getName()
 			.ifPresent(it -> output.store(NAME_KEY, ComponentSerialization.CODEC, it));
+	}
+
+	@Override
+	public void setChanged() {
+		super.setChanged();
+
+		if (level instanceof ServerLevel serverLevel)
+			serverLevel.getChunkSource().blockChanged(worldPosition);
 	}
 
 	@Override
