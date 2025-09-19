@@ -1,0 +1,8 @@
+{
+	"parent": "more_than_a_foxbox:more_than_a_foxbox/wolf/sit",
+	"ambientocclusion": false,
+	"textures": {
+		"1": "more_than_a_foxbox:item/plushie/wolf_black",
+		"particle": "more_than_a_foxbox:item/plushie/wolf_black"
+	}
+}
