@@ -194,6 +194,11 @@
 		"fixed": {
 			"translation": [0, 8, 0],
 			"scale": [2, 2, 2]
+		},
+		"on_shelf": {
+			"rotation": [ 0, 180, 0 ],
+			"translation": [ 0, 0, 0 ],
+			"scale": [ 2, 2, 2 ]
 		}
 	},
 	"groups": [

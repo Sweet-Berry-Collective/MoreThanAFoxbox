@@ -29,7 +29,7 @@ public final class MtfbBlocks {
 		"polyfill_block",
 		withProperties(properties -> new PolyfillBlock(
 			properties
-				.noCollission()
+				.noCollision()
 				.instabreak()
 				.sound(SoundType.WOOL)
 		))

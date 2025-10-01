@@ -16,6 +16,7 @@ import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -127,7 +128,7 @@ public class PlushieBlock extends PlushieHoldingBlock {
 	}
 
 	@Override
-	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos blockPos, Direction direction) {
 		return state.getValue(POSE).ordinal() + 1;
 	}
 }

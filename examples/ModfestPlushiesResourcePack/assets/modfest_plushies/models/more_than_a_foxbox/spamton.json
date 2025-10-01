@@ -44,6 +44,11 @@
 		},
 		"head": {
 			"translation": [0, 14.4, 0]
+		},
+		"on_shelf": {
+			"rotation": [ 0, 180, 0 ],
+			"translation": [ 0, 0, 0 ],
+			"scale": [ 2, 2, 2 ]
 		}
 	}
 }

@@ -72,7 +72,7 @@ public abstract class PlushieHoldingBlock extends BaseEntityBlock {
 
 	@Override
 	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
-		if (level.isClientSide)
+		if (level.isClientSide())
 			return;
 
 		boolean powered = level.hasNeighborSignal(pos);

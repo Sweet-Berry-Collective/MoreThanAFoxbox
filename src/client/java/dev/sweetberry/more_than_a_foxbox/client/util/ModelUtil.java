@@ -9,6 +9,7 @@ package dev.sweetberry.more_than_a_foxbox.client.util;
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,22 +18,22 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 public class ModelUtil {
-	public static CompletableFuture<List<ResourceLocation>> getPlushieModels(ResourceManager manager, Executor executor) {
-		return getModels(MoreThanAFoxbox.ID, manager, executor);
+	public static CompletableFuture<List<ResourceLocation>> getPlushieModels(PreparableReloadListener.SharedState state, Executor executor) {
+		return getModels(MoreThanAFoxbox.ID, state, executor);
 	}
 	
-	public static CompletableFuture<List<ResourceLocation>> getBoxModels(ResourceManager manager, Executor executor) {
-		return getModels("block/cardboard_box", manager, executor);
+	public static CompletableFuture<List<ResourceLocation>> getBoxModels(PreparableReloadListener.SharedState state, Executor executor) {
+		return getModels("block/cardboard_box", state, executor);
 	}
 
 	private static @NotNull CompletableFuture<List<ResourceLocation>> getModels(
 		String path,
-		ResourceManager manager,
+		PreparableReloadListener.SharedState state,
 		Executor executor
 	) {
 		FileToIdConverter fileToIdConverter = FileToIdConverter.json("models/" + path);
 		return CompletableFuture.supplyAsync(
-			() -> fileToIdConverter.listMatchingResources(manager)
+			() -> fileToIdConverter.listMatchingResources(state.resourceManager())
 				.keySet()
 				.stream().map(resourceLocation ->
 					resourceLocation.withPath(s -> s.substring(

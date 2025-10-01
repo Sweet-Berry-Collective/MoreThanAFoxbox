@@ -127,7 +127,7 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 	}
 
 	public void playSound(Level level, BlockPos pos) {
-		if (level.isClientSide)
+		if (level.isClientSide())
 			return;
 
 		var variant = this.components().get(MtfbComponents.PLUSHIE.get());

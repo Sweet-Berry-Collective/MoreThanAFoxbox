@@ -1,15 +1,15 @@
 [versions]
-loom = "1.10.+"
+loom = "1.11.+"
 minotaur = "2.+"
 
-mc = "1.21.8"
-fl = "0.16.14"
+mc = "1.21.9"
+fl = "0.17.2"
 parchment = "2025.07.20"
 parchment_mc = "1.21.8"
-fapi = "0.131.0+1.21.8"
+fapi = "0.133.14+1.21.9"
 yumi_licenser = "2.1.+"
 yumi-commons = "1.0.0-beta.2"
-sodium = "mc1.21.6-0.6.13-fabric"
+sodium = "mc1.21.9-0.7.0-fabric"
 modmenu = "15.0.0-beta.3"
 
 [plugins]

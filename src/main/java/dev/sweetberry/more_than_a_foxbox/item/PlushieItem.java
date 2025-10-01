@@ -63,7 +63,7 @@ public class PlushieItem extends BlockItem {
 
 		level.playPlayerSound(sound.get(), SoundSource.PLAYERS, 1f, 1f);
 
-		if (level.isClientSide)
+		if (level.isClientSide())
 			return InteractionResult.SUCCESS;
 
 		level.playSeededSound(player, center.x, center.y, center.z, sound.get(), SoundSource.PLAYERS, 1f, 1f,  level.random.nextLong());

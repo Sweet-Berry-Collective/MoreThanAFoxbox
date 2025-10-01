@@ -32,7 +32,7 @@ dependencies {
 	minecraft libs.mc
 	mappings loom.layered {
 		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-${libs.versions.parchment.mc.get()}:${libs.versions.parchment.asProvider().get()}@zip")
+//		parchment("org.parchmentmc.data:parchment-${libs.versions.parchment.mc.get()}:${libs.versions.parchment.asProvider().get()}@zip")
 	}
 
 	modImplementation libs.fl
@@ -42,7 +42,7 @@ dependencies {
 	include libs.yumi.commons.core
 	
 	modRuntimeOnly libs.sodium
-	modRuntimeOnly libs.modmenu
+//	modRuntimeOnly libs.modmenu
 }
 
 loom {

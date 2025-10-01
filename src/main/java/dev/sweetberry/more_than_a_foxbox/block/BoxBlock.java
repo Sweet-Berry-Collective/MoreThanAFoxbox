@@ -17,6 +17,7 @@ import dev.sweetberry.more_than_a_foxbox.entity.MtfbEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -169,7 +170,7 @@ public class BoxBlock extends PlushieHoldingBlock {
 
 			serverLevel.getServer().execute(() -> player.startRiding(seatEntity));
 			
-			player.startRiding(seatEntity, true);
+			player.startRiding(seatEntity, true, true);
 			
 			return InteractionResult.SUCCESS;
 		}
@@ -219,7 +220,7 @@ public class BoxBlock extends PlushieHoldingBlock {
 	}
 
 	@Override
-	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
 		var maybeEntity = level.getBlockEntity(pos, MtfbBlockEntityTypes.CARDBOARD_BOX.get());
 
 		if (maybeEntity.isEmpty())
