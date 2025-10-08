@@ -29,7 +29,7 @@ public class PolyfillBlock extends Block {
 	}
 
 	@Override
-	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier, boolean bl) {
 		entity.makeStuckInBlock(state, new Vec3(0.5, 0.5, 0.5));
 	}
 }
