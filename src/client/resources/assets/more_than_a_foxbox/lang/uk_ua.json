@@ -1,0 +1,43 @@
+{
+	"item.more_than_a_foxbox.speaker": "Спікер",
+	"item.more_than_a_foxbox.squeaker": "Пищалка",
+
+	"item.more_than_a_foxbox.polyfill": "Поліфіл",
+	"item.more_than_a_foxbox.polyfill_block": "Блок поліфіла",
+	"block.more_than_a_foxbox.polyfill_block": "Блок поліфіла",
+
+	"item.more_than_a_foxbox.cardboard": "Картон",
+	"item.more_than_a_foxbox.cardboard_box": "Картонна коробка",
+	"block.more_than_a_foxbox.cardboard_box": "Картонна коробка",
+
+	"item.more_than_a_foxbox.plushie.no_sounds": "Без звуку",
+	"item.more_than_a_foxbox.plushie.speaker": "Звуки моба",
+	"item.more_than_a_foxbox.plushie.squeaker": "Пищаві звуки",
+	"item.more_than_a_foxbox.plushie.debug": "Тип іграшки: %s",
+
+	"item.more_than_a_foxbox.plushie": "Невідома іграшка",
+	"block.more_than_a_foxbox.plushie": "Іграшка",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.placeholder": "Невідома іграшка",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.fox": "Іграшкова лисиця",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.snow_fox": "Іграшкова сніжна лисиця",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.cow": "Іграшкова корова",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.wolf": "Іграшковий блідий вовк",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.wolf_ashen": "Іграшковий попелястий вовк",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.wolf_black": "Іграшковий чорний вовк",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.wolf_chestnut": "Іграшковий каштановий вовк",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.wolf_rusty": "Іграшковий іржавий вовк",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.wolf_snowy": "Іграшковий сніжний вовк",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.wolf_spotted": "Іграшковий плямистий вовк",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.wolf_striped": "Іграшковий смугастий вовк",
+	"item.more_than_a_foxbox.plushie.more_than_a_foxbox.wolf_woods": "Іграшковий лісовий вовк",
+
+	"subtitles.more_than_a_foxbox.plushie.squeak": "Іграшка пищить",
+
+	"item.more_than_a_foxbox.sewing_table": "Швейний стіл",
+	"block.more_than_a_foxbox.sewing_table": "Швейний стіл",
+	"container.more_than_a_foxbox.sewing_table": "Швейний стіл",
+
+	"item_group.more_than_a_foxbox.tab": "More Than A Foxbox",
+
+    "modmenu.descriptionTranslation.more_than_a_foxbox": "Набагато більше, ніж просто лисиця в коробці! More Than A Foxbox містить знайомих друзів із налаштовуваними позами та звуками"
+}
