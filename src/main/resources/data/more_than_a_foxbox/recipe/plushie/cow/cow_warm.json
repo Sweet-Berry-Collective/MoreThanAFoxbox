@@ -1,0 +1,16 @@
+{
+	"type": "more_than_a_foxbox:sewing",
+
+	"shell": "brown_wool",
+	"filler": "#more_than_a_foxbox:polyfill",
+	"essence": "#more_than_a_foxbox:cow_essence",
+
+	"result": {
+		"id": "more_than_a_foxbox:plushie",
+		"components": {
+			"more_than_a_foxbox:plushie": {
+				"variant": "more_than_a_foxbox:cow_warm"
+			}
+		}
+	}
+}
