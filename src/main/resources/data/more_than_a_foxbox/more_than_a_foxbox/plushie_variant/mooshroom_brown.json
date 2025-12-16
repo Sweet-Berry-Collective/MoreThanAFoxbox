@@ -1,0 +1,9 @@
+{
+	"mob_sounds": "entity.cow.ambient",
+	"poses": {
+		"sit": "more_than_a_foxbox:more_than_a_foxbox/mooshroom_brown/sit",
+		"stand": "more_than_a_foxbox:more_than_a_foxbox/mooshroom_brown/stand",
+		"lay": "more_than_a_foxbox:more_than_a_foxbox/mooshroom_brown/lay",
+		"box": "more_than_a_foxbox:more_than_a_foxbox/mooshroom_brown/box"
+	}
+}
