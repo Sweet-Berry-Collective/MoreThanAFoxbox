@@ -12,14 +12,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.*;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import org.jetbrains.annotations.NotNull;
 
 public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> {
-	private static final ResourceLocation BG_LOCATION = MoreThanAFoxbox.id("textures/gui/container/sewing_table.png");
+	private static final Identifier BG_LOCATION = MoreThanAFoxbox.id("textures/gui/container/sewing_table.png");
 	private static final SlotBackground SHELL_BACKGROUND = new SlotBackground(
 		0,
 		MoreThanAFoxbox.id("container/slot/shell")
@@ -61,7 +61,7 @@ public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> 
 		UPGRADE_BACKGROUND.render(this, guiGraphics, leftPos, topPos);
 	}
 
-	private record SlotBackground(int slot, ResourceLocation sprite) {
+	private record SlotBackground(int slot, Identifier sprite) {
 		public void render(SewingTableScreen screen, GuiGraphics guiGraphics, int x, int y) {
 			var item = screen.menu.getSlot(slot);
 
@@ -70,7 +70,7 @@ public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> 
 		}
 	}
 
-	private void renderIcon(Slot slot, ResourceLocation icon, GuiGraphics guiGraphics, int x, int y) {
+	private void renderIcon(Slot slot, Identifier icon, GuiGraphics guiGraphics, int x, int y) {
 		guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, icon, x + slot.x, y + slot.y, 16, 16, ARGB.white(1));
 	}
 }

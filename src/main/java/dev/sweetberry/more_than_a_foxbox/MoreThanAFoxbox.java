@@ -17,7 +17,7 @@ import dev.sweetberry.more_than_a_foxbox.recipe.MtfbRecipes;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import dev.sweetberry.more_than_a_foxbox.sound.MtfbSounds;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +41,7 @@ public class MoreThanAFoxbox implements ModInitializer {
 		MtfbEntityTypes.register();
 	}
 
-	public static ResourceLocation id(String path) {
-		return ResourceLocation.fromNamespaceAndPath(ID, path);
+	public static Identifier id(String path) {
+		return Identifier.fromNamespaceAndPath(ID, path);
 	}
 }

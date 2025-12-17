@@ -18,7 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
@@ -93,7 +93,7 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 		return getPlushieData().flatMap(plushieDataComponent -> level.registryAccess().get(plushieDataComponent.variant()));
 	}
 
-	public abstract Optional<ResourceLocation> getPoseModel(BlockState state);
+	public abstract Optional<Identifier> getPoseModel(BlockState state);
 
 	@Override
 	protected void loadAdditional(ValueInput input) {

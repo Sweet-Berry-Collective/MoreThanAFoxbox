@@ -54,7 +54,7 @@ public record PlushieDataComponent(
 	}
 
 	public MutableComponent getDisplayName() {
-		return Component.translatable("item.more_than_a_foxbox.plushie." + variant.location().toLanguageKey());
+		return Component.translatable("item.more_than_a_foxbox.plushie." + variant.identifier().toLanguageKey());
 	}
 
 	public enum SoundType implements StringRepresentable {

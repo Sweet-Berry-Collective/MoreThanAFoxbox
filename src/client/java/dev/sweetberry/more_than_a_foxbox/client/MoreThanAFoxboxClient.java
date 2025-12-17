@@ -34,7 +34,7 @@ import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.item.ItemModels;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
@@ -47,7 +47,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public class MoreThanAFoxboxClient implements ClientModInitializer {
-	public static final Map<ResourceLocation, ExtraModelKey<BlockStateModel>> MODEL_KEYS = new HashMap<>();
+	public static final Map<Identifier, ExtraModelKey<BlockStateModel>> MODEL_KEYS = new HashMap<>();
 	
 	@Override
 	public void onInitializeClient() {
@@ -56,7 +56,7 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 		PreparableModelLoadingPlugin.register(
 			ModelUtil::getPlushieModels,
 			(data, pluginContext) -> {
-				for (ResourceLocation id : data) {
+				for (Identifier id : data) {
 					ExtraModelKey<BlockStateModel> modelKey = ExtraModelKey.create(id::toString);
 					MODEL_KEYS.put(id, modelKey);
 					pluginContext.addModel(modelKey, SimpleUnbakedExtraModel.blockStateModel(id));
@@ -70,7 +70,7 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 		PreparableModelLoadingPlugin.register(
 			ModelUtil::getBoxModels,
 			(data, pluginContext) -> {
-				for (ResourceLocation id : data) {
+				for (Identifier id : data) {
 					pluginContext.addModel(ExtraModelKey.create(id::toString), SimpleUnbakedExtraModel.blockStateModel(id));
 				}
 				

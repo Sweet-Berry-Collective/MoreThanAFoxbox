@@ -26,7 +26,7 @@ public final class MtfbSounds {
 	private MtfbSounds() {}
 
 	public static Function<ResourceKey<SoundEvent>, SoundEvent> withVariableRange() {
-		return key -> SoundEvent.createVariableRangeEvent(key.location());
+		return key -> SoundEvent.createVariableRangeEvent(key.identifier());
 	}
 
 	public static void register() {

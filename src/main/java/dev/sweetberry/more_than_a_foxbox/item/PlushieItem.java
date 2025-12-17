@@ -95,7 +95,7 @@ public class PlushieItem extends BlockItem {
 					.translatable("item.more_than_a_foxbox.plushie.debug",
 						plushie
 							.variant()
-							.location()
+							.identifier()
 							.toString()
 					)
 					.withStyle(

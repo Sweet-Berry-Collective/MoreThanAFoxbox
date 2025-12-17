@@ -110,7 +110,7 @@ public final class MtfbItems {
 	) {
 		return key -> CreativeModeTab
 			.builder(CreativeModeTab.Row.TOP, 0)
-			.title(Component.translatable("item_group."+key.location().toLanguageKey()))
+			.title(Component.translatable("item_group."+key.identifier().toLanguageKey()))
 			.displayItems(generator)
 			.icon(displayItem.get()::getDefaultInstance)
 			.build();
@@ -146,7 +146,7 @@ public final class MtfbItems {
 						.comparing(it ->
 							it
 								.getKey()
-								.location()
+								.identifier()
 								.toString()
 						)
 				)

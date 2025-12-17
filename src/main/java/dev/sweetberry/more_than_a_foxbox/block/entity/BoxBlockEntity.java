@@ -7,7 +7,7 @@
 package dev.sweetberry.more_than_a_foxbox.block.entity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
@@ -21,7 +21,7 @@ public class BoxBlockEntity extends PlushieHoldingBlockEntity {
 	}
 
 	@Override
-	public Optional<ResourceLocation> getPoseModel(BlockState state) {
+	public Optional<Identifier> getPoseModel(BlockState state) {
 		return getPlushieVariant().map(it -> it.value().poses().box());
 	}
 }

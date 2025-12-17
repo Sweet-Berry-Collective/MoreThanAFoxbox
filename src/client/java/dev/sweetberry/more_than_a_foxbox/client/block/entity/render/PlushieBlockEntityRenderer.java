@@ -27,7 +27,7 @@ import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.ModelManager;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -42,7 +42,7 @@ import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlock
 import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.STRETCH_TIME;
 
 public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHoldingBlockEntity, PlushieHoldingBlockEntityRenderState> {
-	private final Map<ResourceLocation, BlockStateModel> models = new HashMap<>();
+	private final Map<Identifier, BlockStateModel> models = new HashMap<>();
 	private final BlockEntityRendererProvider.Context renderContext;
 	
 	public PlushieBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
@@ -72,8 +72,8 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 
 		state.isBox = blockEntity instanceof BoxBlockEntity;
 
-		Optional<ResourceLocation> optionalPoseModel = blockEntity.getPoseModel(blockEntity.getBlockState());
-		ResourceLocation poseModel;
+		Optional<Identifier> optionalPoseModel = blockEntity.getPoseModel(blockEntity.getBlockState());
+		Identifier poseModel;
 
 		if (blockEntity instanceof BoxBlockEntity && optionalPoseModel.isEmpty())
 			return;
@@ -87,7 +87,7 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 		);
 
 		if (state.model == null)
-			state.model = modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(ResourceLocation.fromNamespaceAndPath(MoreThanAFoxbox.ID, MoreThanAFoxbox.ID + "/placeholder")));
+			state.model = modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(Identifier.fromNamespaceAndPath(MoreThanAFoxbox.ID, MoreThanAFoxbox.ID + "/placeholder")));
 
 		if (state.model == null)
 			MoreThanAFoxbox.LOGGER.error("Cannot find placeholder plushie.");

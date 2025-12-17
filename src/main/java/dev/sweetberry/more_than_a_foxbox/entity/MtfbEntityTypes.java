@@ -59,6 +59,6 @@ public final class MtfbEntityTypes {
 	}
 	
 	private static <T extends Entity> ResourceKey<EntityType<?>> toWildcard(ResourceKey<EntityType<T>> key) {
-		return ResourceKey.create(Registries.ENTITY_TYPE, key.location());
+		return ResourceKey.create(Registries.ENTITY_TYPE, key.identifier());
 	}
 }
