@@ -8,15 +8,16 @@ package dev.sweetberry.more_than_a_foxbox.client.screen;
 
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.menu.SewingTableMenu;
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.*;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
-import org.jetbrains.annotations.NotNull;
 
 public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> {
 	private static final Identifier BG_LOCATION = MoreThanAFoxbox.id("textures/gui/container/sewing_table.png");

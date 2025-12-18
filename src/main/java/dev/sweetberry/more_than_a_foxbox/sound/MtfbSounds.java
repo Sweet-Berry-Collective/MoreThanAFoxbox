@@ -6,14 +6,15 @@
 
 package dev.sweetberry.more_than_a_foxbox.sound;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
-
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public final class MtfbSounds {
 	private static final RegistryContext<SoundEvent> CONTEXT = new RegistryContext<>(BuiltInRegistries.SOUND_EVENT, MoreThanAFoxbox.ID);

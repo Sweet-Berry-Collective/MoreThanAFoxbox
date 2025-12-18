@@ -6,6 +6,14 @@
 
 package dev.sweetberry.more_than_a_foxbox.client.block.entity.render;
 
+import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.SCALE_SLOWNESS;
+import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.SQUISH_TIME;
+import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.STRETCH_TIME;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.BoxBlock;
@@ -14,32 +22,22 @@ import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
 import dev.sweetberry.more_than_a_foxbox.client.MoreThanAFoxboxClient;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
-import net.fabricmc.fabric.api.renderer.v1.render.RenderLayerHelper;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.blockentity.ShelfRenderer;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.joml.Matrix4f;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.SCALE_SLOWNESS;
-import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.SQUISH_TIME;
-import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.STRETCH_TIME;
 
 public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHoldingBlockEntity, PlushieHoldingBlockEntityRenderState> {
 	private final Map<Identifier, BlockStateModel> models = new HashMap<>();

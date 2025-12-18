@@ -9,6 +9,9 @@ package dev.sweetberry.more_than_a_foxbox.block;
 import com.mojang.math.OctahedralGroup;
 import com.mojang.serialization.MapCodec;
 import dev.sweetberry.more_than_a_foxbox.menu.SewingTableMenu;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -39,8 +42,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class SewingTableBlock extends Block implements SimpleWaterloggedBlock {
 	public static final MapCodec<SewingTableBlock> CODEC = simpleCodec(SewingTableBlock::new);

@@ -6,10 +6,11 @@
 
 package dev.sweetberry.more_than_a_foxbox.util;
 
-import net.minecraft.util.StringRepresentable;
+import java.util.Locale;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Locale;
+import net.minecraft.util.StringRepresentable;
 
 /**
  * An octal direction like on a compass.

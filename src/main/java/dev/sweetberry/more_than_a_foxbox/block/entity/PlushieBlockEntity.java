@@ -6,13 +6,14 @@
 
 package dev.sweetberry.more_than_a_foxbox.block.entity;
 
+import java.util.Optional;
+
 import dev.sweetberry.more_than_a_foxbox.block.PlushieBlock;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Optional;
 
 public class PlushieBlockEntity extends PlushieHoldingBlockEntity {
 	public PlushieBlockEntity(

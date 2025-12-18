@@ -6,10 +6,15 @@
 
 package dev.sweetberry.more_than_a_foxbox.data;
 
+import java.util.Locale;
+import java.util.Optional;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import dev.sweetberry.more_than_a_foxbox.sound.MtfbSounds;
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -19,10 +24,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
-import java.util.Optional;
 
 public record PlushieDataComponent(
 	ResourceKey<PlushieVariant> variant,

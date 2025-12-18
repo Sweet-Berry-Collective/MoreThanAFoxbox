@@ -6,8 +6,12 @@
 
 package dev.sweetberry.more_than_a_foxbox.block;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
@@ -15,9 +19,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public final class MtfbBlocks {
 	private static final RegistryContext<Block> CONTEXT = new RegistryContext<>(

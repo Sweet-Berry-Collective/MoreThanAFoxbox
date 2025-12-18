@@ -6,16 +6,16 @@
 
 package dev.sweetberry.more_than_a_foxbox.client.util;
 
-import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
-import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.Identifier;
-import net.minecraft.server.packs.resources.PreparableReloadListener;
-import net.minecraft.server.packs.resources.ResourceManager;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+
+import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
+import org.jetbrains.annotations.NotNull;
+
+import net.minecraft.resources.FileToIdConverter;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
 
 public class ModelUtil {
 	public static CompletableFuture<List<Identifier>> getPlushieModels(PreparableReloadListener.SharedState state, Executor executor) {

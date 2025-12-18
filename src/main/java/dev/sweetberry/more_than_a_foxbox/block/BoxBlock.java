@@ -6,6 +6,9 @@
 
 package dev.sweetberry.more_than_a_foxbox.block;
 
+import java.util.Objects;
+import java.util.Optional;
+
 import com.mojang.serialization.MapCodec;
 import dev.sweetberry.more_than_a_foxbox.block.entity.BoxBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
@@ -16,11 +19,15 @@ import dev.sweetberry.more_than_a_foxbox.entity.BoxSeatEntity;
 import dev.sweetberry.more_than_a_foxbox.entity.MtfbEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -40,13 +47,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-
-import java.util.Objects;
-import java.util.Optional;
 
 public class BoxBlock extends PlushieHoldingBlock {
 	public static final MapCodec<BoxBlock> CODEC = simpleCodec(BoxBlock::new);

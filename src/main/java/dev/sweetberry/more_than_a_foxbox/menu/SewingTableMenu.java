@@ -6,10 +6,13 @@
 
 package dev.sweetberry.more_than_a_foxbox.menu;
 
-import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
+import java.util.List;
+
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.recipe.ContainerRecipeInput;
 import dev.sweetberry.more_than_a_foxbox.recipe.MtfbRecipes;
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,11 +20,11 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class SewingTableMenu extends AbstractContainerMenu {
 	public static final int RESULT_SLOT = 4;

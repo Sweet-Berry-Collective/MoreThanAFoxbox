@@ -6,6 +6,10 @@
 
 package dev.sweetberry.more_than_a_foxbox.client;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
+
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.BoxBlock;
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
@@ -19,14 +23,10 @@ import dev.sweetberry.more_than_a_foxbox.client.util.ModelUtil;
 import dev.sweetberry.more_than_a_foxbox.entity.MtfbEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.menu.MtfbMenus;
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.model.loading.v1.ExtraModelKey;
-import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
-import net.fabricmc.fabric.api.client.model.loading.v1.SimpleUnbakedExtraModel;
-import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperBlockStateModel;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
+
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -38,13 +38,15 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Predicate;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.model.loading.v1.ExtraModelKey;
+import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
+import net.fabricmc.fabric.api.client.model.loading.v1.SimpleUnbakedExtraModel;
+import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperBlockStateModel;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 
 public class MoreThanAFoxboxClient implements ClientModInitializer {
 	public static final Map<Identifier, ExtraModelKey<BlockStateModel>> MODEL_KEYS = new HashMap<>();

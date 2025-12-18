@@ -6,9 +6,13 @@
 
 package dev.sweetberry.more_than_a_foxbox.block.entity;
 
+import java.util.Optional;
+
 import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieDataComponent;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -22,15 +26,11 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
 
 public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 	public static final String PLUSHIE_KEY = "plushie";

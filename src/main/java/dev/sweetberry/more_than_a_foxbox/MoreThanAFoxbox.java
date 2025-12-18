@@ -8,18 +8,20 @@ package dev.sweetberry.more_than_a_foxbox;
 
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
+import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.entity.MtfbEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
-import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.menu.MtfbMenus;
 import dev.sweetberry.more_than_a_foxbox.network.MtfbNetworking;
 import dev.sweetberry.more_than_a_foxbox.recipe.MtfbRecipes;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import dev.sweetberry.more_than_a_foxbox.sound.MtfbSounds;
-import net.fabricmc.api.ModInitializer;
-import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.minecraft.resources.Identifier;
+
+import net.fabricmc.api.ModInitializer;
 
 public class MoreThanAFoxbox implements ModInitializer {
 	public static final String ID = "more_than_a_foxbox";

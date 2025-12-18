@@ -7,6 +7,8 @@
 package dev.sweetberry.more_than_a_foxbox.entity;
 
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.vehicle.VehicleEntity;
@@ -17,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 
 public class BoxSeatEntity extends VehicleEntity {
 	public BoxSeatEntity(

@@ -6,13 +6,14 @@
 
 package dev.sweetberry.more_than_a_foxbox.recipe;
 
+import java.util.function.Supplier;
+
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-
-import java.util.function.Supplier;
 
 public final class MtfbRecipes {
 	private static final RegistryContext<RecipeType<?>> TYPE_CONTEXT = new RegistryContext<>(BuiltInRegistries.RECIPE_TYPE, MoreThanAFoxbox.ID);

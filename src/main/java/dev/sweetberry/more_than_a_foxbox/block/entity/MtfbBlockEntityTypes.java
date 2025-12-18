@@ -6,19 +6,21 @@
 
 package dev.sweetberry.more_than_a_foxbox.block.entity;
 
+import java.util.Arrays;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
-import java.util.Arrays;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 
 public final class MtfbBlockEntityTypes {
 	private static final RegistryContext<BlockEntityType<?>> CONTEXT =  new RegistryContext<>(

@@ -7,6 +7,8 @@
 package dev.sweetberry.more_than_a_foxbox.block;
 
 import com.mojang.serialization.MapCodec;
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
@@ -14,7 +16,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 
 public class PolyfillBlock extends Block {
 	public static final MapCodec<PolyfillBlock> CODEC = simpleCodec(PolyfillBlock::new);
