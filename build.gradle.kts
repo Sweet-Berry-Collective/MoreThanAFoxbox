@@ -11,7 +11,7 @@ val modVersion: String by project
 val branchName: String by project
 val slug: String by project
 val modId: String by project
-val authors: String by project
+val modAuthors: String by project
 val group: String by project
 val user: String by project
 val github_slug: String by project
@@ -94,9 +94,9 @@ tasks.processResources {
 		"issues"        to "https://github.com/${user}/${github_slug}/issues",
 		"sources"       to "https://github.com/${user}/${github_slug}",
 		"license"       to license,
-		"authors"       to authors.split(", ").joinToString("\",\n    \""),
+		"authors"       to modAuthors.split(", ").joinToString("\",\n    \""),
 		"contributors"  to contributors.split(", ").joinToString("\",\n    \""),
-		"members"       to "${authors}${members}",
+		"members"       to "${modAuthors}${members}",
 		"mc"            to compatibleVersions.split(", ")[0],
 		"fl"            to libs.versions.fl.get(),
 		"fapi"          to libs.versions.fapi.get(),
