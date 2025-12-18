@@ -6,13 +6,14 @@
 
 package dev.sweetberry.more_than_a_foxbox.data;
 
+import java.util.function.Function;
+
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
+
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-
-import java.util.function.Function;
 
 public final class MtfbComponents {
 	private static final RegistryContext<DataComponentType<?>> CONTEXT = new RegistryContext<>(

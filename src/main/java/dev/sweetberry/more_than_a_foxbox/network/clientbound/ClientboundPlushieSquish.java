@@ -7,11 +7,12 @@
 package dev.sweetberry.more_than_a_foxbox.network.clientbound;
 
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import org.jetbrains.annotations.NotNull;
 
 public record ClientboundPlushieSquish(BlockPos pos) implements CustomPacketPayload {
 	public static final CustomPacketPayload.Type<ClientboundPlushieSquish> TYPE = new CustomPacketPayload.Type<>(

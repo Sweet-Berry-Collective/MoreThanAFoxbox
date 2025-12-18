@@ -6,22 +6,23 @@
 
 package dev.sweetberry.more_than_a_foxbox.data;
 
+import java.util.Locale;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
 
 public record PlushieVariant(
 	Holder<SoundEvent> mobSounds,
@@ -51,26 +52,26 @@ public record PlushieVariant(
 	public static final StreamCodec<RegistryFriendlyByteBuf, Holder<PlushieVariant>> STREAM_CODEC = ByteBufCodecs.holderRegistry(MtfbRegistries.PLUSHIE_VARIANT);
 
 	public record Poses(
-		ResourceLocation sit,
-		ResourceLocation stand,
-		ResourceLocation lay,
-		ResourceLocation box
+		Identifier sit,
+		Identifier stand,
+		Identifier lay,
+		Identifier box
 	) {
 		public static final Codec<Poses> DIRECT_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-			ResourceLocation.CODEC.fieldOf("sit").forGetter(Poses::sit),
-			ResourceLocation.CODEC.fieldOf("stand").forGetter(Poses::stand),
-			ResourceLocation.CODEC.fieldOf("lay").forGetter(Poses::lay),
-			ResourceLocation.CODEC.fieldOf("box").forGetter(Poses::box)
+			Identifier.CODEC.fieldOf("sit").forGetter(Poses::sit),
+			Identifier.CODEC.fieldOf("stand").forGetter(Poses::stand),
+			Identifier.CODEC.fieldOf("lay").forGetter(Poses::lay),
+			Identifier.CODEC.fieldOf("box").forGetter(Poses::box)
 		).apply(inst, Poses::new));
 
 		public static final Codec<Poses> NETWORK_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-			ResourceLocation.CODEC.fieldOf("sit").forGetter(Poses::sit),
-			ResourceLocation.CODEC.fieldOf("stand").forGetter(Poses::stand),
-			ResourceLocation.CODEC.fieldOf("lay").forGetter(Poses::lay),
-			ResourceLocation.CODEC.fieldOf("box").forGetter(Poses::box)
+			Identifier.CODEC.fieldOf("sit").forGetter(Poses::sit),
+			Identifier.CODEC.fieldOf("stand").forGetter(Poses::stand),
+			Identifier.CODEC.fieldOf("lay").forGetter(Poses::lay),
+			Identifier.CODEC.fieldOf("box").forGetter(Poses::box)
 		).apply(inst, Poses::new));
 		
-		public ResourceLocation getModelFromPose(Pose pose) {
+		public Identifier getModelFromPose(Pose pose) {
 			return switch (pose) {
 				case SIT -> sit;
 				case STAND -> stand;

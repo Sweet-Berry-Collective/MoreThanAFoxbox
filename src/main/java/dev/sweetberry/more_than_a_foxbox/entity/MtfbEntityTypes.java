@@ -6,18 +6,19 @@
 
 package dev.sweetberry.more_than_a_foxbox.entity;
 
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public final class MtfbEntityTypes {
 	private static final RegistryContext<EntityType<?>> CONTEXT = new RegistryContext<>(
@@ -59,6 +60,6 @@ public final class MtfbEntityTypes {
 	}
 	
 	private static <T extends Entity> ResourceKey<EntityType<?>> toWildcard(ResourceKey<EntityType<T>> key) {
-		return ResourceKey.create(Registries.ENTITY_TYPE, key.location());
+		return ResourceKey.create(Registries.ENTITY_TYPE, key.identifier());
 	}
 }

@@ -7,6 +7,7 @@
 package dev.sweetberry.more_than_a_foxbox.block.property;
 
 import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
+
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 public final class MtfbBlockProperties {

@@ -14,6 +14,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 public record IdentifiableRecipeType<I extends RecipeInput, T extends Recipe<I>>(ResourceKey<IdentifiableRecipeType<I, T>> key) implements RecipeType<T> {
 	@Override
 	public String toString() {
-		return key.location().toString();
+		return key.identifier().toString();
 	}
 }

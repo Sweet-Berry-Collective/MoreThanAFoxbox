@@ -6,9 +6,10 @@
 
 package dev.sweetberry.more_than_a_foxbox.client.block.entity.render;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
-import org.jetbrains.annotations.Nullable;
 
 public class PlushieHoldingBlockEntityRenderState extends BlockEntityRenderState {
 	@Nullable BlockStateModel model = null;

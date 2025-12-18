@@ -6,6 +6,12 @@
 
 package dev.sweetberry.more_than_a_foxbox.item;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
@@ -13,6 +19,7 @@ import dev.sweetberry.more_than_a_foxbox.data.PlushieDataComponent;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
 import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -21,14 +28,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public final class MtfbItems {
 	private static final RegistryContext<Item> ITEM_CONTEXT = new RegistryContext<>(
@@ -110,7 +109,7 @@ public final class MtfbItems {
 	) {
 		return key -> CreativeModeTab
 			.builder(CreativeModeTab.Row.TOP, 0)
-			.title(Component.translatable("item_group."+key.location().toLanguageKey()))
+			.title(Component.translatable("item_group."+key.identifier().toLanguageKey()))
 			.displayItems(generator)
 			.icon(displayItem.get()::getDefaultInstance)
 			.build();
@@ -146,7 +145,7 @@ public final class MtfbItems {
 						.comparing(it ->
 							it
 								.getKey()
-								.location()
+								.identifier()
 								.toString()
 						)
 				)

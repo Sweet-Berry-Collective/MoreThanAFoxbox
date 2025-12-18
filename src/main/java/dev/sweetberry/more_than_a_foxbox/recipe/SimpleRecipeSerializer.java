@@ -7,6 +7,7 @@
 package dev.sweetberry.more_than_a_foxbox.recipe;
 
 import com.mojang.serialization.MapCodec;
+
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.Recipe;

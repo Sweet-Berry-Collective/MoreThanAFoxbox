@@ -1,16 +1,16 @@
 [versions]
-loom = "1.11.+"
+loom = "1.14.+"
 minotaur = "2.+"
 
-mc = "1.21.10"
-fl = "0.17.2"
-parchment = "2025.10.05"
-parchment_mc = "1.21.9"
-fapi = "0.134.1+1.21.10"
+mc = "1.21.11"
+fl = "0.18.2"
+parchment = "2025.10.12"
+parchment_mc = "1.21.10"
+fapi = "0.140.0+1.21.11"
 yumi_licenser = "2.1.+"
-yumi-commons = "1.0.0-beta.2"
-sodium = "mc1.21.9-0.7.0-fabric"
-modmenu = "16.0.0-rc.1"
+yumi-commons = "1.0.0"
+sodium = "mc1.21.11-0.8.0-fabric"
+modmenu = "17.0.0-alpha.1"
 
 [plugins]
 loom = { id = "fabric-loom", version.ref = "loom" }

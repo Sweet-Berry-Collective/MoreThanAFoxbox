@@ -4,25 +4,31 @@
 			"model": "more_than_a_foxbox:block/cardboard_box"
 		},
 		"facing=south_west": {
-			"model": "more_than_a_foxbox:block/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box_45"
 		},
 		"facing=west": {
-			"model": "more_than_a_foxbox:block/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box",
+			"y": 90
 		},
 		"facing=north_west": {
-			"model": "more_than_a_foxbox:block/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box_45",
+			"y": 90
 		},
 		"facing=north": {
-			"model": "more_than_a_foxbox:block/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box",
+			"y": 180
 		},
 		"facing=north_east": {
-			"model": "more_than_a_foxbox:block/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box_45",
+			"y": 180
 		},
 		"facing=east": {
-			"model": "more_than_a_foxbox:block/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box",
+			"y": 270
 		},
 		"facing=south_east": {
-			"model": "more_than_a_foxbox:block/cardboard_box"
+			"model": "more_than_a_foxbox:block/cardboard_box_45",
+			"y": 270
 		}
 	}
 }

@@ -6,10 +6,11 @@
 
 package dev.sweetberry.more_than_a_foxbox.recipe;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
-import org.jetbrains.annotations.NotNull;
 
 public record ContainerRecipeInput(SimpleContainer container) implements RecipeInput {
 	@Override
