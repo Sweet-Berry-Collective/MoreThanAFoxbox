@@ -1,17 +1,18 @@
 {
+	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
-	"texture_size": [32, 16],
 	"ambientocclusion": false,
+	"texture_size": [32, 16],
 	"textures": {
-		"1": "more_than_a_foxbox:item/plushie/wolf",
-		"particle": "more_than_a_foxbox:item/plushie/wolf"
+		"1": "more_than_a_foxbox:texture",
+		"particle": "more_than_a_foxbox:texture"
 	},
 	"elements": [
 		{
 			"name": "head",
 			"from": [6, 1, 4],
 			"to": [10, 4, 7],
-			"rotation": {"angle": 0, "axis": "y", "origin": [6, 2, 3]},
+			"rotation": {"angle": -15, "axis": "z", "origin": [8, 2, 7]},
 			"faces": {
 				"north": {"uv": [1.5, 3, 3.5, 6], "texture": "#1"},
 				"east": {"uv": [0, 3, 1.5, 6], "texture": "#1"},
@@ -23,23 +24,23 @@
 		},
 		{
 			"name": "snout",
-			"from": [6.5, 1, 3],
-			"to": [9.5, 2, 4],
-			"rotation": {"angle": 0, "axis": "y", "origin": [6, 2, 2]},
+			"from": [7, 1, 3],
+			"to": [9, 2, 4],
+			"rotation": {"angle": -15, "axis": "z", "origin": [8, 2, 7]},
 			"faces": {
-				"north": {"uv": [12.5, 6, 14, 7], "texture": "#1"},
+				"north": {"uv": [12.5, 6, 13.5, 7], "texture": "#1"},
 				"east": {"uv": [12, 6, 12.5, 7], "texture": "#1"},
-				"south": {"uv": [14.5, 6, 16, 7], "texture": "#1"},
-				"west": {"uv": [14, 6, 14.5, 7], "texture": "#1"},
-				"up": {"uv": [14, 6, 12.5, 5], "texture": "#1"},
-				"down": {"uv": [15.5, 5, 14, 6], "texture": "#1"}
+				"south": {"uv": [14, 6, 15, 7], "texture": "#1"},
+				"west": {"uv": [13.5, 6, 14, 7], "texture": "#1"},
+				"up": {"uv": [13.5, 6, 12.5, 5], "texture": "#1"},
+				"down": {"uv": [14.5, 5, 13.5, 6], "texture": "#1"}
 			}
 		},
 		{
 			"name": "ear_l",
-			"from": [6, 4, 5],
-			"to": [7, 5, 6],
-			"rotation": {"angle": 0, "axis": "y", "origin": [5, 5, 4]},
+			"from": [6, 4, 6],
+			"to": [7, 5, 7],
+			"rotation": {"angle": -15, "axis": "z", "origin": [8, 2, 8]},
 			"faces": {
 				"north": {"uv": [11, 8, 11.5, 9], "texture": "#1"},
 				"east": {"uv": [10.5, 8, 11, 9], "texture": "#1"},
@@ -51,9 +52,9 @@
 		},
 		{
 			"name": "ear_r",
-			"from": [9, 4, 5],
-			"to": [10, 5, 6],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 5, 4]},
+			"from": [9, 4, 6],
+			"to": [10, 5, 7],
+			"rotation": {"angle": -15, "axis": "z", "origin": [8, 2, 8]},
 			"faces": {
 				"north": {"uv": [11, 8, 11.5, 9], "texture": "#1"},
 				"east": {"uv": [10.5, 8, 11, 9], "texture": "#1"},
@@ -185,9 +186,9 @@
 			"scale": [2, 2, 2]
 		},
 		"on_shelf": {
-			"rotation": [ 90, 0, 0 ],
-			"translation": [ 0, 0, 12 ],
-			"scale": [ 2, 2, 2 ]
+			"rotation": [90, 0, 0],
+			"translation": [0, 0, 12],
+			"scale": [2, 2, 2]
 		}
 	},
 	"groups": [

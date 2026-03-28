@@ -124,7 +124,7 @@
 			"name": "leg-fr",
 			"from": [8.5, 0.1, 5.8],
 			"to": [9.5, 2.1, 6.8],
-			"rotation": {"angle": 17.5, "axis": "x", "origin": [9, 1.1, 6.3]},
+			"rotation": {"angle": 0, "axis": "y", "origin": [9, 1.1, 6.3]},
 			"faces": {
 				"north": {"uv": [0.5, 14, 1, 16], "texture": "#0"},
 				"east": {"uv": [0, 14, 0.5, 16], "texture": "#0"},
@@ -138,7 +138,7 @@
 			"name": "leg-fl",
 			"from": [6.5, 0.1, 5.8],
 			"to": [7.5, 2.1, 6.8],
-			"rotation": {"angle": 17.5, "axis": "x", "origin": [7, 1.1, 6.3]},
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 1.1, 6.3]},
 			"faces": {
 				"north": {"uv": [0.5, 14, 1, 16], "texture": "#0"},
 				"east": {"uv": [0, 14, 0.5, 16], "texture": "#0"},
