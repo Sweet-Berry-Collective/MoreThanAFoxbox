@@ -7,7 +7,6 @@
 package dev.sweetberry.more_than_a_foxbox.block;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import com.mojang.serialization.MapCodec;
 import dev.sweetberry.more_than_a_foxbox.block.entity.BoxBlockEntity;
@@ -47,6 +46,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jspecify.annotations.NonNull;
 
 public class BoxBlock extends PlushieHoldingBlock {
 	public static final MapCodec<BoxBlock> CODEC = simpleCodec(BoxBlock::new);
@@ -108,7 +108,7 @@ public class BoxBlock extends PlushieHoldingBlock {
 	}
 
 	@Override
-	public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
+	public @Nullable BlockState getStateForPlacement(@NonNull BlockPlaceContext context) {
 		return Objects.requireNonNull(super.getStateForPlacement(context), "Superclass returned null state for placement. This shouldn't happen!")
 			.setValue(
 				MtfbBlockProperties.FACING,
@@ -118,10 +118,10 @@ public class BoxBlock extends PlushieHoldingBlock {
 
 	@Override
 	protected @NotNull VoxelShape getShape(
-		BlockState state,
-		BlockGetter level,
-		BlockPos pos,
-		CollisionContext context
+		@NonNull BlockState state,
+		@NonNull BlockGetter level,
+		@NonNull BlockPos pos,
+		@NonNull CollisionContext context
 	) {
 		return SHAPE;
 	}
@@ -180,15 +180,15 @@ public class BoxBlock extends PlushieHoldingBlock {
 
 	@Override
 	public @Nullable BlockEntity newBlockEntity(
-		BlockPos pos,
-		BlockState state
+		@NonNull BlockPos pos,
+		@NonNull BlockState state
 	) {
 		return new BoxBlockEntity(pos, state);
 	}
 
 	@Override
-	protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-		if (player.isShiftKeyDown() || player.blockActionRestricted(level, pos, player.gameMode()))
+	protected @NotNull InteractionResult useItemOn(@NonNull ItemStack stack, @NonNull BlockState state, @NonNull Level level, @NonNull BlockPos pos, Player player, @NonNull InteractionHand hand, @NonNull BlockHitResult hitResult) {
+		if (player.isShiftKeyDown() || player.gameMode() != null && player.blockActionRestricted(level, pos, Objects.requireNonNull(player.gameMode())))
 			return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
 
 		if (!stack.is(MtfbItems.PLUSHIE.get()))
@@ -207,7 +207,7 @@ public class BoxBlock extends PlushieHoldingBlock {
 		if (!stack.has(MtfbComponents.PLUSHIE.get()))
 			return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
 
-		entity.setPlushieData(stack.get(MtfbComponents.PLUSHIE.get()), Optional.ofNullable(stack.get(DataComponents.CUSTOM_NAME)));
+		entity.setPlushieData(stack.get(MtfbComponents.PLUSHIE.get()), stack.get(DataComponents.CUSTOM_NAME));
 
 		stack.consume(1, player);
 
@@ -215,12 +215,12 @@ public class BoxBlock extends PlushieHoldingBlock {
 	}
 
 	@Override
-	protected boolean hasAnalogOutputSignal(BlockState state) {
+	protected boolean hasAnalogOutputSignal(@NonNull BlockState state) {
 		return true;
 	}
 
 	@Override
-	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+	protected int getAnalogOutputSignal(@NonNull BlockState state, Level level, @NonNull BlockPos pos, @NonNull Direction direction) {
 		var maybeEntity = level.getBlockEntity(pos, MtfbBlockEntityTypes.CARDBOARD_BOX.get());
 
 		if (maybeEntity.isEmpty())

@@ -6,7 +6,6 @@
 
 package dev.sweetberry.more_than_a_foxbox.item;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -17,13 +16,13 @@ import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieDataComponent;
 import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
-import dev.sweetberry.more_than_a_foxbox.registry.MtfbRegistries;
 import dev.sweetberry.more_than_a_foxbox.registry.RegistryContext;
 
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -44,7 +43,7 @@ public final class MtfbItems {
 		withProperties(properties -> new PlushieItem(properties
 			.equippableUnswappable(EquipmentSlot.HEAD)
 			.stacksTo(1)
-			.component(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(PlushieVariant.PLACEHOLDER, Optional.empty()))
+			.component(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(PlushieVariant.PLACEHOLDER))
 		))
 	);
 
@@ -86,10 +85,12 @@ public final class MtfbItems {
 	public static final Supplier<CreativeModeTab> TAB = TAB_CONTEXT.defer(
 		"tab",
 		creativeModeTab(
-			CARDBOARD_BOX,
 			MtfbItems::populateCreativeModeTab
 		)
 	);
+
+	public static TagKey<Item> PLUSHIE_UPGRADES = key("plushie_upgrades");
+	public static TagKey<Item> POLYFILL_TAG = key("polyfill");
 
 	private MtfbItems() {}
 	
@@ -104,14 +105,13 @@ public final class MtfbItems {
 	}
 
 	private static Function<ResourceKey<CreativeModeTab>, CreativeModeTab> creativeModeTab(
-		Supplier<? extends Item> displayItem,
 		CreativeModeTab.DisplayItemsGenerator generator
 	) {
 		return key -> CreativeModeTab
 			.builder(CreativeModeTab.Row.TOP, 0)
 			.title(Component.translatable("item_group."+key.identifier().toLanguageKey()))
 			.displayItems(generator)
-			.icon(displayItem.get()::getDefaultInstance)
+			.icon(MtfbItems.CARDBOARD_BOX.get()::getDefaultInstance)
 			.build();
 	}
 
@@ -127,44 +127,29 @@ public final class MtfbItems {
 		));
 
 
-		var maybeRegistry = itemDisplayParameters.holders().lookup(MtfbRegistries.PLUSHIE_VARIANT);
+		var plushies = PlushieVariant.orderedPlushies(itemDisplayParameters.holders(), holder -> !holder.is(PlushieVariant.PLACEHOLDER));
 
-		if (maybeRegistry.isEmpty())
+		if (plushies.isEmpty())
 			return;
-
-		var registry = (Registry<PlushieVariant>) maybeRegistry.get();
 
 		var stack = PLUSHIE.get().getDefaultInstance();
 
-		for (var value :
-			registry
-				.entrySet()
-				.stream()
-				.sorted(
-					Comparator
-						.comparing(it ->
-							it
-								.getKey()
-								.identifier()
-								.toString()
-						)
-				)
-				.toList()
-		) {
-			if (value.getKey() == PlushieVariant.PLACEHOLDER)
-				continue;
-
-			stack.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(value.getKey(), Optional.empty()));
+		for (var value : plushies) {
+			stack.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(value.key()));
 
 			output.accept(stack.copy());
 
-			stack.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(value.getKey(), Optional.of(PlushieDataComponent.SoundType.SPEAKER)));
+			stack.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(value.key(), PlushieDataComponent.SoundType.SPEAKER));
 
 			output.accept(stack.copy());
 
-			stack.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(value.getKey(), Optional.of(PlushieDataComponent.SoundType.SQUEAKER)));
+			stack.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(value.key(), PlushieDataComponent.SoundType.SQUEAKER));
 
 			output.accept(stack.copy());
 		}
+	}
+
+	private static TagKey<Item> key(String name) {
+		return TagKey.create(Registries.ITEM, MoreThanAFoxbox.id(name));
 	}
 }

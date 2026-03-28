@@ -1,0 +1,21 @@
+{
+	"replace": false,
+	"values": [
+		"more_than_a_foxbox:fox",
+		"more_than_a_foxbox:snow_fox",
+		"more_than_a_foxbox:cow",
+		"more_than_a_foxbox:cow_warm",
+		"more_than_a_foxbox:cow_cold",
+		"more_than_a_foxbox:mooshroom",
+		"more_than_a_foxbox:mooshroom_brown",
+		"more_than_a_foxbox:wolf",
+		"more_than_a_foxbox:wolf_ashen",
+		"more_than_a_foxbox:wolf_black",
+		"more_than_a_foxbox:wolf_chestnut",
+		"more_than_a_foxbox:wolf_rusty",
+		"more_than_a_foxbox:wolf_snowy",
+		"more_than_a_foxbox:wolf_spotted",
+		"more_than_a_foxbox:wolf_striped",
+		"more_than_a_foxbox:wolf_woods"
+	]
+}

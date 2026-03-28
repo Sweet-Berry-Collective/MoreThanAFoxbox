@@ -9,8 +9,10 @@ package dev.sweetberry.more_than_a_foxbox.client.network;
 import java.util.Optional;
 
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
+import dev.sweetberry.more_than_a_foxbox.menu.SewingTableMenu;
 import dev.sweetberry.more_than_a_foxbox.network.clientbound.ClientboundPlushieSquish;
 
+import dev.sweetberry.more_than_a_foxbox.network.clientbound.ClientboundSewingTablePlushies;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -27,6 +29,12 @@ public final class MtfbClientNetworking {
 				return;
 
 			entity.resetStretchSquish();
+		});
+		ClientPlayNetworking.registerGlobalReceiver(ClientboundSewingTablePlushies.TYPE, (payload, context) -> {
+			if (!(context.player().containerMenu instanceof SewingTableMenu sewingTableMenu))
+				return;
+
+			sewingTableMenu.setupPlushieList(context.player().registryAccess());
 		});
 	}
 }

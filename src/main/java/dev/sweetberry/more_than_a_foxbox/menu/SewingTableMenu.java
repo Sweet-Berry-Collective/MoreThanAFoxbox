@@ -6,39 +6,55 @@
 
 package dev.sweetberry.more_than_a_foxbox.menu;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
+import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
-import dev.sweetberry.more_than_a_foxbox.recipe.ContainerRecipeInput;
-import dev.sweetberry.more_than_a_foxbox.recipe.MtfbRecipes;
+import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
+import dev.sweetberry.more_than_a_foxbox.data.PlushieDataComponent;
+import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
+import dev.sweetberry.more_than_a_foxbox.item.MtfbItems;
+import dev.sweetberry.more_than_a_foxbox.network.clientbound.ClientboundSewingTablePlushies;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.inventory.*;
 import org.jetbrains.annotations.NotNull;
 
-import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.ResultContainer;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 public class SewingTableMenu extends AbstractContainerMenu {
-	public static final int RESULT_SLOT = 4;
+	private static final Identifier EMPTY_SLOT_FILLER = MoreThanAFoxbox.id("container/slot/filler");
+	private static final Identifier EMPTY_SLOT_UPGRADE = MoreThanAFoxbox.id("container/slot/upgrade");
+	private static final Identifier EMPTY_SLOT_SHELL = MoreThanAFoxbox.id("container/slot/shell");
+
+	public static final int RESULT_SLOT = 3;
 	public static final int INV_SLOT_START = RESULT_SLOT + 1;
 	public static final int INV_SLOT_END = INV_SLOT_START + 27;
 	public static final int USE_ROW_SLOT_END = INV_SLOT_END + 9;
 
-	private final InputContainer inputContainer = new InputContainer(4);
+	private final InputContainer inputContainer = new InputContainer(3);
 	private final ResultContainer resultContainer = new ResultContainer();
 
-	private final ContainerRecipeInput recipeInput = new ContainerRecipeInput(inputContainer);
-
-	private final ContainerLevelAccess access;
 	private final Player player;
+	private final ContainerLevelAccess access;
+	private Runnable slotUpdateListener = () -> {};
+
+	private List<Holder.Reference<PlushieVariant>> craftablePlushieVariants = Collections.emptyList();
+	private final DataSlot selectedPlushieIndex = DataSlot.standalone();
+
 
 	public SewingTableMenu(int containerId, Inventory playerInventory) {
 		this(containerId, playerInventory, ContainerLevelAccess.NULL);
@@ -47,62 +63,137 @@ public class SewingTableMenu extends AbstractContainerMenu {
 	public SewingTableMenu(int containerId, Inventory playerInventory, ContainerLevelAccess access) {
 		super(MtfbMenus.SEWING_TABLE.get(), containerId);
 
+		this.player = playerInventory.player;
 		this.access = access;
-		player = playerInventory.player;
+		addDataSlot(selectedPlushieIndex);
 
-		addSlot(new Slot(inputContainer, 0, 30, 35-18));
-		addSlot(new Slot(inputContainer, 1, 30, 35));
-		addSlot(new Slot(inputContainer, 2, 30, 35+18));
-		addSlot(new Slot(inputContainer, 3, 66, 35));
+		addSlot(new Slot(inputContainer, 0, 11, 35) {
+			@Override
+			public boolean mayPlace(@NonNull ItemStack stack) {
+				return stack.is(MtfbItems.POLYFILL_TAG);
+			}
 
-		addSlot(new ResultSlot(resultContainer, 3, 124, 34));
+			public @NonNull Identifier getNoItemIcon() {
+				return EMPTY_SLOT_FILLER;
+			}
+		});
+		addSlot(new Slot(inputContainer, 1, 29, 35) {
+			@Override
+			public boolean mayPlace(@NonNull ItemStack stack) {
+				return stack.is(MtfbItems.PLUSHIE_UPGRADES);
+			}
+
+			public @NonNull Identifier getNoItemIcon() {
+				return EMPTY_SLOT_UPGRADE;
+			}
+		});
+		addSlot(new Slot(inputContainer, 2, 20, 35+18) {
+			@Override
+			public boolean mayPlace(@NonNull ItemStack stack) {
+				return stack.is(ItemTags.WOOL);
+			}
+
+			public @NonNull Identifier getNoItemIcon() {
+				return EMPTY_SLOT_SHELL;
+			}
+		});
+
+		addSlot(new ResultSlot(resultContainer, 3, 143, 49));
 
 		addStandardInventorySlots(playerInventory, 8, 84);
 	}
 
-	private void setResult(ItemStack result, ServerPlayer player) {
-		resultContainer.setItem(0, result);
-		setRemoteSlot(RESULT_SLOT, result);
-		player.connection.send(new ClientboundContainerSetSlotPacket(containerId, incrementStateId(), RESULT_SLOT, result));
-	}
+	public boolean clickMenuButton(@NonNull Player player, int id) {
+		if (this.selectedPlushieIndex.get() == id) {
+			return false;
+		} else {
+			if (this.isValidRecipeIndex(id)) {
+				this.selectedPlushieIndex.set(id);
+				this.setupResultSlot(id);
+			}
 
-	private void setupRecipeSlot(
-		ServerLevel level,
-		ServerPlayer player
-	) {
-		var optional = level.getServer().getRecipeManager().getRecipeFor(MtfbRecipes.SEWING_TYPE.get(), recipeInput, level);
-
-		if (optional.isEmpty()) {
-			setResult(ItemStack.EMPTY, player);
-
-			return;
+			return true;
 		}
-
-		var recipe = optional.get();
-
-		resultContainer.setRecipeUsed(recipe);
-
-		var result = recipe.value().assemble(recipeInput, level.registryAccess());
-
-		if (!result.isItemEnabled(level.enabledFeatures())) {
-			setResult(ItemStack.EMPTY, player);
-
-			return;
-		}
-
-		setResult(result, player);
 	}
 
 	@Override
-	public void slotsChanged(Container container) {
-		access.execute((level, blockPos) -> {
-			if (level instanceof ServerLevel serverLevel)
-				setupRecipeSlot(serverLevel, (ServerPlayer) player);
+	public void slotsChanged(@NonNull Container container) {
+		access.execute((level, _) -> {
+			if (
+				player instanceof ServerPlayer serverPlayer
+				&& (
+					craftablePlushieVariants.isEmpty() && canCreatePlushie()
+					|| !craftablePlushieVariants.isEmpty() && !canCreatePlushie()
+				)
+			) {
+				setupPlushieList(level.registryAccess());
+				ServerPlayNetworking.send(serverPlayer, ClientboundSewingTablePlushies.INSTANCE);
+			}
 		});
 	}
 
+	public void setupPlushieList(RegistryAccess registryAccess) {
+		this.selectedPlushieIndex.set(-1);
+		this.resultContainer.setItem(0, ItemStack.EMPTY);
+		craftablePlushieVariants = Collections.unmodifiableList(
+			PlushieVariant.orderedPlushies(registryAccess, holder ->
+				!holder.is(PlushieVariant.PLACEHOLDER) && !holder.is(PlushieVariant.EXCLUDED_IN_SEWING_TABLE))
+		);
+	}
+
+	private void setupResultSlot(int id) {
+		Optional<ResourceKey<PlushieVariant>> optional;
+		if (!this.craftablePlushieVariants.isEmpty() && this.isValidRecipeIndex(id)) {
+			optional = Optional.of(craftablePlushieVariants.get(id).key());
+		} else {
+			optional = Optional.empty();
+		}
+
+		optional.ifPresentOrElse((plushieKey) -> {
+			ItemStack plushie = MtfbItems.PLUSHIE.get().getDefaultInstance();
+			plushie.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(plushieKey, getSoundType()));
+			this.resultContainer.setItem(0, plushie);
+		}, () -> {
+			this.resultContainer.setItem(0, ItemStack.EMPTY);
+		});
+		this.broadcastChanges();
+	}
+
+	private PlushieDataComponent.@Nullable SoundType getSoundType() {
+		ItemStack upgradeStack = inputContainer.getItem(1);
+		if (upgradeStack.is(MtfbItems.SPEAKER.get())) {
+			return PlushieDataComponent.SoundType.SPEAKER;
+		}
+		if (upgradeStack.is(MtfbItems.SQUEAKER.get())) {
+			return PlushieDataComponent.SoundType.SQUEAKER;
+		}
+		return null;
+	}
+
+	public boolean canCreatePlushie() {
+		ItemStack polyfill = inputContainer.getItem(0);
+		ItemStack wool = inputContainer.getItem(2);
+		return !polyfill.isEmpty() && !wool.isEmpty();
+	}
+
+	public int getSelectedPlushieIndex() {
+		return selectedPlushieIndex.get();
+	}
+
+	public List<Holder.Reference<PlushieVariant>> getCraftablePlushieVariants() {
+		return craftablePlushieVariants;
+	}
+
+	public int getNumberOfVisibleRecipes() {
+		return this.craftablePlushieVariants.size();
+	}
+
+	private boolean isValidRecipeIndex(int recipeIndex) {
+		return recipeIndex >= 0 && recipeIndex < this.craftablePlushieVariants.size();
+	}
+
 	@Override
-	public @NotNull ItemStack quickMoveStack(Player player, int index) {
+	public @NotNull ItemStack quickMoveStack(@NonNull Player player, int index) {
 		var slot = slots.get(index);
 
 		if (!slot.hasItem())
@@ -148,13 +239,17 @@ public class SewingTableMenu extends AbstractContainerMenu {
 	}
 
 	@Override
-	public boolean stillValid(Player player) {
+	public boolean stillValid(@NonNull Player player) {
 		return stillValid(access, player, MtfbBlocks.SEWING_TABLE.get());
 	}
 
 	@Override
-	public void removed(Player player) {
-		access.execute((level, blockPos) -> clearContainer(player, inputContainer));
+	public void removed(@NonNull Player player) {
+		access.execute((_, _) -> clearContainer(player, inputContainer));
+	}
+
+	public void registerUpdateListener(final Runnable slotUpdateListener) {
+		this.slotUpdateListener = slotUpdateListener;
 	}
 
 	private class InputContainer extends SimpleContainer {
@@ -166,6 +261,7 @@ public class SewingTableMenu extends AbstractContainerMenu {
 		public void setChanged() {
 			super.setChanged();
 			SewingTableMenu.this.slotsChanged(this);
+			SewingTableMenu.this.slotUpdateListener.run();
 		}
 	}
 
@@ -175,16 +271,14 @@ public class SewingTableMenu extends AbstractContainerMenu {
 		}
 
 		@Override
-		public boolean mayPlace(ItemStack stack) {
+		public boolean mayPlace(@NonNull ItemStack stack) {
 			return false;
 		}
 
 		@Override
-		public void onTake(Player player, ItemStack stack) {
+		public void onTake(@NonNull Player player, ItemStack stack) {
 			stack.onCraftedBy(player, stack.getCount());
 			resultContainer.awardUsedRecipes(player, getRelevantItems());
-
-			var refreshRecipes = false;
 
 			for (int i = 0; i < RESULT_SLOT; i++) {
 				var slot = getSlot(i);
@@ -193,17 +287,18 @@ public class SewingTableMenu extends AbstractContainerMenu {
 
 				var count = item.getCount();
 
-				if (count == 1)
-					refreshRecipes = true;
-
-				if (count == 1 && item.getRecipeRemainder() != ItemStack.EMPTY)
-					slot.set(item.getRecipeRemainder());
-				else
+				if (item.getCraftingRemainder() != null && item.getCraftingRemainder().create() != ItemStack.EMPTY) {
+					if (count == 1) {
+						slot.set(item.getCraftingRemainder().create());
+					} else {
+						player.getInventory().placeItemBackInInventory(item.getCraftingRemainder().create());
+					}
+				} else
 					slot.remove(1);
 			}
-
-			if (refreshRecipes)
-				slotsChanged(inputContainer);
+			if (!stack.isEmpty()) {
+				SewingTableMenu.this.setupResultSlot(selectedPlushieIndex.get());
+			}
 
 			super.onTake(player, stack);
 		}

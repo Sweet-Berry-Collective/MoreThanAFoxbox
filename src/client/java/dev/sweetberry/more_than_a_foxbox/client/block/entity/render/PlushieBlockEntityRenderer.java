@@ -8,39 +8,29 @@ package dev.sweetberry.more_than_a_foxbox.client.block.entity.render;
 
 import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.SCALE_SLOWNESS;
 import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.SQUISH_TIME;
-import static dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity.STRETCH_TIME;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
-import dev.sweetberry.more_than_a_foxbox.block.BoxBlock;
 import dev.sweetberry.more_than_a_foxbox.block.entity.BoxBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
-import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
-import dev.sweetberry.more_than_a_foxbox.client.MoreThanAFoxboxClient;
-import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Matrix4f;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
-import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 
+// TODO: Waiting on FRAPI update...
 public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHoldingBlockEntity, PlushieHoldingBlockEntityRenderState> {
-	private final Map<Identifier, BlockStateModel> models = new HashMap<>();
+//	private final Map<Identifier, BlockStateModel> models = new HashMap<>();
 	private final BlockEntityRendererProvider.Context renderContext;
 	
 	public PlushieBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
@@ -66,8 +56,6 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 			blockEntity.setDeltaSquish(blockEntity.getDeltaSquish() + partialTick / SCALE_SLOWNESS);
 		}
 
-		state.model = null;
-
 		state.isBox = blockEntity instanceof BoxBlockEntity;
 
 		Optional<Identifier> optionalPoseModel = blockEntity.getPoseModel(blockEntity.getBlockState());
@@ -79,54 +67,54 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 		poseModel = optionalPoseModel.orElseGet(() -> MoreThanAFoxbox.id(
 			MoreThanAFoxbox.ID + "/placeholder"));
 		ModelManager modelManager = Minecraft.getInstance().getModelManager();
-		state.model = models.computeIfAbsent(
-			poseModel,
-			asset -> modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(asset))
-		);
-
-		if (state.model == null)
-			state.model = modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(Identifier.fromNamespaceAndPath(MoreThanAFoxbox.ID, MoreThanAFoxbox.ID + "/placeholder")));
-
-		if (state.model == null)
-			MoreThanAFoxbox.LOGGER.error("Cannot find placeholder plushie.");
+//		state.model = models.computeIfAbsent(
+//			poseModel,
+//			asset -> modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(asset))
+//		);
+//
+//		if (state.model == null)
+//			state.model = modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(Identifier.fromNamespaceAndPath(MoreThanAFoxbox.ID, MoreThanAFoxbox.ID + "/placeholder")));
+//
+//		if (state.model == null)
+//			MoreThanAFoxbox.LOGGER.error("Cannot find placeholder plushie.");
 	}
 
 	@Override
-	public void submit(PlushieHoldingBlockEntityRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
-		if (state.model == null)
-			return;
-
-		poseStack.pushPose();
-
-		OctalDirection direction = state.blockState.getValue(
-			MtfbBlockProperties.FACING);
-		Matrix4f rotationTransform = BoxBlock.pointBlockToward(direction, 0.5f);
-		poseStack.mulPose(rotationTransform);
-
-		// Stretch & Squish
-		float stretch = 1.0f - state.deltaStretch / STRETCH_TIME;
-		float squish = state.deltaSquish / SQUISH_TIME;
-
-		poseStack.translate(scaleInPlace(stretch), 0.0f, 0.0f);
-		if (state.isBox)
-			poseStack.translate(0.0f, scaleInPlace(squish), 0.0f);
-
-		poseStack.scale(stretch, squish, 1.0f);
-
-		submitNodeCollector
-			.submitBlockModel(
-				poseStack,
-				Sheets.translucentItemSheet(),
-				state.model,
-				1,
-				1,
-				1,
-				state.lightCoords,
-				OverlayTexture.NO_OVERLAY,
-				0
-			);
-
-		poseStack.popPose();
+	public void submit(PlushieHoldingBlockEntityRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+//		if (state.model == null)
+//			return;
+//
+//		poseStack.pushPose();
+//
+//		OctalDirection direction = state.blockState.getValue(
+//			MtfbBlockProperties.FACING);
+//		Matrix4f rotationTransform = BoxBlock.pointBlockToward(direction, 0.5f);
+//		poseStack.mulPose(rotationTransform);
+//
+//		// Stretch & Squish
+//		float stretch = 1.0f - state.deltaStretch / STRETCH_TIME;
+//		float squish = state.deltaSquish / SQUISH_TIME;
+//
+//		poseStack.translate(scaleInPlace(stretch), 0.0f, 0.0f);
+//		if (state.isBox)
+//			poseStack.translate(0.0f, scaleInPlace(squish), 0.0f);
+//
+//		poseStack.scale(stretch, squish, 1.0f);
+//
+//		submitNodeCollector
+//			.submitBlockModel(
+//				poseStack,
+//				Sheets.translucentItemSheet(),
+//				state.model,
+//				1,
+//				1,
+//				1,
+//				state.lightCoords,
+//				OverlayTexture.NO_OVERLAY,
+//				0
+//			);
+//
+//		poseStack.popPose();
 	}
 
 	private float scaleInPlace(float scale) {

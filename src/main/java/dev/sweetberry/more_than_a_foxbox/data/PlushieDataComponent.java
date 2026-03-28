@@ -24,34 +24,36 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.StringRepresentable;
+import org.jspecify.annotations.Nullable;
 
 public record PlushieDataComponent(
 	ResourceKey<PlushieVariant> variant,
-	Optional<SoundType> soundType
+	@Nullable SoundType soundType
 ) {
 	public static final Codec<PlushieDataComponent> CODEC = RecordCodecBuilder.create(inst -> inst.group(
 		ResourceKey.codec(MtfbRegistries.PLUSHIE_VARIANT).fieldOf("variant").forGetter(PlushieDataComponent::variant),
-		SoundType.CODEC.optionalFieldOf("sound_type").forGetter(PlushieDataComponent::soundType)
-	).apply(inst, PlushieDataComponent::new));
+		SoundType.CODEC.optionalFieldOf("sound_type").forGetter(c -> Optional.ofNullable(c.soundType()))
+	).apply(inst, (variant, soundType) -> new PlushieDataComponent(variant, soundType.orElse(null))));
 	public static final StreamCodec<RegistryFriendlyByteBuf, PlushieDataComponent> STREAM_CODEC = ByteBufCodecs.fromCodecWithRegistries(CODEC);
 
-	public Optional<SoundEvent> getInteractionSound(RegistryAccess access) {
-		var maybeSoundType = soundType;
+	public PlushieDataComponent(ResourceKey<PlushieVariant> variant) {
+		this(variant, null);
+	}
 
-		if (maybeSoundType.isEmpty())
-			return Optional.empty();
-
-		var soundType = maybeSoundType.get();
+	public @Nullable SoundEvent getInteractionSound(RegistryAccess access) {
+		if (soundType == null)
+			return null;
 
 		if (soundType == SoundType.SQUEAKER)
-			return Optional.of(MtfbSounds.SQUEAK.get());
+			return MtfbSounds.SQUEAK.get();
 
 		var variant = access.get(this.variant);
 
 		return variant.map(plushieVariantReference -> plushieVariantReference
 			.value()
 			.mobSounds()
-			.value());
+			.value())
+			.orElse(null);
 	}
 
 	public MutableComponent getDisplayName() {

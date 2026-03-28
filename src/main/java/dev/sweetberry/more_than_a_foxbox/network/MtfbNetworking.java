@@ -8,6 +8,7 @@ package dev.sweetberry.more_than_a_foxbox.network;
 
 import dev.sweetberry.more_than_a_foxbox.network.clientbound.ClientboundPlushieSquish;
 
+import dev.sweetberry.more_than_a_foxbox.network.clientbound.ClientboundSewingTablePlushies;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
 public final class MtfbNetworking {
@@ -15,6 +16,7 @@ public final class MtfbNetworking {
 	}
 	
 	public static void register() {
-		PayloadTypeRegistry.playS2C().register(ClientboundPlushieSquish.TYPE, ClientboundPlushieSquish.STREAM_CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(ClientboundPlushieSquish.TYPE, ClientboundPlushieSquish.STREAM_CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(ClientboundSewingTablePlushies.TYPE, ClientboundSewingTablePlushies.STREAM_CODEC);
 	}
 }

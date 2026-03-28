@@ -31,6 +31,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 	public static final String PLUSHIE_KEY = "plushie";
@@ -49,11 +51,13 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
-	public void setPlushieData(PlushieDataComponent component, Optional<Component> name) {
+	public void setPlushieData(PlushieDataComponent component, @Nullable Component name) {
 		var builder = DataComponentPatch.builder()
 			.set(MtfbComponents.PLUSHIE.get(), component);
 
-		name.ifPresent(it -> builder.set(DataComponents.CUSTOM_NAME, it));
+		if (name != null) {
+			builder.set(DataComponents.CUSTOM_NAME, name);
+		}
 
 		applyComponents(
 			components(),
@@ -99,13 +103,13 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 	protected void loadAdditional(ValueInput input) {
 		var component = input.read(PLUSHIE_KEY, PlushieDataComponent.CODEC);
 
-		var name = input.read(NAME_KEY, ComponentSerialization.CODEC);
+		var name = input.read(NAME_KEY, ComponentSerialization.CODEC).orElse(null);
 
 		component.ifPresent(it -> setPlushieData(it, name));
 	}
 
 	@Override
-	protected void saveAdditional(ValueOutput output) {
+	protected void saveAdditional(@NonNull ValueOutput output) {
 		getPlushieData()
 			.ifPresent(it -> output.store(PLUSHIE_KEY, PlushieDataComponent.CODEC, it));
 
@@ -122,7 +126,7 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+	public @NotNull CompoundTag getUpdateTag(HolderLookup.@NonNull Provider registries) {
 		return this.saveWithoutMetadata(registries);
 	}
 
@@ -137,12 +141,12 @@ public abstract class PlushieHoldingBlockEntity extends BlockEntity {
 
 		var maybeSound = variant.getInteractionSound(level.registryAccess());
 
-		if (maybeSound.isEmpty())
+		if (maybeSound == null)
 			return;
 
 		var center = pos.getCenter();
 
-		level.playSeededSound(null, center.x, center.y, center.z, maybeSound.get(), SoundSource.PLAYERS, 1f, 1f,  level.random.nextLong());
+		level.playSeededSound(null, center.x, center.y, center.z, maybeSound, SoundSource.PLAYERS, 1f, 1f,  level.getRandom().nextLong());
 	}
 
 	public float getDeltaStretch() {

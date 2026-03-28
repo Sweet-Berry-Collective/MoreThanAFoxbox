@@ -6,58 +6,42 @@
 
 package dev.sweetberry.more_than_a_foxbox.client;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
-import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
 import dev.sweetberry.more_than_a_foxbox.block.entity.MtfbBlockEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.client.block.entity.render.PlushieBlockEntityRenderer;
 import dev.sweetberry.more_than_a_foxbox.client.entity.render.BoxSeatEntityRenderer;
 import dev.sweetberry.more_than_a_foxbox.client.network.MtfbClientNetworking;
 import dev.sweetberry.more_than_a_foxbox.client.screen.SewingTableScreen;
-import dev.sweetberry.more_than_a_foxbox.client.util.ModelUtil;
 import dev.sweetberry.more_than_a_foxbox.entity.MtfbEntityTypes;
 import dev.sweetberry.more_than_a_foxbox.menu.MtfbMenus;
 
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemModels;
-import net.minecraft.resources.Identifier;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.model.loading.v1.ExtraModelKey;
-import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
-import net.fabricmc.fabric.api.client.model.loading.v1.SimpleUnbakedExtraModel;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 public class MoreThanAFoxboxClient implements ClientModInitializer {
-	public static final Map<Identifier, ExtraModelKey<BlockStateModel>> MODEL_KEYS = new HashMap<>();
+//	public static final Map<Identifier, ExtraModelKey<BlockStateModel>> MODEL_KEYS = new HashMap<>();
 	
 	@Override
 	public void onInitializeClient() {
 		MtfbClientNetworking.register();
-		
-		PreparableModelLoadingPlugin.register(
-			ModelUtil::getPlushieModels,
-			(data, pluginContext) -> {
-				for (Identifier id : data) {
-					ExtraModelKey<BlockStateModel> modelKey = ExtraModelKey.create(id::toString);
-					MODEL_KEYS.put(id, modelKey);
-					pluginContext.addModel(modelKey, SimpleUnbakedExtraModel.blockStateModel(id));
-				}
-			}
-		);
+
+		// TODO: When FRAPI updates.
+//		PreparableModelLoadingPlugin.register(
+//			ModelUtil::getPlushieModels,
+//			(data, pluginContext) -> {
+//				for (Identifier id : data) {
+//					ExtraModelKey<BlockStateModel> modelKey = ExtraModelKey.create(id::toString);
+//					MODEL_KEYS.put(id, modelKey);
+//					pluginContext.addModel(modelKey, SimpleUnbakedExtraModel.blockStateModel(id));
+//				}
+//			}
+//		);
 
 		ItemModels.ID_MAPPER.put(MoreThanAFoxbox.id("plushie"), PlushieModel.Unbaked.CODEC);
-
-		BlockRenderLayerMap.putBlocks(
-			ChunkSectionLayer.CUTOUT,
-			MtfbBlocks.CARDBOARD_BOX.get()
-		);
 
 		BlockEntityRenderers.register(
 			MtfbBlockEntityTypes.CARDBOARD_BOX.get(),
@@ -69,7 +53,7 @@ public class MoreThanAFoxboxClient implements ClientModInitializer {
 			PlushieBlockEntityRenderer::new
 		);
 
-		EntityRendererRegistry.register(
+		EntityRenderers.register(
 			MtfbEntityTypes.BOX_SEAT.get(),
 			BoxSeatEntityRenderer::new
 		);

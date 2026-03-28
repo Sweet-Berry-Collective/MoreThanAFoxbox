@@ -6,7 +6,6 @@
 
 package dev.sweetberry.more_than_a_foxbox.item;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import dev.sweetberry.more_than_a_foxbox.block.MtfbBlocks;
@@ -28,6 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
+import org.jspecify.annotations.Nullable;
 
 public class PlushieItem extends BlockItem {
 	public PlushieItem(Properties properties) {
@@ -44,11 +44,12 @@ public class PlushieItem extends BlockItem {
 		return plushie.getDisplayName();
 	}
 
-	public Optional<SoundEvent> getInteractionSound(RegistryAccess access, ItemStack stack) {
+	@Nullable
+	public SoundEvent getInteractionSound(RegistryAccess access, ItemStack stack) {
 		var plushie = stack.get(MtfbComponents.PLUSHIE.get());
 
 		if (plushie == null)
-			return Optional.empty();
+			return null;
 
 		return plushie.getInteractionSound(access);
 	}
@@ -57,25 +58,25 @@ public class PlushieItem extends BlockItem {
 	public @NotNull InteractionResult use(Level level, Player player, InteractionHand hand) {
 		var sound = getInteractionSound(level.registryAccess(), player.getItemInHand(hand));
 
-		if (sound.isEmpty())
+		if (sound == null)
 			return super.use(level, player, hand);
 
 		var center = player.getEyePosition();
 
-		level.playPlayerSound(sound.get(), SoundSource.PLAYERS, 1f, 1f);
+		level.playPlayerSound(sound, SoundSource.PLAYERS, 1f, 1f);
 
 		if (level.isClientSide())
 			return InteractionResult.SUCCESS;
 
-		level.playSeededSound(player, center.x, center.y, center.z, sound.get(), SoundSource.PLAYERS, 1f, 1f,  level.random.nextLong());
+		level.playSeededSound(player, center.x, center.y, center.z, sound, SoundSource.PLAYERS, 1f, 1f,  level.getRandom().nextLong());
 
 		return InteractionResult.SUCCESS;
 	}
 
-	private static MutableComponent getSoundComponent(Optional<PlushieDataComponent.SoundType> type) {
-		if (type.isEmpty())
+	private static MutableComponent getSoundComponent(PlushieDataComponent.@Nullable SoundType type) {
+		if (type == null)
 			return Component.translatable("item.more_than_a_foxbox.plushie.no_sounds");
-		if (type.get() == PlushieDataComponent.SoundType.SPEAKER)
+		if (type == PlushieDataComponent.SoundType.SPEAKER)
 			return Component.translatable("item.more_than_a_foxbox.plushie.speaker");
 		return Component.translatable("item.more_than_a_foxbox.plushie.squeaker");
 	}

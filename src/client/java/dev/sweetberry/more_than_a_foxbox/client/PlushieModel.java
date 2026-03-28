@@ -8,10 +8,10 @@ package dev.sweetberry.more_than_a_foxbox.client;
 
 import com.mojang.serialization.MapCodec;
 import dev.sweetberry.more_than_a_foxbox.data.MtfbComponents;
+import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.ItemModelResolver;
@@ -19,12 +19,14 @@ import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Matrix4fc;
+import org.jspecify.annotations.NonNull;
 
 public class PlushieModel implements ItemModel {
 	public static final PlushieModel INSTANCE = new PlushieModel();
 
 	@Override
-	public void update(ItemStackRenderState renderState, ItemStack stack, ItemModelResolver itemModelResolver, ItemDisplayContext displayContext, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {
+	public void update(@NonNull ItemStackRenderState renderState, ItemStack stack, @NonNull ItemModelResolver itemModelResolver, @NonNull ItemDisplayContext displayContext, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {
 		var plushie = stack.get(MtfbComponents.PLUSHIE.get());
 
 		if (plushie == null)
@@ -44,7 +46,7 @@ public class PlushieModel implements ItemModel {
 		}
 
 		@Override
-		public @NotNull ItemModel bake(BakingContext context) {
+		public @NonNull ItemModel bake(BakingContext context, Matrix4fc transformation) {
 			return INSTANCE;
 		}
 
