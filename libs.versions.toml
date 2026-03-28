@@ -2,18 +2,16 @@
 loom = "1.14.+"
 minotaur = "2.+"
 
-mc = "1.21.11"
-fl = "0.18.2"
-parchment = "2025.10.12"
-parchment_mc = "1.21.10"
-fapi = "0.140.0+1.21.11"
+mc = "26.1"
+fl = "0.18.4"
+fapi = "0.144.3+26.1"
 yumi_licenser = "2.1.+"
-yumi-commons = "1.0.0"
+yumi-commons = "2.0.0"
 sodium = "mc1.21.11-0.8.0-fabric"
-modmenu = "17.0.0-alpha.1"
+modmenu = "18.0.0-alpha.8"
 
 [plugins]
-loom = { id = "fabric-loom", version.ref = "loom" }
+loom = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }
 minotaur = { id = "com.modrinth.minotaur", version.ref = "minotaur" }
 yumi_licenser = { id = "dev.yumi.gradle.licenser", version.ref = "yumi_licenser" }
 

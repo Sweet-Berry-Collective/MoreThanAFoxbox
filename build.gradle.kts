@@ -45,19 +45,15 @@ repositories {
 
 dependencies {
 	minecraft(libs.mc)
-	mappings(loom.layered {
-		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-${libs.versions.parchment.mc.get()}:${libs.versions.parchment.asProvider().get()}@zip")
-	})
 
-	modImplementation(libs.fl)
-	modImplementation(libs.fapi)
+	implementation(libs.fl)
+	implementation(libs.fapi)
 	
 	implementation(libs.yumi.commons.core)
 	include(libs.yumi.commons.core)
 	
 //	modRuntimeOnly(libs.sodium) // re-enable when 0.8.1 comes out lol
-	modRuntimeOnly(libs.modmenu)
+	runtimeOnly(libs.modmenu)
 }
 
 loom {
@@ -108,13 +104,13 @@ tasks.processResources {
 
 tasks.withType<JavaCompile>().configureEach {
 	options.encoding = "UTF-8"
-	options.release = 21
+	options.release = 25
 }
 
 java {
 	withSourcesJar()
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 }
 
 
@@ -132,7 +128,7 @@ modrinth {
 	token = "${System.getenv("MODRINTH_TOKEN")}"
 	projectId = slug
 	versionNumber.set(project.version as String?)
-	uploadFile.set(tasks.remapJar)
+	uploadFile.set(tasks.jar)
 	gameVersions = compatibleVersions.split(", ").toList()
 	loaders = compatibleLoaders.split(", ").toList()
 	changelog = "${System.getenv("CHANGELOG")}"
