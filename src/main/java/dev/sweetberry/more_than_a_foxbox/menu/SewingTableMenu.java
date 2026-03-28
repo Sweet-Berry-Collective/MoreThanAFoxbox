@@ -159,7 +159,7 @@ public class SewingTableMenu extends AbstractContainerMenu {
 		this.broadcastChanges();
 	}
 
-	private PlushieDataComponent.@Nullable SoundType getSoundType() {
+	public PlushieDataComponent.@Nullable SoundType getSoundType() {
 		ItemStack upgradeStack = inputContainer.getItem(2);
 		if (upgradeStack.is(MtfbItems.SPEAKER.get())) {
 			return PlushieDataComponent.SoundType.SPEAKER;

@@ -144,7 +144,7 @@ public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> 
 			int row = posIndex / RECIPES_COLUMNS;
 			int posY = y + row * RECIPES_IMAGE_SIZE_HEIGHT + 2;
 			ItemStack stack = new ItemStack(MtfbItems.PLUSHIE.get());
-			stack.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(visibleRecipes.get(index).key()));
+			stack.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(visibleRecipes.get(index).key(), menu.getSoundType()));
 			graphics.item(stack, posX, posY);
 		}
 	}
