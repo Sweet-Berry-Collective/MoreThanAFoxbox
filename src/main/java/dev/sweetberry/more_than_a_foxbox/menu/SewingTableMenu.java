@@ -67,7 +67,7 @@ public class SewingTableMenu extends AbstractContainerMenu {
 		this.access = access;
 		addDataSlot(selectedPlushieIndex);
 
-		addSlot(new Slot(inputContainer, 0, 11, 35) {
+		addSlot(new Slot(inputContainer, 0, 11, 25) {
 			@Override
 			public boolean mayPlace(@NonNull ItemStack stack) {
 				return stack.is(MtfbItems.POLYFILL_TAG);
@@ -77,17 +77,7 @@ public class SewingTableMenu extends AbstractContainerMenu {
 				return EMPTY_SLOT_FILLER;
 			}
 		});
-		addSlot(new Slot(inputContainer, 1, 29, 35) {
-			@Override
-			public boolean mayPlace(@NonNull ItemStack stack) {
-				return stack.is(MtfbItems.PLUSHIE_UPGRADES);
-			}
-
-			public @NonNull Identifier getNoItemIcon() {
-				return EMPTY_SLOT_UPGRADE;
-			}
-		});
-		addSlot(new Slot(inputContainer, 2, 20, 35+18) {
+		addSlot(new Slot(inputContainer, 1, 11, 43) {
 			@Override
 			public boolean mayPlace(@NonNull ItemStack stack) {
 				return stack.is(ItemTags.WOOL);
@@ -95,6 +85,16 @@ public class SewingTableMenu extends AbstractContainerMenu {
 
 			public @NonNull Identifier getNoItemIcon() {
 				return EMPTY_SLOT_SHELL;
+			}
+		});
+		addSlot(new Slot(inputContainer, 2, 29, 34) {
+			@Override
+			public boolean mayPlace(@NonNull ItemStack stack) {
+				return stack.is(MtfbItems.PLUSHIE_UPGRADES);
+			}
+
+			public @NonNull Identifier getNoItemIcon() {
+				return EMPTY_SLOT_UPGRADE;
 			}
 		});
 
@@ -160,7 +160,7 @@ public class SewingTableMenu extends AbstractContainerMenu {
 	}
 
 	private PlushieDataComponent.@Nullable SoundType getSoundType() {
-		ItemStack upgradeStack = inputContainer.getItem(1);
+		ItemStack upgradeStack = inputContainer.getItem(2);
 		if (upgradeStack.is(MtfbItems.SPEAKER.get())) {
 			return PlushieDataComponent.SoundType.SPEAKER;
 		}
@@ -172,7 +172,7 @@ public class SewingTableMenu extends AbstractContainerMenu {
 
 	public boolean canCreatePlushie() {
 		ItemStack polyfill = inputContainer.getItem(0);
-		ItemStack wool = inputContainer.getItem(2);
+		ItemStack wool = inputContainer.getItem(1);
 		return !polyfill.isEmpty() && !wool.isEmpty();
 	}
 
