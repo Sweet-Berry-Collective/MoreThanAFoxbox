@@ -4,8 +4,8 @@
 	"ambientocclusion": false,
 	"texture_size": [32, 16],
 	"textures": {
-		"1": "more_than_a_foxbox:texture",
-		"particle": "more_than_a_foxbox:texture"
+		"1": "more_than_a_foxbox:item/plushie/wolf",
+		"particle": "more_than_a_foxbox:item/plushie/wolf"
 	},
 	"elements": [
 		{

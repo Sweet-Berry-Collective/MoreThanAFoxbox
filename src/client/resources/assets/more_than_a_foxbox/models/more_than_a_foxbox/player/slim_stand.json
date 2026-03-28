@@ -1,7 +1,7 @@
 {
 	"format_version": "1.21.6",
-	"ambientocclusion": false,
 	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
 	"texture_size": [64, 64],
 	"textures": {
 		"particle": "#skin"
@@ -183,9 +183,9 @@
 			"translation": [0, 5, 0]
 		},
 		"gui": {
-			"rotation": [0, -180, 0],
-			"translation": [0, 8, 0],
-			"scale": [2, 2, 2]
+			"rotation": [25, 140, 0],
+			"translation": [0, 6.25, 0],
+			"scale": [1.8, 1.8, 1.8]
 		},
 		"head": {
 			"translation": [0, 22.25, 0],
@@ -196,9 +196,8 @@
 			"scale": [2, 2, 2]
 		},
 		"on_shelf": {
-			"rotation": [ 0, 180, 0 ],
-			"translation": [ 0, 0, 0 ],
-			"scale": [ 2, 2, 2 ]
+			"rotation": [0, -180, 0],
+			"scale": [2, 2, 2]
 		}
 	},
 	"groups": [

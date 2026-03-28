@@ -149,14 +149,6 @@
 			}
 		}
 	],
-	"groups": [
-		{
-			"name": "fox",
-			"origin": [8, 8, 8],
-			"color": 0,
-			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-		}
-	],
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [90, 0, 0],
@@ -180,9 +172,9 @@
 			"translation": [0, 6, 0]
 		},
 		"gui": {
-			"rotation": [30, -165, 0],
-			"translation": [0, 10, 0],
-			"scale": [2, 2, 2]
+			"rotation": [25, 140, 0],
+			"translation": [0.5, 8.5, 0],
+			"scale": [1.9, 1.9, 1.9]
 		},
 		"head": {
 			"translation": [0, 22, 0],
@@ -194,9 +186,17 @@
 			"scale": [2, 2, 2]
 		},
 		"on_shelf": {
-			"rotation": [ 90, 0, 0 ],
-			"translation": [ 0, 0, 12 ],
-			"scale": [ 2, 2, 2 ]
+			"rotation": [90, 0, 0],
+			"translation": [0, 0, 12],
+			"scale": [2, 2, 2]
 		}
-	}
+	},
+	"groups": [
+		{
+			"name": "fox",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+		}
+	]
 }
