@@ -105,7 +105,7 @@ public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> 
 				int itemRight = edgeTop + posIndex / RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_HEIGHT + 2;
 				if (mouseX >= itemLeft && mouseX < itemLeft + RECIPES_IMAGE_SIZE_WIDTH && mouseY >= itemRight && mouseY < itemRight + RECIPES_IMAGE_SIZE_HEIGHT) {
 					ItemStack stack = new ItemStack(MtfbItems.PLUSHIE.get());
-					stack.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(visibleRecipes.get(index).key()));
+					stack.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(visibleRecipes.get(index).key(), menu.getSoundType()));
 					graphics.setTooltipForNextFrame(this.font, stack, mouseX, mouseY);
 				}
 			}
