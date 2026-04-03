@@ -4,8 +4,8 @@
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
 	"textures": {
-		"0": "more_than_a_foxbox:item/plushie/placeholder",
-		"particle": "more_than_a_foxbox:item/plushie/placeholder"
+		"0": "more_than_a_foxbox:block/plushie/placeholder",
+		"particle": "more_than_a_foxbox:block/plushie/placeholder"
 	},
 	"elements": [
 		{

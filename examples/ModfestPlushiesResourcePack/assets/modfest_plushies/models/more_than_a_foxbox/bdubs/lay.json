@@ -2,6 +2,6 @@
 	"parent": "more_than_a_foxbox:more_than_a_foxbox/player/slim_lay",
 	"ambientocclusion": false,
 	"textures": {
-		"skin": "modfest_plushies:item/plushie/bdubs"
+		"skin": "modfest_plushies:block/plushie/bdubs"
 	}
 }

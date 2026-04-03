@@ -2,7 +2,7 @@
 	"parent": "more_than_a_foxbox:more_than_a_foxbox/wolf/lay",
 	"ambientocclusion": false,
 	"textures": {
-		"1": "more_than_a_foxbox:item/plushie/wolf_black",
-		"particle": "more_than_a_foxbox:item/plushie/wolf_black"
+		"1": "more_than_a_foxbox:block/plushie/wolf_black",
+		"particle": "more_than_a_foxbox:block/plushie/wolf_black"
 	}
 }

@@ -4,7 +4,8 @@
 	"ambientocclusion": false,
 	"texture_size": [32, 16],
 	"textures": {
-		"1": "more_than_a_foxbox:item/plushie/cow_warm"
+		"1": "more_than_a_foxbox:block/plushie/cow_warm",
+		"particle": "more_than_a_foxbox:block/plushie/cow_warm"
 	},
 	"elements": [
 		{

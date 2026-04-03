@@ -6,10 +6,13 @@
 
 package dev.sweetberry.more_than_a_foxbox.client.block.entity.render;
 
+import dev.sweetberry.more_than_a_foxbox.util.OctalDirection;
+import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 
 public class PlushieHoldingBlockEntityRenderState extends BlockEntityRenderState {
-//	@Nullable BlockStateModel model = null;
+	BlockModelRenderState model = new BlockModelRenderState();
+	OctalDirection direction;
 	float deltaStretch, deltaSquish;
 	boolean isBox;
 }

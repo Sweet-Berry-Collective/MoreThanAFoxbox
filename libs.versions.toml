@@ -2,9 +2,9 @@
 loom = "1.14.+"
 minotaur = "2.+"
 
-mc = "26.1"
+mc = "26.1.1"
 fl = "0.18.4"
-fapi = "0.144.3+26.1"
+fapi = "0.145.3+26.1.1"
 yumi_licenser = "2.1.+"
 yumi-commons = "2.0.0"
 sodium = "mc1.21.11-0.8.0-fabric"

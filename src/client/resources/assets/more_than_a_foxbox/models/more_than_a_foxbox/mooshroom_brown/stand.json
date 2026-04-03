@@ -2,7 +2,7 @@
 	"parent": "more_than_a_foxbox:more_than_a_foxbox/mooshroom/stand",
 	"ambientocclusion": false,
 	"textures": {
-		"0": "more_than_a_foxbox:item/plushie/mooshroom_brown",
-		"particle": "more_than_a_foxbox:item/plushie/mooshroom"
+		"0": "more_than_a_foxbox:block/plushie/mooshroom_brown",
+		"particle": "more_than_a_foxbox:block/plushie/mooshroom"
 	}
 }
