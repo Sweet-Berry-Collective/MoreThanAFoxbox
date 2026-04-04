@@ -1,6 +1,7 @@
 {
   "pack": {
     "description": "ModFest Plushies",
-    "pack_format": 80
+    "min_format": 101,
+	"max_format": 101
   }
 }
