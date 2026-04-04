@@ -135,10 +135,10 @@ public class SewingTableMenu extends AbstractContainerMenu {
 	public void setupPlushieList(RegistryAccess registryAccess) {
 		this.selectedPlushieIndex.set(-1);
 		this.resultContainer.setItem(0, ItemStack.EMPTY);
-		craftablePlushieVariants = Collections.unmodifiableList(
+		craftablePlushieVariants = canCreatePlushie() ? Collections.unmodifiableList(
 			PlushieVariant.orderedPlushies(registryAccess, holder ->
 				!holder.is(PlushieVariant.PLACEHOLDER) && !holder.is(PlushieVariant.EXCLUDED_IN_SEWING_TABLE))
-		);
+		) : Collections.emptyList();
 	}
 
 	private void setupResultSlot(int id) {
