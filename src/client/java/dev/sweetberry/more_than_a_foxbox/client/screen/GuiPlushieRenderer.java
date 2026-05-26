@@ -12,7 +12,6 @@ import com.mojang.math.Axis;
 import dev.sweetberry.more_than_a_foxbox.MoreThanAFoxbox;
 import dev.sweetberry.more_than_a_foxbox.client.PlushieModel;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.navigation.ScreenAxis;
 import net.minecraft.client.gui.render.pip.PictureInPictureRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -39,6 +38,7 @@ public class GuiPlushieRenderer extends PictureInPictureRenderer<GuiPlushieRende
 		GameRenderer gameRenderer = Minecraft.getInstance().gameRenderer;
 		gameRenderer.getLighting().setupFor(Lighting.Entry.ENTITY_IN_UI);
 
+		poseStack.translate(-0.525F, 0.0, 0.0);
 		poseStack.mulPose(Axis.XP.rotationDegrees(25.0F));
 		poseStack.rotateAround(Axis.YP.rotation(renderState.yRot()), 0.5F, 0.0F, -0.5F);
 		poseStack.scale(1.0F, -1.0F, -1.0F);
@@ -62,7 +62,7 @@ public class GuiPlushieRenderer extends PictureInPictureRenderer<GuiPlushieRende
 
 	@Override
 	protected float getTranslateY(final int height, final int guiScale) {
-		return height / 2.0F;
+		return height / 1.8F;
 	}
 
 	@Override

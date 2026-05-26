@@ -169,10 +169,10 @@ public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> 
 			default -> PlushieVariant.Pose.STAND;
 		};
 
-		int minX = x + 26;
-		int minY = y - 36;
-		int maxX = minX + 96;
-		int maxY = minY + 96;
+		int minX = x + 80;
+		int minY = y - 12;
+		int maxX = minX + 40;
+		int maxY = minY + 40;
 
 		graphics.guiRenderState.addPicturesInPictureState(
 			new GuiPlushieRenderState(variant, pose,((plushieDisplayTicks + a) / 60 % Mth.TWO_PI) + DEFAULT_ROTATION_RADIANS, minX, minY, maxX, maxY, 50.0F, graphics.scissorStack.peek())
