@@ -1,0 +1,143 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 16],
+	"textures": {
+		"0": "more_than_a_foxbox:block/plushie/creeper",
+		"particle": "more_than_a_foxbox:block/plushie/creeper"
+	},
+	"elements": [
+		{
+			"name": "head",
+			"from": [6, 6, 6],
+			"to": [10, 10, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 6, 8]},
+			"faces": {
+				"north": {"uv": [2.5, 4, 4.5, 8], "texture": "#0"},
+				"east": {"uv": [0.5, 4, 2.5, 8], "texture": "#0"},
+				"south": {"uv": [6.5, 4, 8.5, 8], "texture": "#0"},
+				"west": {"uv": [4.5, 4, 6.5, 8], "texture": "#0"},
+				"up": {"uv": [4.5, 4, 2.5, 0], "texture": "#0"},
+				"down": {"uv": [6.5, 0, 4.5, 4], "texture": "#0"}
+			}
+		},
+		{
+			"name": "body",
+			"from": [6.5, 2, 7],
+			"to": [9.5, 6, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 4, 8]},
+			"faces": {
+				"north": {"uv": [1, 10, 2.5, 14], "texture": "#0"},
+				"east": {"uv": [0, 10, 1, 14], "texture": "#0"},
+				"south": {"uv": [3.5, 10, 5, 14], "texture": "#0"},
+				"west": {"uv": [2.5, 10, 3.5, 14], "texture": "#0"},
+				"up": {"uv": [2.5, 10, 1, 8], "texture": "#0"},
+				"down": {"uv": [4, 8, 2.5, 10], "texture": "#0"}
+			}
+		},
+		{
+			"name": "leg-fl",
+			"from": [6, 0, 5.5],
+			"to": [8, 2, 7.5],
+			"rotation": {"angle": 20, "axis": "y", "origin": [7, 2, 7.5]},
+			"faces": {
+				"north": {"uv": [7.5, 2, 8.5, 4], "texture": "#0"},
+				"east": {"uv": [6.5, 2, 7.5, 4], "texture": "#0"},
+				"south": {"uv": [9.5, 2, 10.5, 4], "texture": "#0"},
+				"west": {"uv": [8.5, 2, 9.5, 4], "texture": "#0"},
+				"up": {"uv": [8.5, 2, 7.5, 0], "texture": "#0"},
+				"down": {"uv": [9.5, 0, 8.5, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "leg-fr",
+			"from": [8, 0, 5.5],
+			"to": [10, 2, 7.5],
+			"rotation": {"angle": -20, "axis": "y", "origin": [9, 2, 7.5]},
+			"faces": {
+				"north": {"uv": [7.5, 2, 8.5, 4], "texture": "#0"},
+				"east": {"uv": [6.5, 2, 7.5, 4], "texture": "#0"},
+				"south": {"uv": [9.5, 2, 10.5, 4], "texture": "#0"},
+				"west": {"uv": [8.5, 2, 9.5, 4], "texture": "#0"},
+				"up": {"uv": [8.5, 2, 7.5, 0], "texture": "#0"},
+				"down": {"uv": [9.5, 0, 8.5, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "leg-br",
+			"from": [8, 0, 8.5],
+			"to": [10, 2, 10.5],
+			"rotation": {"angle": 20, "axis": "y", "origin": [9, 2, 8.5]},
+			"faces": {
+				"north": {"uv": [9.5, 6, 10.5, 8], "texture": "#0"},
+				"east": {"uv": [8.5, 6, 9.5, 8], "texture": "#0"},
+				"south": {"uv": [11.5, 6, 12.5, 8], "texture": "#0"},
+				"west": {"uv": [10.5, 6, 11.5, 8], "texture": "#0"},
+				"up": {"uv": [10.5, 6, 9.5, 4], "texture": "#0"},
+				"down": {"uv": [11.5, 4, 10.5, 6], "texture": "#0"}
+			}
+		},
+		{
+			"name": "leg-bl",
+			"from": [6, 0, 8.5],
+			"to": [8, 2, 10.5],
+			"rotation": {"angle": -20, "axis": "y", "origin": [7, 2, 8.5]},
+			"faces": {
+				"north": {"uv": [9.5, 6, 10.5, 8], "texture": "#0"},
+				"east": {"uv": [8.5, 6, 9.5, 8], "texture": "#0"},
+				"south": {"uv": [11.5, 6, 12.5, 8], "texture": "#0"},
+				"west": {"uv": [10.5, 6, 11.5, 8], "texture": "#0"},
+				"up": {"uv": [10.5, 6, 9.5, 4], "texture": "#0"},
+				"down": {"uv": [11.5, 4, 10.5, 6], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [67, 0, 0],
+			"translation": [0, 1.75, 4.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [67, 0, 0],
+			"translation": [0, 1.75, 4.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [-180, 60, -180],
+			"translation": [0, 4, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-180, 60, -180],
+			"translation": [0, 4, 0]
+		},
+		"ground": {
+			"translation": [0, 4, 0]
+		},
+		"gui": {
+			"rotation": [25, 140, 0],
+			"translation": [0.25, 4, 0],
+			"scale": [1.25, 1.25, 1.25]
+		},
+		"head": {
+			"translation": [0, 17.25, 0],
+			"scale": [1.4, 1.4, 1.4]
+		},
+		"fixed": {
+			"rotation": [-90, 180, 0],
+			"translation": [0, 0.5, -13],
+			"scale": [1.8, 1.8, 1.8]
+		},
+		"on_shelf": {
+			"rotation": [-90, -180, 0],
+			"translation": [0, 0.5, -13],
+			"scale": [1.8, 1.8, 1.8]
+		}
+	},
+	"groups": [
+		{
+			"name": "creeper",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5]
+		}
+	]
+}
