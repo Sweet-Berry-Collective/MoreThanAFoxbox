@@ -19,11 +19,14 @@ import dev.sweetberry.more_than_a_foxbox.block.entity.BoxBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.entity.PlushieHoldingBlockEntity;
 import dev.sweetberry.more_than_a_foxbox.block.property.MtfbBlockProperties;
 import dev.sweetberry.more_than_a_foxbox.client.MoreThanAFoxboxClient;
-import net.minecraft.client.renderer.block.BlockModelResolver;
+import dev.sweetberry.more_than_a_foxbox.client.PlushieModel;
+import dev.sweetberry.more_than_a_foxbox.data.PlushieVariant;
+import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
 import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.Holder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,10 +42,7 @@ import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
 
 public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHoldingBlockEntity, PlushieHoldingBlockEntityRenderState> {
-	private static final Matrix4fc IDENTITY = new Matrix4f();
-	private static final Map<Identifier, BlockStateModel> MODELS = new HashMap<>();
-	
-	public PlushieBlockEntityRenderer(BlockEntityRendererProvider.Context context) {}
+		public PlushieBlockEntityRenderer(BlockEntityRendererProvider.Context context) {}
 
 	@Override
 	public @NotNull PlushieHoldingBlockEntityRenderState createRenderState() {
@@ -74,23 +74,8 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieHo
 
 		poseModel = optionalPoseModel.orElseGet(() -> MoreThanAFoxbox.id(
 			MoreThanAFoxbox.ID + "/placeholder"));
-		ModelManager modelManager = Minecraft.getInstance().getModelManager();
-		BlockStateModel model = MODELS.computeIfAbsent(
-			poseModel,
-			asset -> modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(asset))
-		);
 
-		if (model == null)
-			model = modelManager.getModel(MoreThanAFoxboxClient.MODEL_KEYS.get(Identifier.fromNamespaceAndPath(MoreThanAFoxbox.ID, MoreThanAFoxbox.ID + "/placeholder")));
-
-		if (model == null) {
-			MoreThanAFoxbox.LOGGER.error("Cannot find placeholder plushie.");
-			return;
-		}
-
-		state.model.clear();
-		List<BlockStateModelPart> partList = state.model.setupModel(IDENTITY, true);
-		model.collectParts(state.model.scratchRandomSource(42L), partList);
+		PlushieModel.updatePlushieModelState(state.model, poseModel);
 	}
 
 	@Override

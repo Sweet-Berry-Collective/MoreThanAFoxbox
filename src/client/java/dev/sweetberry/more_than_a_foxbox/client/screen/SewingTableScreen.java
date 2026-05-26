@@ -39,6 +39,7 @@ public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> 
 	private static final Identifier RECIPE_HIGHLIGHTED_SPRITE = Identifier.withDefaultNamespace("container/stonecutter/recipe_highlighted");
 	private static final Identifier RECIPE_SPRITE = Identifier.withDefaultNamespace("container/stonecutter/recipe");
 	private static final Identifier BG_LOCATION = MoreThanAFoxbox.id("textures/gui/container/sewing_table.png");
+
 	private static final int SCROLLER_WIDTH = 12;
 	private static final int SCROLLER_HEIGHT = 15;
 	private static final int RECIPES_COLUMNS = 4;
@@ -48,10 +49,13 @@ public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> 
 	private static final int SCROLLER_FULL_HEIGHT = 54;
 	private static final int RECIPES_X = 52;
 	private static final int RECIPES_Y = 14;
+	private static final float DEFAULT_ROTATION_RADIANS = (float) Math.toRadians(210.0);
+
 	private float scrollOffs;
 	private boolean scrolling;
 	private int startIndex;
 	private boolean displayRecipes;
+	private float plushieDisplayTicks;
 
 	public SewingTableScreen(SewingTableMenu menu, Inventory playerInventory, Component title) {
 		super(menu, playerInventory, title);
@@ -88,8 +92,8 @@ public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> 
 		int endIndex = this.startIndex + 12;
 		this.extractButtons(graphics, mouseX, mouseY, x, y, endIndex);
 		this.extractRecipes(graphics, x, y, endIndex);
+		this.extractPreview(graphics, x, y, a);
 	}
-
 	@Override
 	protected void extractTooltip(final @NonNull GuiGraphicsExtractor graphics, final int mouseX, final int mouseY) {
 		super.extractTooltip(graphics, mouseX, mouseY);
@@ -147,6 +151,32 @@ public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> 
 			stack.set(MtfbComponents.PLUSHIE.get(), new PlushieDataComponent(visibleRecipes.get(index).key(), menu.getSoundType()));
 			graphics.item(stack, posX, posY);
 		}
+	}
+
+	private void extractPreview(final GuiGraphicsExtractor graphics, final int x, final int y, final float a) {
+		List<Holder.Reference<PlushieVariant>> visibleRecipes = menu.getCraftablePlushieVariants();
+		int selectedIndex = this.menu.getSelectedPlushieIndex();
+
+		if (visibleRecipes.isEmpty() || selectedIndex == -1)
+			return;
+
+		Holder.Reference<PlushieVariant> variant = visibleRecipes.get(selectedIndex);
+
+		int poseIndex = Mth.floor(plushieDisplayTicks / 40 % 3);
+		PlushieVariant.Pose pose = switch (poseIndex) {
+			case 1 -> PlushieVariant.Pose.SIT;
+			case 2 -> PlushieVariant.Pose.LAY;
+			default -> PlushieVariant.Pose.STAND;
+		};
+
+		int minX = x + 26;
+		int minY = y - 36;
+		int maxX = minX + 96;
+		int maxY = minY + 96;
+
+		graphics.guiRenderState.addPicturesInPictureState(
+			new GuiPlushieRenderState(variant, pose,((plushieDisplayTicks + a) / 60 % Mth.TWO_PI) + DEFAULT_ROTATION_RADIANS, minX, minY, maxX, maxY, 50.0F, graphics.scissorStack.peek())
+		);
 	}
 
 	public boolean mouseClicked(final @NonNull MouseButtonEvent event, final boolean doubleClick) {
@@ -219,5 +249,14 @@ public class SewingTableScreen extends AbstractContainerScreen<SewingTableMenu> 
 		this.displayRecipes = menu.canCreatePlushie();
 		this.scrollOffs = 0.0F;
 		this.startIndex = 0;
+		this.plushieDisplayTicks = 0;
+	}
+
+	@Override
+	protected void containerTick() {
+		super.containerTick();
+		if (!getMenu().getCraftablePlushieVariants().isEmpty() && getMenu().getSelectedPlushieIndex() != -1) {
+			++this.plushieDisplayTicks;
+		}
 	}
 }
