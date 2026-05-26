@@ -42,5 +42,11 @@
 	"block.more_than_a_foxbox.sewing_table": "Sewing Table",
 	"container.more_than_a_foxbox.sewing_table": "Sewing Table",
 
+	"tag.item.more_than_a_foxbox.polyfill": "Polyfill",
+	"tag.item.more_than_a_foxbox.plushie_upgrades": "Plushie Upgrades",
+
+	"tag.more_than_a_foxbox.plushie_variant.more_than_a_foxbox.excluded_in_sewing_table": "Excluded in Sewing Table",
+	"tag.more_than_a_foxbox.plushie_variant.more_than_a_foxbox.item_order": "Item Order",
+
 	"item_group.more_than_a_foxbox.tab": "More Than A FoxBox"
 }
